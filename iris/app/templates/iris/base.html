@@ -7,25 +7,25 @@
 {% url 'iris:index' as index_url %}
 
 {% block bootstrap5_content %}
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<div class="container-fluid">
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	  		<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-	  		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item">
-		  		<a class="nav-link active" aria-current="page" href="{{ index_url }}">Index</a>
-				</li>
-			</div>
-		</div>
-	</nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{{ index_url }}">Index</a>
+                </li>
+            </div>
+        </div>
+    </nav>
 
-	<div class="container">
-		{% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
-		{% block content %}
-		{% bootstrap_button "Go to Index" href=index_url %}
-		{% endblock %}
-	</div>
+    <div class="container">
+        {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+        {% block content %}
+            {% bootstrap_button "Go to Index" href=index_url %}
+        {% endblock %}
+    </div>
 
 {% endblock %}
