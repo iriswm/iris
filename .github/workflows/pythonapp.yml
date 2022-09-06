@@ -1,0 +1,24 @@
+name: iris
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.9
+    - name: Install pip dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [ -f requirements.dev.txt ]; then pip install -r requirements.dev.txt; fi
+    - name: Check styles with Black
+      run: black --check manage.py iris
+    - name: Check imports with isort
+      run: isort -c manage.py iris
