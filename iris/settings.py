@@ -2,7 +2,6 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-ROOT_DIR = BASE_DIR.parent
 
 
 # Security
@@ -36,7 +35,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "iris.project.urls"
+ROOT_URLCONF = "iris.urls"
 
 TEMPLATES = [
     {
@@ -54,7 +53,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "iris.project.wsgi.application"
+WSGI_APPLICATION = "iris.wsgi.application"
 
 
 # Database
@@ -62,7 +61,7 @@ WSGI_APPLICATION = "iris.project.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": ROOT_DIR / "db.sqlite3",
+        "NAME": "db.sqlite3",
     }
 }
 
