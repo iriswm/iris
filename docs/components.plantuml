@@ -1,0 +1,24 @@
+@startuml
+left to right direction
+
+node "iris.dpalbum.com" {
+  () "API" as API_IRIS
+  API_IRIS -- [iris]
+}
+
+node "dpalbum.com" {
+  [WooIris]
+}
+
+[WooIris] ..> API_IRIS
+
+node "dropbox.com" {
+  [Dropbox]
+}
+
+[iris] ..> [Dropbox] : sdk
+
+"user"
+user - [iris]
+
+@enduml

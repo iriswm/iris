@@ -1,0 +1,42 @@
+@startuml
+
+object Order
+object Line
+object Task
+object Work
+object Station
+object Worker
+object Commit
+
+object auth.User
+object auth.Group
+
+Order "1" -- "n" Line : has
+Line "1" -- "n" Task : spans
+
+Task "n" -- "1" Work : is type
+Work "m" -- "n" Station : is resolved
+
+Task "1" -- "1" Commit : closed by
+Worker "1" -- "n" Commit : owns
+
+auth.User "n" -- "m" auth.Group : belongs
+Worker "1" -- "1" auth.User
+
+Order : wp_id
+Order : (text) wp_info
+Order : (str) notes
+
+Line : wp_id
+Line : (text) wp_info
+Line : (str) notes
+
+Work : instructions
+
+Commit : (str) notes
+
+object NoteTemplate
+NoteTemplate : kind = Order|Line|Commit
+NoteTemplate : (str) body
+
+@enduml
