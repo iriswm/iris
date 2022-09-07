@@ -1,42 +1,173 @@
 @startuml
 
+/'
+
+When an order is completed (or reaches a configured completion state) in a
+WooCommerce site, a plugin notifies the Iris site with the order details. This
+details are stored in the models `Order` and `Line`. Both models keep the
+corresponding Wordpress ids and a custom `notes` field to track extra
+information provided by the plugin or recorded while working in the Iris site.
+The items in the model `Line` also keep an identifier for the WooCommerce
+category.
+
+'/
+
 object Order
 object Line
+
+Order "1" -- "n" Line
+
+Order : ?wp_id
+Order : notes
+
+Line : ?wp_id
+Line : wp_tag_id
+Line : notes
+
+/'
+
+In the Iris site, another model called `Category` maps each WooCommerce
+category identifier with a set of items in the model `Task`. Each task has
+also individual `instructions`.
+
+When a new item is created in the model `Line`, the category is checked and
+the appropriate set of actual tasks are created as entries in a model called
+`Work`. Each of this works, when completed, will span extra works according to
+another model called `WorkSpan`.
+
+'/
+
+object Category
+
+Category : wp_tag_id
+
 object Task
+
+Category "n" -- "m" Task
+
+Task : instructions
+
 object Work
-object Station
+object WorkSpan
+
+WorkSpan "n" -- "m" Task
+
+/'
+
+The items in the models `Task`, `Category` and `WorkSpan` represent trees of
+works needed to consider an order fulfilled.
+
+The works can be completed by any worker, identified in the model `Worker` and
+connected to an Django `User`. The works are marked as completed creating a
+new item in another model called `Commit`. This commits also have `notes`.
+
+'/
+
 object Worker
-object Commit
-
 object auth.User
-object auth.Group
 
-Order "1" -- "n" Line : has
-Line "1" -- "n" Task : spans
-
-Task "n" -- "1" Work : is type
-Work "m" -- "n" Station : is resolved
-
-Task "1" -- "1" Commit : closed by
-Worker "1" -- "n" Commit : owns
-
-auth.User "n" -- "m" auth.Group : belongs
 Worker "1" -- "1" auth.User
 
-Order : wp_id
-Order : (text) wp_info
-Order : (str) notes
+object Commit
 
-Line : wp_id
-Line : (text) wp_info
-Line : (str) notes
+Commit "1" -- "1" Worker
+Commit "1" -- "1" Work
 
-Work : instructions
+Commit : notes
 
-Commit : (str) notes
+/'
+
+The items in `Work` and `Commit` are timestamped to keep track of the amount
+of time needed by each item in an Order and offer proper estimations and
+reports. For the estimations, information about average times needed per task
+will be recorded in the `Task` model.
+
+'/
+
+Work : created
+Commit : created
+Task : avg_hours
+
+/'
+
+Each order and line can be canceled with a `reason` field. Either in the Iris
+site or by the WooCommerce plugin.
+
+'/
+
+Order : cancel_time
+Order : cancel_reason
+Line : cancel_time
+Line : cancel_reason
+
+/'
+
+The main purpose of the Iris site is to keep a list of station profiles in a
+`Station` model and offer a detail page for each station when the workers in
+the station can see the tasks pending work and the information needed for each
+task. The secondary purpose is to help with the estimation of order completion
+times and the tertiary purpose is to offer insights into work efficiency and
+performance.
+
+'/
+
+object Station
+
+Task "n" -- "m" Station
+
+/'
+
+The interface will be keep as simple as possible and will have utilities to
+ease the interaction using touch screens. A simple way to switch between
+workers profiles or an alternative should be provided. Also, a system for
+adding common notes using a few touches may be helpful.
+
+'/
 
 object NoteTemplate
-NoteTemplate : kind = Order|Line|Commit
-NoteTemplate : (str) body
+NoteTemplate : kind = Order|Line|Commit|Delay|Suspension
+NoteTemplate : text
+
+/'
+
+Abnormal stops in works will be handled using extra models:
+
+'/
+
+/'
+
+- The `Delay` model, with a specific time specified to hide the work in the
+station during that time and a note.
+
+'/
+
+object Delay
+
+Delay "1" -- "1" Work
+
+Delay : created
+Delay : time
+Delay : notes
+
+/'
+
+- The `Suspension` model, for halts in works without time estimations, also
+with a note.
+
+'/
+
+object Suspension
+
+Suspension "1" -- "1" Work
+
+Suspension : created
+Suspension : notes
+
+/'
+
+A system of alerts to handle delays or suspensions is also considerably
+useful to have, but in the meantime, an screen to show them should be enough.
+
+'/
 
 @enduml
