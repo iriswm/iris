@@ -17,11 +17,11 @@ object Line
 
 Order "1" -- "n" Line
 
-Order : ?wp_id
+Order : wc_order_id
 Order : notes
 
-Line : ?wp_id
-Line : wp_tag_id
+Line : wc_order_item_id
+Line : wc_category_id
 Line : notes
 
 /'
@@ -39,7 +39,7 @@ another model called `WorkSpan`.
 
 object Category
 
-Category : wp_tag_id
+Category : wp_category_id
 
 object Task
 
