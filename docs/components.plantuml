@@ -1,22 +1,16 @@
 @startuml
 left to right direction
 
-node "iris.dpalbum.com" {
+node "Iris internal site" {
   () "API" as API_IRIS
   API_IRIS -- [iris]
 }
 
-node "dpalbum.com" {
-  [WooIris]
+node "Company on-line store" {
+  [wooiris]
 }
 
-[WooIris] ..> API_IRIS
-
-node "dropbox.com" {
-  [Dropbox]
-}
-
-[iris] ..> [Dropbox] : sdk
+[wooiris] ..> API_IRIS
 
 "user"
 user - [iris]
