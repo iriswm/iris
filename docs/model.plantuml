@@ -8,7 +8,8 @@ details are stored in the models `Order` and `Line`. Both models keep the
 corresponding Wordpress ids and a custom `notes` field to track extra
 information provided by the plugin or recorded while working in the Iris site.
 The items in the model `Line` also keep an identifier for the WooCommerce
-category.
+category. Also, an extra field will keep track of the order notes specified in
+the WooCommerce site (also using the plugin).
 
 '/
 
@@ -18,6 +19,7 @@ object Line
 Order "1" -- "n" Line
 
 Order : wc_order_id
+Order : wc_order_notes
 Order : notes
 
 Line : wc_order_item_id
@@ -93,6 +95,14 @@ Task : avg_hours
 Each order and line can be canceled with a `reason` field. Either in the Iris
 site or by the WooCommerce plugin.
 
+Deletion of orders or lines will be notified to Iris to have the time and
+reason updated. Reason will be a custom text like "Deleted in WooCommerce.".
+
+When two orders are related because of a cancellation (ex: a correct new order
+replaced an incorrect obsolete one) the operator in the WooCommerce site can
+add this information in the order notes (and they will be notified by the
+plugin, as said above).
+
 '/
 
 Order : cancel_time
@@ -130,14 +140,14 @@ NoteTemplate : text
 
 /'
 
-Abnormal stops in works will be handled using extra models:
+Abnormal workflows in works will be handled using extra models:
 
 '/
 
 /'
 
 - The `Delay` model, with a specific time specified to hide the work in the
-station during that time and a note.
+  station during that time and a note.
 
 '/
 
@@ -152,7 +162,7 @@ Delay : notes
 /'
 
 - The `Suspension` model, for halts in works without time estimations, also
-with a note.
+  with a note.
 
 '/
 
@@ -162,6 +172,23 @@ Suspension "1" -- "1" Work
 
 Suspension : created
 Suspension : notes
+
+/'
+
+- The `Priority` model, to give extra priority to certain work from a specific
+  date. This will override the default FIFO order for works with a different
+  score. The higher the score the higher the priority.
+
+'/
+
+object Priority
+
+Priority "1" -- "1" Work
+
+Priority : created
+Priority : from
+Priority : score
+Priority : notes
 
 /'
 
