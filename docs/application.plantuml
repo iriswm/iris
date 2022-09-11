@@ -32,10 +32,12 @@ In the Iris site, another model called `Category` maps each WooCommerce
 category identifier with a set of items in the model `Task`. Each task has
 also individual `instructions`.
 
-When a new item is created in the model `Line`, the category is checked and
-the appropriate set of actual tasks are created as entries in a model called
+When a new item is created in the model `Line`, the category is checked and the
+appropriate set of actual tasks are created as entries in a model called
 `Work`. Each of this works, when completed, will span extra works according to
-another model called `WorkSpan`.
+another model called `TaskSpan`. Also, some tasks will be spawned when a set of
+tasks for the same line are completed (only when they are all completed).  This
+tasks depending on sets of tasks are kept in the model `TaskConsolidation`.
 
 '/
 
@@ -50,14 +52,16 @@ Category "n" -- "m" Task
 Task : instructions
 
 object Work
-object WorkSpan
+object TaskSpan
+object TaskConsolidation
 
-WorkSpan "n" -- "m" Task
+TaskSpan "n" -- "m" Task
+TaskConsolidation "n" -- "m" Task
 
 /'
 
-The items in the models `Task`, `Category` and `WorkSpan` represent trees of
-works needed to consider an order fulfilled.
+The items in the models `Task`, `Category`, `TaskSpan` and `TaskConsolidation`
+represent trees of works needed to consider an order fulfilled.
 
 The works can be completed by any worker, identified in the model `Worker` and
 connected to an Django `User`. The works are marked as completed creating a
