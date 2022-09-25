@@ -139,7 +139,7 @@ adding common notes using a few touches may be helpful.
 '/
 
 object NoteTemplate
-NoteTemplate : kind = Order|Line|Commit|Delay|Suspension
+NoteTemplate : kind = Order|Line|Commit|Delay|Suspension|Priority
 NoteTemplate : text
 
 /'
