@@ -5,11 +5,10 @@
 When an order is completed (or reaches a configured completion state) in a
 WooCommerce site, a plugin notifies the Iris site with the order details. This
 details are stored in the models `Order` and `Line`. Both models keep the
-corresponding Wordpress ids and a custom `notes` field to track extra
-information provided by the plugin or recorded while working in the Iris site.
+corresponding Wordpress ids and a copy of the order note field.
+
 The items in the model `Line` also keep an identifier for the WooCommerce
-category. Also, an extra field will keep track of the order notes specified in
-the WooCommerce site (also using the plugin).
+category.
 
 '/
 
@@ -20,79 +19,30 @@ Order "1" -- "n" Line
 
 Order : wc_order_id
 Order : wc_order_notes
-Order : notes
 
 Line : wc_order_item_id
 Line : wc_category_id
+
+/'
+
+An extra field will keep track of internal Iris notes.
+
+'/
+
+Order : notes
 Line : notes
 
 /'
 
-In the Iris site, another model called `Category` maps each WooCommerce
-category identifier with a set of items in the model `Task`. Each task has
-also individual `instructions`.
-
-When a new item is created in the model `Line`, the category is checked and the
-appropriate set of actual tasks are created as entries in a model called
-`Work`. Each of this works, when completed, will span extra works according to
-another model called `TaskSpan`. Also, some tasks will be spawned when a set of
-tasks for the same line are completed (only when they are all completed).  This
-tasks depending on sets of tasks are kept in the model `TaskConsolidation`.
+Both models track creation and modification times.
 
 '/
 
-object Category
+Order : created
+Order : modified
+Line : created
+Line : modified
 
-Category : wp_category_id
-
-object Task
-
-Category "n" -- "m" Task
-
-Task : instructions
-
-object Work
-object TaskSpan
-object TaskConsolidation
-
-TaskSpan "n" -- "m" Task
-TaskConsolidation "n" -- "m" Task
-
-/'
-
-The items in the models `Task`, `Category`, `TaskSpan` and `TaskConsolidation`
-represent trees of works needed to consider an order fulfilled.
-
-The works can be completed by any worker, identified in the model `Worker` and
-connected to an Django `User`. The works are marked as completed creating a
-new item in another model called `Commit`. This commits also have `notes`.
-
-'/
-
-object Worker
-object auth.User
-
-Worker "1" -- "1" auth.User
-
-object Commit
-
-Commit "1" -- "1" Worker
-Commit "1" -- "1" Work
-
-Commit : notes
-
-/'
-
-The items in `Work` and `Commit` are timestamped to keep track of the amount
-of time needed by each item in an Order and offer proper estimations and
-reports. For the estimations, information about average times needed per task
-will be recorded in the `Task` model.
-
-'/
-
-Work : created
-Commit : created
-Task : avg_hours
 
 /'
 
@@ -113,6 +63,89 @@ Order : cancel_time
 Order : cancel_reason
 Line : cancel_time
 Line : cancel_reason
+
+/'
+
+In the Iris site, another model called `Category` maps each WooCommerce
+category identifier with a set of items in the model `Task`. Each task has also
+individual `instructions` and a simple `name`.
+
+When a new item is created in the model `Line`, the category is checked and the
+appropriate set of actual tasks are created as entries in a model called
+`Work`. Each of this works, when completed, will span extra works according to
+another model called `TaskSpawn`. Also, some tasks will be spawned when a set
+of tasks for the same line are completed (only when they are all completed).
+This tasks depending on sets of tasks are kept in the model
+`TaskConsolidation`.
+
+'/
+
+object Category
+
+Category : name
+Category : wp_category_id
+
+object Task
+
+Category "n" -- "m" Task
+
+Task : name
+Task : instructions
+
+object Work
+
+Work "n" -- "1" Task
+Work "n" -- "1" Line
+
+object TaskSpawn
+object TaskConsolidation
+
+TaskSpawn "n" -- "1" Task
+TaskSpawn "n" -- "m" Task
+TaskConsolidation "n" -- "m" Task
+TaskConsolidation "n" -- "m" Task
+
+/'
+
+The items in the models `Task`, `Category`, `TaskSpawn` and `TaskConsolidation`
+represent trees of works needed to consider an order fulfilled.
+
+The works can be completed by any worker, identified in the model `Worker` and
+connected to an Django `User`. The works are marked as completed creating a new
+item in another model called `Commit`. This commits also have `notes`.
+
+Worker can have a picture to ease visual identification in the site views.
+
+'/
+
+object Worker
+object auth.User
+
+Worker "1" -- "1" auth.User
+
+Worker : picture
+
+object Commit
+
+Commit "1" -[#green]- "1" Work
+Commit "1" -- "1" Worker
+
+Commit : notes
+
+/'
+
+The items in `Work` and `Commit` are timestamped to keep track of the amount of
+time needed by each item in an Order and offer proper estimations and reports.
+For the estimations, information about average times needed per task will be
+recorded in the `Task` model.
+
+'/
+
+Work : created
+Work : modified
+Commit : created
+Commit : modified
+Task : avg_hours
 
 /'
 
@@ -157,9 +190,11 @@ Abnormal workflows in works will be handled using extra models:
 
 object Delay
 
-Delay "1" -- "1" Work
+Delay "1" -[#orange]- "1" Work
+Delay "1" -- "1" Worker
 
 Delay : created
+Delay : modified
 Delay : time
 Delay : notes
 
@@ -172,9 +207,11 @@ Delay : notes
 
 object Suspension
 
-Suspension "1" -- "1" Work
+Suspension "1" -[#red]- "1" Work
+Suspension "1" -- "1" Worker
 
 Suspension : created
+Suspension : modified
 Suspension : notes
 
 /'
@@ -187,17 +224,19 @@ Suspension : notes
 
 object Priority
 
-Priority "1" -- "1" Work
+Priority "1" -[#blue]- "1" Work
+Priority "1" -- "1" Worker
 
 Priority : created
+Priority : modified
 Priority : from
 Priority : score
 Priority : notes
 
 /'
 
-A system of alerts to handle delays or suspensions is also considerably
-useful to have, but in the meantime, an screen to show them should be enough.
+A system of alerts to handle delays or suspensions is also considerably useful
+to have, but in the meantime, an screen to show them should be enough.
 
 '/
 
