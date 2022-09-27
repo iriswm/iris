@@ -8,16 +8,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Security
-
 SECRET_KEY = "django-insecure-gs=xloqs7ztt*v)e_w=!moh+_vvfu25#_$c^yhdspv_wosx&om"
-
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Database
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
 
-
-# Application definition
-
+# General framework
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -28,7 +30,6 @@ INSTALLED_APPS = [
     "bootstrap5",
     "iris.app",
 ]
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -39,13 +40,9 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
-ROOT_URLCONF = "iris.urls"
-
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -57,59 +54,19 @@ TEMPLATES = [
         },
     },
 ]
-
+ROOT_URLCONF = "iris.urls"
 WSGI_APPLICATION = "iris.wsgi.application"
 
-
-# Database
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "db.sqlite3",
-    }
-}
-
-
-# Password validation
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
-]
-
-
-# Internationalization
-
+# I18N/L10N
 LANGUAGE_CODE = "en"
-
 LANGUAGES = [
     ("en", _("English")),
     ("es", _("Spanish")),
 ]
-
 TIME_ZONE = "UTC"
 
-USE_I18N = True
-
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-
+# Media and static files
+MEDIA_ROOT = BASE_DIR / "storage"
+MEDIA_URL = "media/"
+STATIC_ROOT = BASE_DIR / "cdn"
 STATIC_URL = "static/"
-
-
-# Misc
-
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
