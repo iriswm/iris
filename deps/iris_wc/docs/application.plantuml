@@ -60,6 +60,8 @@ object ProductMap
 object CategoryMap
 object Category
 
+Line "n" -- "1" Category
+
 ProductMap : wc_product_id
 ProductMap "n" -- "1" Category
 
