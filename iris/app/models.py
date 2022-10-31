@@ -4,6 +4,27 @@ from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
+NOTES_PATH_LIMIT = 64
+NOTES_MAX_DISPLAY_LENGTH = 32
+
+
+_notes_registry = set()
+
+
+def get_note_types():
+    return _notes_registry
+
+
+def add_note_type(name, path):
+    if len(path) > NOTES_PATH_LIMIT:
+        raise RuntimeError(
+            f"Notes registry path value must be under {NOTES_PATH_LIMIT} characters"
+        )
+    if (name, path) not in _notes_registry:
+        _notes_registry.add((name, path))
+    else:
+        raise RuntimeError(f"Note types registry duplicate value for {name}, {path}")
+
 
 class TimestampMixin(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -46,46 +67,26 @@ class NotesMixin(models.Model):
         abstract = True
 
 
-class Order(TimestampMixin, CancelableMixin, NotesMixin):
-    wc_order_id = models.IntegerField(_("WooCommerce order ID"))
-    wc_order_notes = models.TextField(_("WooCommerce order notes"), blank=True)
-
-    def cancel(reason):
-        super().cancel(reason)
-        for line in self.lines.all():
-            line.cancel(reason)
+class Work(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
+    category = models.ForeignKey(
+        "Category", on_delete=models.RESTRICT, related_name="categories"
+    )
 
     def __str__(self):
-        return str(_(f"WooCommerce order {self.wc_order_id}"))
+        return f"Work {self.pk}"
 
 
-class WooCommerceCategoryMixin(models.Model):
-    wc_category_id = models.IntegerField(_("WooCommerce category ID"))
-
-    class Meta:
-        abstract = True
+add_note_type("Work", "iris.app.Work")
 
 
-class Line(TimestampMixin, CancelableMixin, NotesMixin, WooCommerceCategoryMixin):
-    order = models.ForeignKey("Order", on_delete=models.CASCADE, related_name="lines")
-    wc_order_item_id = models.IntegerField(_("WooCommerce order line ID"))
-
-    def __str__(self):
-        return str(
-            _(
-                f"WooCommerce line {self.wc_order_item_id} for order {self.order.wc_order_id}"
-            )
-        )
-
-
-class Category(WooCommerceCategoryMixin):
+class Category(models.Model):
     name = models.CharField(max_length=64)
     spawned_tasks = models.ManyToManyField(
         "Task", related_name="spawned_by_categories", blank=True
     )
 
     def __str__(self):
-        return f"{self.name} ({self.pk})"
+        return f"{self.name}"
 
     class Meta:
         verbose_name_plural = "categories"
@@ -101,16 +102,12 @@ class Task(models.Model):
         return f"{self.name} ({self.pk})"
 
 
-class Work(TimestampMixin):
-    task = models.ForeignKey("Task", on_delete=models.RESTRICT, related_name="works")
-    line = models.ForeignKey("Line", on_delete=models.CASCADE, related_name="works")
+class Job(TimestampMixin, models.Model):
+    task = models.ForeignKey("Task", on_delete=models.RESTRICT, related_name="jobs")
+    work = models.ForeignKey("Work", on_delete=models.CASCADE, related_name="jobs")
 
     def __str__(self):
-        return str(
-            _(
-                f"'{self.task.name}' for order id {self.line.order.pk}, line id {self.line.pk}"
-            )
-        )
+        return str(_(f"'{self.task.name}' for work {self.work.pk}"))
 
 
 class TaskSpawn(models.Model):
@@ -162,16 +159,17 @@ class Worker(models.Model):
         return str(self.user)
 
 
-class Commit(TimestampMixin, NotesMixin):
-    work = models.OneToOneField("Work", on_delete=models.RESTRICT)
+class Commit(TimestampMixin, NotesMixin, models.Model):
+    job = models.OneToOneField("Job", on_delete=models.RESTRICT)
     worker = models.OneToOneField("Worker", on_delete=models.RESTRICT)
 
     def __str__(self):
         return str(
-            _(
-                f'Commit for work "{self.work}" by worker {self.worker} ({self.modified})'
-            )
+            _(f'Commit for work "{self.job}" by worker {self.worker} ({self.modified})')
         )
+
+
+add_note_type("Commit", "iris.app.Commit")
 
 
 class Station(models.Model):
@@ -182,61 +180,53 @@ class Station(models.Model):
 
 
 class NoteTemplate(models.Model):
-    KIND_SHORT_LIMIT = 32
-
-    ORDER, LINE, COMMIT, DELAY, SUSPENSION, PRIORITY = range(6)
-    KIND_CHOICES = [
-        (ORDER, "Order"),
-        (LINE, "Line"),
-        (COMMIT, "Commit"),
-        (DELAY, "Delay"),
-        (SUSPENSION, "Suspension"),
-        (PRIORITY, "Priority"),
-    ]
-
-    kind = models.IntegerField(default=COMMIT, choices=KIND_CHOICES)
+    path = models.CharField(max_length=NOTES_PATH_LIMIT)
     template = models.CharField(max_length=256)
 
     def __str__(self):
         # "Long string with many things" -> "Long stri..."
-        template_name = self.KIND_CHOICES[self.kind][1]
         short_template = (
             self.template
-            if len(self.template) < self.KIND_SHORT_LIMIT
-            else self.template[:28] + "..."
+            if len(self.template) < NOTES_MAX_DISPLAY_LENGTH
+            else self.template[: NOTES_MAX_DISPLAY_LENGTH - 3] + "..."
         )
-        return str(_(f"{template_name} template: {short_template}"))
+        return str(_(f"{self.path} template: {short_template}"))
 
 
-class Delay(TimestampMixin, NotesMixin):
-    work = models.ForeignKey("Work", on_delete=models.CASCADE, related_name="delays")
+class Delay(TimestampMixin, NotesMixin, models.Model):
+    job = models.ForeignKey("Job", on_delete=models.CASCADE, related_name="delays")
     worker = models.OneToOneField("Worker", on_delete=models.RESTRICT)
     time = models.DurationField()
 
     def __str__(self):
-        return str(_(f'Delay "{self.work}" for {self.time}'))
+        return str(_(f'Delay "{self.job}" for {self.time}'))
 
 
-class Suspension(TimestampMixin, NotesMixin):
-    work = models.ForeignKey(
-        "Work", on_delete=models.CASCADE, related_name="suspensions"
-    )
+add_note_type("Delay", "iris.app.Delay")
+
+
+class Suspension(TimestampMixin, NotesMixin, models.Model):
+    job = models.ForeignKey("Job", on_delete=models.CASCADE, related_name="suspensions")
     worker = models.OneToOneField("Worker", on_delete=models.RESTRICT)
 
     def __str__(self):
-        return str(_(f'Suspension for "{self.work}"'))
+        return str(_(f'Suspension for "{self.job}"'))
 
 
-class Priority(TimestampMixin, NotesMixin):
-    work = models.ForeignKey(
-        "Work", on_delete=models.CASCADE, related_name="priorities"
-    )
+add_note_type("Suspension", "iris.app.Suspension")
+
+
+class Priority(TimestampMixin, NotesMixin, models.Model):
+    job = models.ForeignKey("Job", on_delete=models.CASCADE, related_name="priorities")
     worker = models.OneToOneField("Worker", on_delete=models.RESTRICT)
     from_date = models.DateTimeField(default=now)
     score = models.IntegerField()
 
     def __str__(self):
-        return str(_(f'Override "{self.work}" priority ({self.score})'))
+        return str(_(f'Override "{self.job}" priority ({self.score})'))
 
     class Meta:
         verbose_name_plural = "priorities"
+
+
+add_note_type("Priority", "iris.app.Priority")
