@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+STATE_DIR = BASE_DIR / "state"
 
 
 # Security
@@ -15,7 +16,7 @@ DEBUG = True
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": STATE_DIR / "db.sqlite3",
     }
 }
 
@@ -66,7 +67,7 @@ LANGUAGES = [
 TIME_ZONE = "UTC"
 
 # Media and static files
-MEDIA_ROOT = BASE_DIR / "storage"
+MEDIA_ROOT = STATE_DIR / "media"
 MEDIA_URL = "media/"
-STATIC_ROOT = BASE_DIR / "cdn"
+STATIC_ROOT = STATE_DIR / "cdn"
 STATIC_URL = "static/"

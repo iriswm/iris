@@ -1,8 +1,5 @@
 __pycache__/
-/db.sqlite3
 /docs/*.png
 .project
 .pydevproject
 /.dbeaver/
-/cdn/
-/storage/
