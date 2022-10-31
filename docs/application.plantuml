@@ -2,88 +2,41 @@
 
 /'
 
-When an order is completed (or reaches a configured completion state) in a
-WooCommerce site, a plugin notifies the Iris site with the order details. This
-details are stored in the models `Order` and `Line`. Both models keep the
-corresponding Wordpress ids and a copy of the order note field.
+Each time the workshop receives a new order, each single item to be created is
+stored as a `Work` in the Iris site.
 
-The items in the model `Line` also keep an identifier for the WooCommerce
-category.
+Works track creation and modification times, can have notes and can be
+cancelled.
 
 '/
 
-object Order
-object Line
+object Work
 
-Order "1" -- "n" Line
-
-Order : wc_order_id
-Order : wc_order_notes
-
-Line : wc_order_item_id
-Line : wc_category_id
+Work : created
+Work : modified
+Work : notes
+Work : cancel_time
+Work : cancel_reason
 
 /'
 
-An extra field will keep track of internal Iris notes.
+Each work will be part of a `Category`. Categories will map each work to a set
+of tasks (`Task` objects).
 
-'/
+Each task has individual `instructions` and a simple `name`.
 
-Order : notes
-Line : notes
-
-/'
-
-Both models track creation and modification times.
-
-'/
-
-Order : created
-Order : modified
-Line : created
-Line : modified
-
-
-/'
-
-Each order and line can be canceled with a `reason` field. Either in the Iris
-site or by the WooCommerce plugin.
-
-Deletion of orders or lines will be notified to Iris to have the time and
-reason updated. Reason will be a custom text like "Deleted in WooCommerce.".
-
-When two orders are related because of a cancellation (ex: a correct new order
-replaced an incorrect obsolete one) the operator in the WooCommerce site can
-add this information in the order notes (and they will be notified by the
-plugin, as said above).
-
-'/
-
-Order : cancel_time
-Order : cancel_reason
-Line : cancel_time
-Line : cancel_reason
-
-/'
-
-In the Iris site, another model called `Category` maps each WooCommerce
-category identifier with a set of items in the model `Task`. Each task has also
-individual `instructions` and a simple `name`.
-
-When a new item is created in the model `Line`, the category is checked and the
-appropriate set of actual tasks are created as entries in a model called
-`Work`. Each of this works, when completed, will span extra works according to
-another model called `TaskSpawn`. Also, some tasks will be spawned when a set
-of tasks for the same line are completed (only when they are all completed).
-This tasks depending on sets of tasks are kept in the model
-`TaskConsolidation`.
+When a new work is created, the category is checked and an appropriate set of
+jobs are created (`Job` objects). Each of this jobs, when completed, will span
+extra works according to another model called `TaskSpawn`. Also, some tasks
+will be spawned when a set of tasks for the same line are completed (only when
+they are all completed). This tasks depending on sets of tasks are kept in the
+model `TaskConsolidation`.
 
 '/
 
 object Category
 
-Category : name
-Category : wp_category_id
+Work "n" -- "1" Category
 
 object Task
 
@@ -92,10 +45,10 @@ Category "n" -- "m" Task
 Task : name
 Task : instructions
 
-object Work
+object Job
 
-Work "n" -- "1" Task
-Work "n" -- "1" Line
+Job "n" -- "1" Task
+Job "n" -- "1" Work
 
 object TaskSpawn
 object TaskConsolidation
@@ -112,7 +65,7 @@ represent trees of works needed to consider an order fulfilled.
 
 The works can be completed by any worker, identified in the model `Worker` and
 connected to an Django `User`. The works are marked as completed creating a new
-item in another model called `Commit`. This commits also have `notes`.
+item in another model called `Commit`.
 
 Worker can have a picture to ease visual identification in the site views.
 
@@ -127,17 +80,15 @@ Worker : picture
 
 object Commit
 
-Commit "1" -[#green]- "1" Work
+Commit "1" -[#green]- "1" Job
 Commit "1" -- "1" Worker
-
-Commit : notes
 
 /'
 
 The items in `Work` and `Commit` are timestamped to keep track of the amount of
 time needed by each item in an Order and offer proper estimations and reports.
 For the estimations, information about average times needed per task will be
-recorded in the `Task` model.
+recorded in the `Task` model. The commits also have `notes`.
 
 '/
 
@@ -145,6 +96,7 @@ Work : created
 Work : modified
 Commit : created
 Commit : modified
+Commit : notes
 Task : avg_hours
 
 /'
@@ -172,7 +124,7 @@ adding common notes using a few touches may be helpful.
 '/
 
 object NoteTemplate
-NoteTemplate : kind = Order|Line|Commit|Delay|Suspension|Priority
+NoteTemplate : kind = Commit|Delay|Suspension|Priority
 NoteTemplate : text
 
 /'
@@ -190,13 +142,13 @@ Abnormal workflows in works will be handled using extra models:
 
 object Delay
 
-Delay "1" -[#orange]- "1" Work
+Delay "1" -[#orange]- "1" Job
 Delay "1" -- "1" Worker
 
 Delay : created
 Delay : modified
-Delay : time
 Delay : notes
+Delay : time
 
 /'
 
@@ -207,7 +159,7 @@ Delay : notes
 
 object Suspension
 
-Suspension "1" -[#red]- "1" Work
+Suspension "1" -[#red]- "1" Job
 Suspension "1" -- "1" Worker
 
 Suspension : created
@@ -224,14 +176,14 @@ Suspension : notes
 
 object Priority
 
-Priority "1" -[#blue]- "1" Work
+Priority "1" -[#blue]- "1" Job
 Priority "1" -- "1" Worker
 
 Priority : created
 Priority : modified
+Priority : notes
 Priority : from
 Priority : score
-Priority : notes
 
 /'
 

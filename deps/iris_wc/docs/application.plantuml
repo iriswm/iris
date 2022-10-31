@@ -1,0 +1,69 @@
+@startuml
+
+/'
+
+When an order is completed (or reaches a configured completion state) in a
+WooCommerce site, a plugin notifies the Iris site with the order details. This
+details are stored in the models `Order` and `Line`. Both models keep the
+corresponding Wordpress ids. Orders will keep a copy of the order notes in
+WooCommerce. Lines will also keep an identifier for the WooCommerce category.
+
+'/
+
+object Order
+object Line
+
+Order "1" -- "n" Line
+
+Order : wc_order_id
+Order : wc_order_notes
+
+Line : wc_order_item_id
+Line : wc_category_id
+
+/'
+
+Both models support Iris timestamps, notes and cancellations.
+
+The WooCommerce plugin will keep the notes updated.
+
+Cancellation of orders in the WooCommerce site will be notified by the plugin.
+Deletion of orders or lines will be notified to Iris as cancellations with a
+custom text like "Deleted in WooCommerce.".
+
+'/
+
+Order : created
+Order : modified
+Order : notes
+Order : cancel_time
+Order : cancel_reason
+Line : created
+Line : modified
+Line : notes
+Line : cancel_time
+Line : cancel_reason
+
+/'
+
+Two models will keep maps between WooCommerce IDs and Iris categories. One for
+individual WooCommerce products and another for the WooCommerce categories.
+
+When a new order is notified to Iris, each line will be inspected to find the
+Iris internal category with the set of associated tasks. First, the product ID
+maps will be checked, and then the category maps. Proper works will be created
+in Iris to represent them using this maps.
+
+'/
+
+object ProductMap
+object CategoryMap
+object Category
+
+ProductMap : wc_product_id
+ProductMap "n" -- "1" Category
+
+CategoryMap : wc_category_id
+CategoryMap "n" -- "1" Category
+
+@enduml

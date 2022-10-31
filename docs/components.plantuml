@@ -1,18 +1,26 @@
 @startuml
+
 left to right direction
 
 node "Iris internal site" {
-  () "API" as API_IRIS
-  API_IRIS -- [iris]
+  () "API" as API_IRIS_WC
+  API_IRIS_WC -- [iris_wc]
+  [iris_wc] -- [iris]
 }
 
-node "Company on-line store" {
+node "Company WooCommerce store" {
   [wooiris]
 }
 
-[wooiris] ..> API_IRIS
+[wooiris] ..> API_IRIS_WC
 
 "user"
 user - [iris]
+
+legend
+wooiris - WooCommerce PHP plugin
+iris_wc - Django app for integration with WooCommerce
+iris - Main Djanjo app/project
+endlegend
 
 @enduml

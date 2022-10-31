@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "bootstrap5",
     "iris.app",
+    "iris_wc",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
