@@ -1,13 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from iris.app.models import (
-    CancelableMixin,
-    Category,
-    NotesMixin,
-    TimestampMixin,
-    add_note_type,
-)
+from iris.app.models import CancelableMixin, NotesMixin, TimestampMixin, add_note_type
 
 
 class Order(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
@@ -37,6 +31,13 @@ class Line(
     TimestampMixin, CancelableMixin, NotesMixin, WooCommerceCategoryMixin, models.Model
 ):
     order = models.ForeignKey("Order", on_delete=models.CASCADE, related_name="lines")
+    category = models.ForeignKey(
+        "iris.Category",
+        on_delete=models.SET_NULL,
+        related_name="woocommerce_lines",
+        null=True,
+        blank=True,
+    )
     wc_order_item_id = models.IntegerField(_("WooCommerce order line ID"))
 
     def __str__(self):
@@ -52,20 +53,30 @@ add_note_type("WooCommerce line", "iris_wc.Line")
 
 class ProductMap(models.Model):
     wc_product_id = models.IntegerField(_("WooCommerce order ID"))
-    category = models.ForeignKey("iris.Category", on_delete=models.RESTRICT)
-
-    def __str__(self):
-        return str(
-            _(f"WooCommerce product {self.wc_product_id} -> Category: {self.category}")
-        )
-
-
-class CategoryMap(WooCommerceCategoryMixin, models.Model):
-    category = models.ForeignKey("iris.Category", on_delete=models.RESTRICT)
+    category = models.ForeignKey(
+        "iris.Category",
+        on_delete=models.CASCADE,
+        related_name="mapped_woocommerce_products",
+    )
 
     def __str__(self):
         return str(
             _(
-                f"WooCommerce category {self.wc_category_id} -> Category: {self.category}"
+                f"Map: WooCommerce product {self.wc_product_id} -> Category {self.category}"
+            )
+        )
+
+
+class CategoryMap(WooCommerceCategoryMixin, models.Model):
+    category = models.ForeignKey(
+        "iris.Category",
+        on_delete=models.CASCADE,
+        related_name="mapped_woocommerce_categories",
+    )
+
+    def __str__(self):
+        return str(
+            _(
+                f"Map: WooCommerce category {self.wc_category_id} -> Category {self.category}"
             )
         )

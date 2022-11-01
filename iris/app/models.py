@@ -69,11 +69,15 @@ class NotesMixin(models.Model):
 
 class Work(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
     category = models.ForeignKey(
-        "Category", on_delete=models.RESTRICT, related_name="categories"
+        "Category",
+        on_delete=models.SET_NULL,
+        related_name="works",
+        null=True,
+        blank=True,
     )
 
     def __str__(self):
-        return f"Work {self.pk}"
+        return str(_(f"Work {self.pk}"))
 
 
 add_note_type("Work", "iris.app.Work")
@@ -86,7 +90,7 @@ class Category(models.Model):
     )
 
     def __str__(self):
-        return f"{self.name}"
+        return str(_(f"'{self.name}' category"))
 
     class Meta:
         verbose_name_plural = "categories"
@@ -99,12 +103,12 @@ class Task(models.Model):
     stations = models.ManyToManyField("Station", related_name="tasks", blank=True)
 
     def __str__(self):
-        return f"{self.name} ({self.pk})"
+        return str(_(f"Task '{self.name}' ({self.pk})"))
 
 
 class Job(TimestampMixin, models.Model):
     task = models.ForeignKey("Task", on_delete=models.RESTRICT, related_name="jobs")
-    work = models.ForeignKey("Work", on_delete=models.CASCADE, related_name="jobs")
+    work = models.ForeignKey("Work", on_delete=models.RESTRICT, related_name="jobs")
 
     def __str__(self):
         return str(_(f"'{self.task.name}' for work {self.work.pk}"))
@@ -114,7 +118,9 @@ class TaskSpawn(models.Model):
     closing_task = models.ForeignKey(
         "Task", on_delete=models.CASCADE, related_name="spawns"
     )
-    spawned_tasks = models.ManyToManyField("Task", related_name="spawned_by_tasks")
+    spawned_tasks = models.ManyToManyField(
+        "Task", related_name="spawned_by_tasks", blank=True
+    )
 
     def __str__(self):
         # (task, task, task)
@@ -129,7 +135,7 @@ class TaskSpawn(models.Model):
 class TaskConsolidation(models.Model):
     closing_tasks = models.ManyToManyField("Task", related_name="consolidations")
     spawned_tasks = models.ManyToManyField(
-        "Task", related_name="spawned_by_consolidation"
+        "Task", related_name="spawned_by_consolidation", blank=True
     )
 
     def __str__(self):
@@ -144,7 +150,9 @@ class TaskConsolidation(models.Model):
 
 
 class Worker(models.Model):
-    user = models.OneToOneField(get_user_model(), on_delete=models.RESTRICT)
+    user = models.OneToOneField(
+        get_user_model(), on_delete=models.SET_NULL, null=True, blank=True
+    )
     picture = models.ImageField(
         upload_to="worker_pictures/",
         height_field="picture_height",
@@ -160,7 +168,7 @@ class Worker(models.Model):
 
 
 class Commit(TimestampMixin, NotesMixin, models.Model):
-    job = models.OneToOneField("Job", on_delete=models.RESTRICT)
+    job = models.OneToOneField("Job", on_delete=models.CASCADE)
     worker = models.OneToOneField("Worker", on_delete=models.RESTRICT)
 
     def __str__(self):
