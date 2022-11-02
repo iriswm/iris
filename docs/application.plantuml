@@ -87,8 +87,7 @@ Commit "1" -- "1" Worker
 
 The items in `Work` and `Commit` are timestamped to keep track of the amount of
 time needed by each item in an Order and offer proper estimations and reports.
-For the estimations, information about average times needed per task will be
-recorded in the `Task` model. The commits also have `notes`.
+The commits also have `notes`.
 
 '/
 
@@ -97,7 +96,6 @@ Work : modified
 Commit : created
 Commit : modified
 Commit : notes
-Task : avg_hours
 
 /'
 

@@ -99,7 +99,6 @@ class Category(models.Model):
 class Task(models.Model):
     name = models.CharField(max_length=64)
     instructions = models.TextField(blank=True)
-    average_hours = models.IntegerField(null=True, blank=True)
     stations = models.ManyToManyField("Station", related_name="tasks", blank=True)
 
     def __str__(self):
