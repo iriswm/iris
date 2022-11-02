@@ -88,7 +88,6 @@ class Category(models.Model):
     spawned_tasks = models.ManyToManyField(
         "Task",
         related_name="spawned_by_categories",
-        blank=True,
         through="CategorySpawnedTasks",
     )
 
@@ -128,7 +127,6 @@ class TaskSpawn(models.Model):
     spawned_tasks = models.ManyToManyField(
         "Task",
         related_name="spawned_by_tasks",
-        blank=True,
         through="TaskSpawnSpawnedTasks",
     )
 
@@ -154,7 +152,6 @@ class TaskConsolidation(models.Model):
     spawned_tasks = models.ManyToManyField(
         "Task",
         related_name="spawned_by_consolidation",
-        blank=True,
         through="TaskConsolidationSpawnedTasks",
     )
 
