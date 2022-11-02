@@ -184,15 +184,6 @@ class Worker(models.Model):
     user = models.OneToOneField(
         get_user_model(), on_delete=models.SET_NULL, null=True, blank=True
     )
-    picture = models.ImageField(
-        upload_to="worker_pictures/",
-        height_field="picture_height",
-        width_field="picture_width",
-        null=True,
-        blank=True,
-    )
-    picture_height = models.IntegerField(editable=False, null=True)
-    picture_width = models.IntegerField(editable=False, null=True)
 
     def __str__(self):
         return str(self.user)

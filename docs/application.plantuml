@@ -67,16 +67,12 @@ The works can be completed by any worker, identified in the model `Worker` and
 connected to an Django `User`. The works are marked as completed creating a new
 item in another model called `Commit`.
 
-Worker can have a picture to ease visual identification in the site views.
-
 '/
 
 object Worker
 object auth.User
 
 Worker "1" -- "1" auth.User
-
-Worker : picture
 
 object Commit
 
