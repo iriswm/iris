@@ -86,7 +86,10 @@ add_note_type("Work", "iris.app.Work")
 class Category(models.Model):
     name = models.CharField(max_length=64)
     spawned_tasks = models.ManyToManyField(
-        "Task", related_name="spawned_by_categories", blank=True
+        "Task",
+        related_name="spawned_by_categories",
+        blank=True,
+        through="CategorySpawnedTasks",
     )
 
     def __str__(self):
@@ -94,6 +97,11 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = "categories"
+
+
+class CategorySpawnedTasks(models.Model):
+    category = models.ForeignKey("Category", on_delete=models.CASCADE)
+    task = models.ForeignKey("Task", on_delete=models.RESTRICT)
 
 
 class Task(models.Model):
@@ -118,34 +126,61 @@ class TaskSpawn(models.Model):
         "Task", on_delete=models.CASCADE, related_name="spawns"
     )
     spawned_tasks = models.ManyToManyField(
-        "Task", related_name="spawned_by_tasks", blank=True
+        "Task",
+        related_name="spawned_by_tasks",
+        blank=True,
+        through="TaskSpawnSpawnedTasks",
     )
 
     def __str__(self):
         # (task, task, task)
         spawns_names = (
-            "(" + ", ".join([f"'{task}'" for task in self.spawned_tasks.all()]) + ")"
+            "(" + ", ".join([f'"{task}"' for task in self.spawned_tasks.all()]) + ")"
         )
         return str(
             _(f'Spawns {spawns_names} when task "{self.closing_task}" is closed')
         )
 
 
+class TaskSpawnSpawnedTasks(models.Model):
+    task_spawn = models.ForeignKey("TaskSpawn", on_delete=models.CASCADE)
+    task = models.ForeignKey("Task", on_delete=models.RESTRICT)
+
+
 class TaskConsolidation(models.Model):
-    closing_tasks = models.ManyToManyField("Task", related_name="consolidations")
+    closing_tasks = models.ManyToManyField(
+        "Task", related_name="consolidations", through="TaskConsolidationClosingTasks"
+    )
     spawned_tasks = models.ManyToManyField(
-        "Task", related_name="spawned_by_consolidation", blank=True
+        "Task",
+        related_name="spawned_by_consolidation",
+        blank=True,
+        through="TaskConsolidationSpawnedTasks",
     )
 
     def __str__(self):
         # (task, task, task)
         spawns_names = (
-            "(" + ", ".join([f"'{task}'" for task in self.spawned_tasks.all()]) + ")"
+            "(" + ", ".join([f'"{task}"' for task in self.spawned_tasks.all()]) + ")"
         )
         closing_names = (
-            "(" + ", ".join([f"'{task}'" for task in self.closing_tasks.all()]) + ")"
+            "(" + ", ".join([f'"{task}"' for task in self.closing_tasks.all()]) + ")"
         )
         return str(_(f"Spawns {spawns_names} when tasks {closing_names} are closed"))
+
+
+class TaskConsolidationClosingTasks(models.Model):
+    task_consolidation = models.ForeignKey(
+        "TaskConsolidation", on_delete=models.CASCADE
+    )
+    task = models.ForeignKey("Task", on_delete=models.RESTRICT)
+
+
+class TaskConsolidationSpawnedTasks(models.Model):
+    task_consolidation = models.ForeignKey(
+        "TaskConsolidation", on_delete=models.CASCADE
+    )
+    task = models.ForeignKey("Task", on_delete=models.RESTRICT)
 
 
 class Worker(models.Model):

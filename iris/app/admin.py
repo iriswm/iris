@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from iris.app.models import (
     Category,
+    CategorySpawnedTasks,
     Commit,
     Delay,
     Job,
@@ -11,7 +12,10 @@ from iris.app.models import (
     Suspension,
     Task,
     TaskConsolidation,
+    TaskConsolidationClosingTasks,
+    TaskConsolidationSpawnedTasks,
     TaskSpawn,
+    TaskSpawnSpawnedTasks,
     Work,
     Worker,
 )
@@ -22,9 +26,13 @@ class WorkAdmin(admin.ModelAdmin):
     pass
 
 
+class CategorySpawnedTasksInline(admin.TabularInline):
+    model = CategorySpawnedTasks
+
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    inlines = [CategorySpawnedTasksInline]
 
 
 @admin.register(Task)
@@ -37,14 +45,26 @@ class JobAdmin(admin.ModelAdmin):
     pass
 
 
+class TaskSpawnSpawnedTasksInline(admin.TabularInline):
+    model = TaskSpawnSpawnedTasks
+
+
 @admin.register(TaskSpawn)
 class TaskSpawnAdmin(admin.ModelAdmin):
-    pass
+    inlines = [TaskSpawnSpawnedTasksInline]
+
+
+class TaskConsolidationClosingTasksInline(admin.TabularInline):
+    model = TaskConsolidationClosingTasks
+
+
+class TaskConsolidationSpawnedTasksInline(admin.TabularInline):
+    model = TaskConsolidationSpawnedTasks
 
 
 @admin.register(TaskConsolidation)
 class TaskConsolidationAdmin(admin.ModelAdmin):
-    pass
+    inlines = [TaskConsolidationClosingTasksInline, TaskConsolidationSpawnedTasksInline]
 
 
 @admin.register(Worker)
