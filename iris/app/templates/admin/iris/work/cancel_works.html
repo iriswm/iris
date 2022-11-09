@@ -1,0 +1,24 @@
+{% extends 'admin/admin_base_iris.html' %}
+
+{% load i18n %}
+
+{% block iris_breadcrumbs_tail %}
+&rsaquo; {% translate 'Cancel works' %}
+{% endblock %}
+
+{% block content %}
+
+<span>{% translate 'Cancelling works' %}</span>
+<ul>
+{% for work in works %}
+<li>{{ work }}</li>
+{% endfor %}
+</ul>
+
+<form action="?ids={{ ids }}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}
