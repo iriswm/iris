@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path
+from django.utils.translation import gettext_lazy as _
 
 from iris.app.admin.actions import cancel_works, restore_works
 from iris.app.admin.views import CancelWorksView
@@ -27,6 +28,15 @@ from iris.app.models import (
 @admin.register(Work)
 class WorkAdmin(admin.ModelAdmin):
     actions = [cancel_works, restore_works]
+    list_display = ["name", "cancelled"]
+
+    @admin.display(description=_("Name"))
+    def name(self, obj):
+        return str(obj)
+
+    @admin.display(description=_("Cancelled"), boolean=True)
+    def cancelled(self, obj):
+        return obj.cancelled
 
     def get_urls(self):
         return [
