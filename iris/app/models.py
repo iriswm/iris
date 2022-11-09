@@ -38,14 +38,21 @@ class CancelableMixin(models.Model):
     cancel_time = models.DateTimeField(editable=False, null=True)
     cancel_reason = models.CharField(max_length=256, editable=False)
 
-    def cancel(reason):
-        self.cancel_time = now()
+    def cancel(self, reason, datetime_=None):
+        if datetime_ is None:
+            datetime_ = now()
+        self.cancel_time = datetime_
         self.cancel_reason = reason
         self.save()
 
+    def restore(self):
+        self.cancel_time = None
+        self.cancel_reason = ""
+        self.save()
+
     @property
-    def cancelled():
-        return cancel_reason != "" or cancel_time is not None
+    def cancelled(self):
+        return self.cancel_reason != "" or self.cancel_time is not None
 
     def clean(self):
         super().clean()
