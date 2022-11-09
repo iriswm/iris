@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 
-class AlreadyRestoredError(Exception):
+class NotCancelledError(Exception):
     pass
 
 
@@ -26,13 +26,11 @@ def restore_works(self, request, queryset):
         with transaction.atomic():
             for work in queryset.all():
                 if not work.cancelled:
-                    messages.error(
-                        request, _(f"The work '{work}' is already restored.")
-                    )
-                    raise AlreadyRestoredError()
+                    messages.error(request, _(f"The work '{work}' is not cancelled."))
+                    raise NotCancelledError()
                 else:
                     work.restore()
-    except AlreadyRestoredError:
+    except NotCancelledError:
         return HttpResponseRedirect(reverse("admin:iris_work_changelist"))
     messages.info(request, _("The works were restored."))
     return HttpResponseRedirect(reverse("admin:iris_work_changelist"))
