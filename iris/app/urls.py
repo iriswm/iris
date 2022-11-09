@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import IndexView
+from iris.app.views import IndexView
 
 app_name = "iris"
 

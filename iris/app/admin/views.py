@@ -6,8 +6,8 @@ from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import FormView
 
-from ..models import Work
-from .forms import CancelWorksViewForm
+from iris.app.admin.forms import CancelWorksViewForm
+from iris.app.models import Work
 
 
 class AlreadyCancelledError(Exception):

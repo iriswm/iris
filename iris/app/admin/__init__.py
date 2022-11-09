@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.urls import path
 
-from ..models import (
+from iris.app.admin.actions import cancel_works, restore_works
+from iris.app.admin.views import CancelWorksView
+from iris.app.models import (
     Category,
     CategorySpawnedTasks,
     Commit,
@@ -20,8 +22,6 @@ from ..models import (
     Work,
     Worker,
 )
-from .actions import cancel_works, restore_works
-from .views import CancelWorksView
 
 
 @admin.register(Work)
