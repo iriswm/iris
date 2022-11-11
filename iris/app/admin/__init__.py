@@ -40,11 +40,7 @@ class CancelableAdminMixin:
 @admin.register(Work)
 class WorkAdmin(CompletableAdminMixin, CancelableAdminMixin, admin.ModelAdmin):
     actions = [cancel_works, restore_works]
-    list_display = ["name", "completed", "canceled"]
-
-    @admin.display(description=_("Name"))
-    def name(self, obj):
-        return str(obj)
+    list_display = ["__str__", "completed", "canceled"]
 
     def get_urls(self):
         return [
@@ -73,11 +69,7 @@ class TaskAdmin(admin.ModelAdmin):
 
 @admin.register(Job)
 class JobAdmin(CompletableAdminMixin, admin.ModelAdmin):
-    list_display = ["name", "completed"]
-
-    @admin.display(description=_("Name"))
-    def name(self, obj):
-        return str(obj)
+    list_display = ["__str__", "completed"]
 
 
 class TaskSpawnSpawnedTasksInline(admin.TabularInline):
