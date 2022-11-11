@@ -86,6 +86,11 @@ class Work(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
     def __str__(self):
         return str(_(f"Work {self.pk}"))
 
+    @property
+    def completed(self):
+        all_jobs = Job.objects.filter(work=self)
+        return all([job.completed for job in all_jobs])
+
 
 add_note_type("Work", "iris.app.Work")
 
@@ -125,6 +130,10 @@ class Job(TimestampMixin, models.Model):
 
     def __str__(self):
         return str(_(f"'{self.task.name}' for work {self.work.pk}"))
+
+    @property
+    def completed(self):
+        return Commit.objects.filter(job=self).exists()
 
 
 class TaskSpawn(models.Model):

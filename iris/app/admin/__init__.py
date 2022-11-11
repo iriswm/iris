@@ -24,16 +24,23 @@ from iris.app.models import (
     Worker,
 )
 
-class CancelableMixin:
+
+class CompletableAdminMixin:
+    @admin.display(description=_("Completed"), boolean=True)
+    def completed(self, obj):
+        return obj.completed
+
+
+class CancelableAdminMixin:
     @admin.display(description=_("Canceled"), boolean=True)
     def canceled(self, obj):
         return obj.canceled
 
 
 @admin.register(Work)
-class WorkAdmin(CancelableMixin, admin.ModelAdmin):
+class WorkAdmin(CompletableAdminMixin, CancelableAdminMixin, admin.ModelAdmin):
     actions = [cancel_works, restore_works]
-    list_display = ["name", "canceled"]
+    list_display = ["name", "completed", "canceled"]
 
     @admin.display(description=_("Name"))
     def name(self, obj):
@@ -65,8 +72,12 @@ class TaskAdmin(admin.ModelAdmin):
 
 
 @admin.register(Job)
-class JobAdmin(admin.ModelAdmin):
-    pass
+class JobAdmin(CompletableAdminMixin, admin.ModelAdmin):
+    list_display = ["name", "completed"]
+
+    @admin.display(description=_("Name"))
+    def name(self, obj):
+        return str(obj)
 
 
 class TaskSpawnSpawnedTasksInline(admin.TabularInline):
