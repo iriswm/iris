@@ -34,3 +34,26 @@ def restore_works(self, request, queryset):
         return HttpResponseRedirect(reverse("admin:iris_work_changelist"))
     messages.info(request, _("The works were restored."))
     return HttpResponseRedirect(reverse("admin:iris_work_changelist"))
+
+
+@admin.action(description=str(_("Spawn category jobs")))
+def spawn_jobs(self, request, queryset):
+    all_works = queryset.all()
+    for work in all_works:
+        if work.category is None:
+            messages.error(
+                request, _(f"Work '{work}' doesn't have a category assigned.")
+            )
+            return HttpResponseRedirect(reverse("admin:iris_work_changelist"))
+    for work in all_works:
+        work.spawn_jobs()
+    messages.info(request, _("Jobs spawned."))
+    return HttpResponseRedirect(reverse("admin:iris_work_changelist"))
+
+
+@admin.action(description=str(_("Spawn and consolidate jobs")))
+def spawn_and_consolidate_jobs(self, request, queryset):
+    for commit in queryset.all():
+        commit.spawn_and_consolidate_jobs()
+    messages.info(request, _("Jobs spawned."))
+    return HttpResponseRedirect(reverse("admin:iris_commit_changelist"))

@@ -2,7 +2,12 @@ from django.contrib import admin
 from django.urls import path
 from django.utils.translation import gettext_lazy as _
 
-from iris.app.admin.actions import cancel_works, restore_works
+from iris.app.admin.actions import (
+    cancel_works,
+    restore_works,
+    spawn_and_consolidate_jobs,
+    spawn_jobs,
+)
 from iris.app.admin.views import CancelWorksView
 from iris.app.models import (
     Category,
@@ -39,7 +44,7 @@ class CancelableAdminMixin:
 
 @admin.register(Work)
 class WorkAdmin(CompletableAdminMixin, CancelableAdminMixin, admin.ModelAdmin):
-    actions = [cancel_works, restore_works]
+    actions = [cancel_works, restore_works, spawn_jobs]
     list_display = ["__str__", "completed", "canceled"]
 
     def get_urls(self):
@@ -101,7 +106,7 @@ class WorkerAdmin(admin.ModelAdmin):
 
 @admin.register(Commit)
 class CommitAdmin(admin.ModelAdmin):
-    pass
+    actions = [spawn_and_consolidate_jobs]
 
 
 @admin.register(Station)

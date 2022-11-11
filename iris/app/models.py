@@ -91,6 +91,13 @@ class Work(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
         all_jobs = Job.objects.filter(work=self)
         return all([job.completed for job in all_jobs])
 
+    def spawn_jobs(self):
+        if self.category is None:
+            return
+        for task in self.category.spawned_tasks.all():
+            new_job = Job(work=self, task=task)
+            new_job.save()
+
 
 add_note_type("Work", "iris.app.Work")
 
@@ -213,6 +220,19 @@ class Commit(TimestampMixin, NotesMixin, models.Model):
         return str(
             _(f'Commit for work "{self.job}" by worker {self.worker} ({self.modified})')
         )
+
+    def spawn_and_consolidate_jobs(self):
+        for spawn in self.job.task.spawns.all():
+            for task in spawn.spawned_tasks.all():
+                new_job = Job(work=self.job.work, task=task)
+                new_job.save()
+        for consolidation in self.job.task.consolidations.all():
+            for closing_task in consolidation.closing_tasks.all():
+                closing_jobs = Job.objects.filter(work=self.job.work, task=closing_task)
+                if all([job.completed for job in closing_jobs]):
+                    for task in consolidation.spawned_tasks.all():
+                        new_job = Job(work=self.job.work, task=task)
+                        new_job.save()
 
 
 add_note_type("Commit", "iris.app.Commit")
