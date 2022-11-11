@@ -23,12 +23,12 @@ Line : wc_category_id
 
 /'
 
-Both models support Iris timestamps, notes and cancellations.
+Both models support Iris timestamps, notes and cancelations.
 
 The WooCommerce plugin will keep the notes updated.
 
-Cancellation of orders in the WooCommerce site will be notified by the plugin.
-Deletion of orders or lines will be notified to Iris as cancellations with a
+Cancelation of orders in the WooCommerce site will be notified by the plugin.
+Deletion of orders or lines will be notified to Iris as cancelations with a
 custom text like "Deleted in WooCommerce.".
 
 '/

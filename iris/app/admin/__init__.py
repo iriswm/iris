@@ -24,19 +24,20 @@ from iris.app.models import (
     Worker,
 )
 
+class CancelableMixin:
+    @admin.display(description=_("Canceled"), boolean=True)
+    def canceled(self, obj):
+        return obj.canceled
+
 
 @admin.register(Work)
-class WorkAdmin(admin.ModelAdmin):
+class WorkAdmin(CancelableMixin, admin.ModelAdmin):
     actions = [cancel_works, restore_works]
-    list_display = ["name", "cancelled"]
+    list_display = ["name", "canceled"]
 
     @admin.display(description=_("Name"))
     def name(self, obj):
         return str(obj)
-
-    @admin.display(description=_("Cancelled"), boolean=True)
-    def cancelled(self, obj):
-        return obj.cancelled
 
     def get_urls(self):
         return [

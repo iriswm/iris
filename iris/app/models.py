@@ -51,7 +51,7 @@ class CancelableMixin(models.Model):
         self.save()
 
     @property
-    def cancelled(self):
+    def canceled(self):
         return self.cancel_reason != "" or self.cancel_time is not None
 
     def clean(self):
@@ -60,7 +60,7 @@ class CancelableMixin(models.Model):
             self.cancel_reason == "" and self.cancel_time is not None
         ):
             raise ValidationError(
-                _("Cancellation reason and time must be specified at the same time.")
+                _("Cancelation reason and time must be specified at the same time.")
             )
 
     class Meta:

@@ -10,7 +10,7 @@ from iris.app.admin.forms import CancelWorksViewForm
 from iris.app.models import Work
 
 
-class AlreadyCancelledError(Exception):
+class AlreadyCanceledError(Exception):
     pass
 
 
@@ -37,9 +37,9 @@ class CancelWorksView(AdminContextMixin, PermissionRequiredMixin, FormView):
         ids = self.request.GET["ids"]
         works = Work.objects.filter(pk__in=ids.split(","))
         for work in works:
-            if work.cancelled:
+            if work.canceled:
                 messages.error(
-                    self.request, _(f"The work '{work}' is already cancelled.")
+                    self.request, _(f"The work '{work}' is already canceled.")
                 )
                 return HttpResponseRedirect(reverse("admin:iris_work_changelist"))
         return super().get(request, *args, **kwargs)
@@ -62,14 +62,14 @@ class CancelWorksView(AdminContextMixin, PermissionRequiredMixin, FormView):
         try:
             with transaction.atomic():
                 for work in works:
-                    if work.cancelled:
+                    if work.canceled:
                         messages.error(
-                            self.request, _(f"The work '{work}' is already cancelled.")
+                            self.request, _(f"The work '{work}' is already canceled.")
                         )
-                        raise AlreadyCancelledError()
+                        raise AlreadyCanceledError()
                     else:
                         work.cancel(reason, datetime_)
-        except AlreadyCancelledError:
+        except AlreadyCanceledError:
             return HttpResponseRedirect(reverse("admin:cancel_works") + f"?ids={ids}")
-        messages.info(self.request, _("The works were cancelled."))
+        messages.info(self.request, _("The works were canceled."))
         return super().form_valid(form)

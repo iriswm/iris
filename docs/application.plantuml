@@ -6,7 +6,7 @@ Each time the workshop receives a new order, each single item to be created is
 stored as a `Work` in the Iris site.
 
 Works track creation and modification times, can have notes and can be
-cancelled.
+canceled.
 
 '/
 
