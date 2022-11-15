@@ -18,6 +18,11 @@
 				<li class="nav-item">
 					<a class="nav-link active" aria-current="page" href="{{ index_url }}">{% translate "Index" %}</a>
 				</li>
+				{% for station in stations %}
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="{% url 'iris:station' station.pk %}">{{ station.name }}</a>
+				</li>
+				{% endfor %}
 				<li class="nav-item">
 					<a class="nav-link active" aria-current="page" href="{% url 'admin:index' %}">{% translate "Admin" %}</a>
 				</li>

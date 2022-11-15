@@ -1,0 +1,14 @@
+{% extends 'iris/base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="container m-4">
+	<h1>{{ object.name }}</h1>
+	<ul>
+		{% for job in jobs %}
+		<li>{{ job }}</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}
