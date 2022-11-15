@@ -18,14 +18,27 @@
 				<li class="nav-item">
 					<a class="nav-link active" aria-current="page" href="{{ index_url }}">{% translate "Index" %}</a>
 				</li>
+				{% if user.is_authenticated %}
 				{% for station in stations %}
 				<li class="nav-item">
 					<a class="nav-link active" aria-current="page" href="{% url 'iris:station' station.pk %}">{{ station.name }}</a>
 				</li>
 				{% endfor %}
+				{% if user.is_staff %}
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="{% url 'iris:index' %}">Works</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="{% url 'iris:index' %}">Alerts</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="{% url 'iris:index' %}">Reports</a>
+				</li>
 				<li class="nav-item">
 					<a class="nav-link active" aria-current="page" href="{% url 'admin:index' %}">{% translate "Admin" %}</a>
 				</li>
+				{% endif %}
+				{% endif %}
 			</ul>
 			{% if user.is_authenticated %}
 			<a class="btn" role="button" href="{% url 'iris:logout' %}">{% translate "Log out" %}</a>
