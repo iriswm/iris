@@ -58,6 +58,7 @@ TEMPLATES = [
 ]
 ROOT_URLCONF = "iris.urls"
 WSGI_APPLICATION = "iris.wsgi.application"
+LOGIN_URL = "iris:login"
 
 # I18N/L10N
 LANGUAGE_CODE = "en"
