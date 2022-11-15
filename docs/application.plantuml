@@ -77,7 +77,7 @@ Worker "1" -- "1" auth.User
 object Commit
 
 Commit "1" -[#green]- "1" Job
-Commit "1" -- "1" Worker
+Commit "n" -- "1" Worker
 
 /'
 
@@ -136,8 +136,8 @@ Abnormal workflows in works will be handled using extra models:
 
 object Delay
 
-Delay "1" -[#orange]- "1" Job
-Delay "1" -- "1" Worker
+Delay "n" -[#orange]- "1" Job
+Delay "n" -- "1" Worker
 
 Delay : created
 Delay : modified
@@ -153,8 +153,8 @@ Delay : time
 
 object Suspension
 
-Suspension "1" -[#red]- "1" Job
-Suspension "1" -- "1" Worker
+Suspension "n" -[#red]- "1" Job
+Suspension "n" -- "1" Worker
 
 Suspension : created
 Suspension : modified
@@ -170,8 +170,8 @@ Suspension : notes
 
 object Priority
 
-Priority "1" -[#blue]- "1" Job
-Priority "1" -- "1" Worker
+Priority "n" -[#blue]- "1" Job
+Priority "n" -- "1" Worker
 
 Priority : created
 Priority : modified

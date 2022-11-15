@@ -214,7 +214,9 @@ class Worker(models.Model):
 
 class Commit(TimestampMixin, NotesMixin, models.Model):
     job = models.OneToOneField("Job", on_delete=models.CASCADE)
-    worker = models.OneToOneField("Worker", on_delete=models.RESTRICT)
+    worker = models.ForeignKey(
+        "Worker", on_delete=models.RESTRICT, related_name="commits"
+    )
 
     def __str__(self):
         return str(
@@ -261,7 +263,9 @@ class NoteTemplate(models.Model):
 
 class Delay(TimestampMixin, NotesMixin, models.Model):
     job = models.ForeignKey("Job", on_delete=models.CASCADE, related_name="delays")
-    worker = models.OneToOneField("Worker", on_delete=models.RESTRICT)
+    worker = models.ForeignKey(
+        "Worker", on_delete=models.RESTRICT, related_name="delays"
+    )
     time = models.DurationField()
 
     def __str__(self):
@@ -273,7 +277,9 @@ add_note_type("Delay", "iris.app.Delay")
 
 class Suspension(TimestampMixin, NotesMixin, models.Model):
     job = models.ForeignKey("Job", on_delete=models.CASCADE, related_name="suspensions")
-    worker = models.OneToOneField("Worker", on_delete=models.RESTRICT)
+    worker = models.ForeignKey(
+        "Worker", on_delete=models.RESTRICT, related_name="suspensions"
+    )
 
     def __str__(self):
         return str(_(f'Suspension for "{self.job}"'))
@@ -284,7 +290,9 @@ add_note_type("Suspension", "iris.app.Suspension")
 
 class Priority(TimestampMixin, NotesMixin, models.Model):
     job = models.ForeignKey("Job", on_delete=models.CASCADE, related_name="priorities")
-    worker = models.OneToOneField("Worker", on_delete=models.RESTRICT)
+    worker = models.ForeignKey(
+        "Worker", on_delete=models.RESTRICT, related_name="priorities"
+    )
     from_date = models.DateTimeField(default=now)
     score = models.IntegerField()
 
