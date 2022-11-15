@@ -82,9 +82,13 @@ class Work(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
         null=True,
         blank=True,
     )
+    description = models.CharField(max_length=128, blank=True)
 
     def __str__(self):
-        return str(_(f"Work {self.pk}"))
+        str_ = str(_(f"Work {self.pk}"))
+        if self.description != "":
+            str_ = f"{str_}: {self.description}"
+        return str_
 
     @property
     def completed(self):
