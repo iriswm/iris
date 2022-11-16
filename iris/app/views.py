@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
 
-from iris.app.models import Job, Station
+from iris.app.models import Delay, Job, Priority, Station, Suspension
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
@@ -20,7 +20,7 @@ class IrisLogoutView(LogoutView):
     next_page = reverse_lazy("iris:index")
 
 
-class StationView(DetailView):
+class StationView(LoginRequiredMixin, DetailView):
     model = Station
     template_name = "iris/station.html"
 
@@ -32,4 +32,17 @@ class StationView(DetailView):
             for job in Job.objects.filter(task__stations=station).all()
             if not job.completed
         ]
+        return context
+
+
+class AlertsView(LoginRequiredMixin, TemplateView):
+    template_name = "iris/alerts.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context |= {
+            "delays": Delay.objects.all(),
+            "suspensions": Suspension.objects.all(),
+            "priorities": Priority.objects.all(),
+        }
         return context

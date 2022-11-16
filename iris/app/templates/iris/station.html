@@ -4,10 +4,16 @@
 
 {% block content %}
 <div class="container m-4">
-	<h1>{{ object.name }}</h1>
+	<h1>{% blocktranslate with station_name=object.name %}Works for station {{ station_name }}{% endblocktranslate %}</h1>
 	<ul>
 		{% for job in jobs %}
-		<li>{{ job }}</li>
+		<li><div>
+			Task {{ job.task.name }} for {{ job.work }}.
+			<a href="{% url 'admin:iris_commit_add' %}?job={{ job.pk }}">Commit</a>
+			<a href="{% url 'admin:iris_delay_add' %}?job={{ job.pk }}">Delay</a>
+			<a href="{% url 'admin:iris_suspension_add' %}?job={{ job.pk }}">Suspend</a>
+			<a href="{% url 'admin:iris_priority_add' %}?job={{ job.pk }}">Prioritize</a>
+		</div></li>
 		{% endfor %}
 	</ul>
 </div>

@@ -1,0 +1,20 @@
+{% extends 'iris/base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="container m-4">
+	<h1>{% translate 'Current alerts' %}</h1>
+	<ul>
+		{% for delay in delays %}
+		<li>{{ delay }}</li>
+		{% endfor %}
+		{% for suspension in suspensions %}
+		<li>{{ suspension }}</li>
+		{% endfor %}
+		{% for priority in priorities %}
+		<li>{{ priority }}</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}
