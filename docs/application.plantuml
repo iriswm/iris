@@ -120,7 +120,7 @@ adding common notes using a few touches may be helpful.
 '/
 
 object NoteTemplate
-NoteTemplate : kind = Commit|Delay|Suspension|Priority
+NoteTemplate : kind = Commit|Delay|Suspension
 NoteTemplate : text
 
 /'
@@ -161,25 +161,6 @@ Suspension "n" -- "1" Worker
 Suspension : created
 Suspension : modified
 Suspension : notes
-
-/'
-
-- The `Priority` model, to give extra priority to certain work from a specific
-  date. This will override the default FIFO order for works with a different
-  score. The higher the score the higher the priority.
-
-'/
-
-object Priority
-
-Priority "n" -[#blue]- "1" Job
-Priority "n" -- "1" Worker
-
-Priority : created
-Priority : modified
-Priority : notes
-Priority : from
-Priority : score
 
 /'
 

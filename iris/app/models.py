@@ -293,21 +293,3 @@ class Suspension(TimestampMixin, NotesMixin, models.Model):
 
 
 add_note_type("Suspension", "iris.app.Suspension")
-
-
-class Priority(TimestampMixin, NotesMixin, models.Model):
-    job = models.ForeignKey("Job", on_delete=models.CASCADE, related_name="priorities")
-    worker = models.ForeignKey(
-        "Worker", on_delete=models.RESTRICT, related_name="priorities"
-    )
-    from_date = models.DateTimeField(default=now)
-    score = models.IntegerField()
-
-    def __str__(self):
-        return str(_(f'Override "{self.job}" priority ({self.score})'))
-
-    class Meta:
-        verbose_name_plural = "priorities"
-
-
-add_note_type("Priority", "iris.app.Priority")

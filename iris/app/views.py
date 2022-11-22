@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
 
-from iris.app.models import Delay, Job, Priority, Station, Suspension
+from iris.app.models import Delay, Job, Station, Suspension
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
@@ -43,6 +43,5 @@ class AlertsView(LoginRequiredMixin, TemplateView):
         context |= {
             "delays": Delay.objects.all(),
             "suspensions": Suspension.objects.all(),
-            "priorities": Priority.objects.all(),
         }
         return context

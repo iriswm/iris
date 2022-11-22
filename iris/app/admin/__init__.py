@@ -16,7 +16,6 @@ from iris.app.models import (
     Delay,
     Job,
     NoteTemplate,
-    Priority,
     Station,
     Suspension,
     Task,
@@ -126,9 +125,4 @@ class DelayAdmin(admin.ModelAdmin):
 
 @admin.register(Suspension)
 class SuspensionAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Priority)
-class PriorityAdmin(admin.ModelAdmin):
     pass

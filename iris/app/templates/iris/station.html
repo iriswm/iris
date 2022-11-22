@@ -12,7 +12,6 @@
 			<a href="{% url 'admin:iris_commit_add' %}?job={{ job.pk }}">Commit</a>
 			<a href="{% url 'admin:iris_delay_add' %}?job={{ job.pk }}">Delay</a>
 			<a href="{% url 'admin:iris_suspension_add' %}?job={{ job.pk }}">Suspend</a>
-			<a href="{% url 'admin:iris_priority_add' %}?job={{ job.pk }}">Prioritize</a>
 		</div></li>
 		{% endfor %}
 	</ul>
