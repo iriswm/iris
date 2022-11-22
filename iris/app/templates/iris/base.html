@@ -8,36 +8,46 @@
 {% block bootstrap5_content %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<div class="container-fluid">
+		<a class="navbar-brand" href="{% url 'iris:index' %}">Iris</a>
+		{% if user.is_authenticated %}
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="/">{% translate "Index" %}</a>
-				</li>
-				{% if user.is_authenticated %}
-				{% for station in stations %}
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="{% url 'iris:station' station.pk %}">{{ station.name }}</a>
-				</li>
-				{% endfor %}
-				{% if user.is_staff %}
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="{% url 'iris:index' %}">Works</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="{% url 'iris:alerts' %}">Alerts</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="{% url 'iris:index' %}">Reports</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="{% url 'admin:index' %}">{% translate "Admin" %}</a>
+				{% if stations %}
+				<li class="nav-item dropdown">
+					<a href="#" class="nav-link dropdown-toggle active" id="navbarStationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% translate "Stations" %}</a>
+					<ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarStationsDropdown">
+						{% for station in stations %}
+						<li>
+							<a class="dropdown-item" href="{% url 'iris:station' station.pk %}">{{ station.name }}</a>
+						</li>
+						{% endfor %}
+					</ul>
 				</li>
 				{% endif %}
+				{% if user.is_staff %}
+				<li class="nav-item dropdown">
+					<a href="#" class="nav-link dropdown-toggle active" id="navbarManagerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% translate "Manage" %}</a>
+					<ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarManagerDropdown">
+						<li>
+							<a class="dropdown-item" href="{% url 'iris:index' %}">Works</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="{% url 'iris:alerts' %}">Alerts</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="{% url 'iris:index' %}">Reports</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="{% url 'admin:index' %}">{% translate "Admin" %}</a>
+						</li>
+					</ul>
+				</li>
 				{% endif %}
 			</ul>
+			{% endif %}
 			{% if user.is_authenticated %}
 			<a class="btn" role="button" href="{% url 'iris:logout' %}">{% blocktranslate %}Logged as {{ user }}{% endblocktranslate %} - {% translate "Log out" %}</a>
 			{% else %}
