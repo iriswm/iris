@@ -27,22 +27,25 @@
 					</ul>
 				</li>
 				{% endif %}
-				{% if user.is_staff %}
+				{% if user.is_staff or perms.iris.view_work or perms.iris.view_delay or perms.iris.view_suspension %}
 				<li class="nav-item dropdown">
 					<a href="#" class="nav-link dropdown-toggle active" id="navbarManagerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% translate "Manage" %}</a>
 					<ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarManagerDropdown">
+						{% if perms.iris.view_work %}
 						<li>
 							<a class="dropdown-item" href="{% url 'iris:index' %}">Works</a>
 						</li>
+						{% endif %}
+						{% if perms.iris.view_delay or perms.iris.view_suspension %}
 						<li>
 							<a class="dropdown-item" href="{% url 'iris:alerts' %}">Alerts</a>
 						</li>
-						<li>
-							<a class="dropdown-item" href="{% url 'iris:index' %}">Reports</a>
-						</li>
+						{% endif %}
+						{% if user.is_staff %}
 						<li>
 							<a class="dropdown-item" href="{% url 'admin:index' %}">{% translate "Admin" %}</a>
 						</li>
+						{% endif %}
 					</ul>
 				</li>
 				{% endif %}

@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
@@ -35,8 +35,18 @@ class StationView(LoginRequiredMixin, DetailView):
         return context
 
 
-class AlertsView(LoginRequiredMixin, TemplateView):
+class SomePermissionRequiredMixin(PermissionRequiredMixin):
+    def has_permission(self):
+        perms = self.get_permission_required()
+        return any([self.request.user.has_perm(perm) for perm in perms])
+
+
+class AlertsView(SomePermissionRequiredMixin, TemplateView):
     template_name = "iris/alerts.html"
+    permission_required = (
+        "iris.view_delay",
+        "iris.view_suspension",
+    )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

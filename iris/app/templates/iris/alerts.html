@@ -6,12 +6,16 @@
 <div class="container m-4">
 	<h1>{% translate 'Current alerts' %}</h1>
 	<ul>
+		{% if perms.iris.view_delay %}
 		{% for delay in delays %}
 		<li>{{ delay }}</li>
 		{% endfor %}
+		{% endif %}
+		{% if perms.iris.view_suspension %}
 		{% for suspension in suspensions %}
 		<li>{{ suspension }}</li>
 		{% endfor %}
+		{% endif %}
 	</ul>
 </div>
 {% endblock %}
