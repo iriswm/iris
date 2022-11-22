@@ -9,6 +9,8 @@ should be created, a desired quantity can be specified.
 Works track creation and modification times, can have notes and can be
 canceled.
 
+Works can also have priority over other works.
+
 '/
 
 object Work
@@ -19,6 +21,7 @@ Work : modified
 Work : notes
 Work : cancel_time
 Work : cancel_reason
+Work : has_priority
 
 /'
 

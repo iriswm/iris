@@ -84,6 +84,7 @@ class Work(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
     )
     description = models.CharField(max_length=128, blank=True)
     quantity = models.IntegerField(default=1, validators=[MinValueValidator(1)])
+    has_priority = models.BooleanField(default=False)
 
     def __str__(self):
         str_ = str(_(f"Work {self.pk}"))
