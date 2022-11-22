@@ -39,7 +39,7 @@
 				{% endif %}
 			</ul>
 			{% if user.is_authenticated %}
-			<a class="btn" role="button" href="{% url 'iris:logout' %}">{% translate "Log out" %}</a>
+			<a class="btn" role="button" href="{% url 'iris:logout' %}">{% blocktranslate %}Logged as {{ user }}{% endblocktranslate %} - {% translate "Log out" %}</a>
 			{% else %}
 			<a class="btn" role="button" href="{% url 'iris:login' %}">{% translate "Log in" %}</a>
 			{% endif %}
