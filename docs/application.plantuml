@@ -2,8 +2,9 @@
 
 /'
 
-Each time the workshop receives a new order, each single item to be created is
-stored as a `Work` in the Iris site.
+Each time the workshop receives a new order, each item type to be created is
+stored as a `Work` in the Iris site. When more than one item of the same time
+should be created, a desired quantity can be specified.
 
 Works track creation and modification times, can have notes and can be
 canceled.
@@ -12,6 +13,7 @@ canceled.
 
 object Work
 
+Work : quantity
 Work : created
 Work : modified
 Work : notes

@@ -8,7 +8,7 @@
 	<ul>
 		{% for job in jobs %}
 		<li><div>
-			Task {{ job.task.name }} for {{ job.work }}.
+			Task {{ job.task.name }} for {{ job.work }}{% if job.work.quantity != 1 %} x{{job.work.quantity}}{% endif %}.
 			<a href="{% url 'admin:iris_commit_add' %}?job={{ job.pk }}">Commit</a>
 			<a href="{% url 'admin:iris_delay_add' %}?job={{ job.pk }}">Delay</a>
 			<a href="{% url 'admin:iris_suspension_add' %}?job={{ job.pk }}">Suspend</a>

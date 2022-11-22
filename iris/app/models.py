@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import ValidationError
+from django.core.validators import MinValueValidator, ValidationError
 from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
@@ -83,6 +83,7 @@ class Work(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
         blank=True,
     )
     description = models.CharField(max_length=128, blank=True)
+    quantity = models.IntegerField(default=1, validators=[MinValueValidator(1)])
 
     def __str__(self):
         str_ = str(_(f"Work {self.pk}"))
@@ -140,7 +141,8 @@ class Job(TimestampMixin, models.Model):
     work = models.ForeignKey("Work", on_delete=models.RESTRICT, related_name="jobs")
 
     def __str__(self):
-        return str(_(f"'{self.task.name}' for work {self.work.pk}"))
+        quantity_suffix = "" if self.work.quantity == 1 else f" x{self.work.quantity}"
+        return str(_(f"'{self.task.name}' for work {self.work.pk}{quantity_suffix}"))
 
     @property
     def completed(self):
