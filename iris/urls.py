@@ -1,10 +1,9 @@
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path, re_path
-from django.utils.translation import gettext_lazy as _
 from django.views.static import serve
 
-admin.site.site_header = _("Iris administration")
+admin.site.site_header = "Iris admin"
 
 urlpatterns = [
     path("admin/", admin.site.urls),

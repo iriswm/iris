@@ -3,7 +3,7 @@
 {% load bootstrap5 %}
 {% load i18n %}
 
-{% block bootstrap5_title %}Iris workshop management system{% endblock %}
+{% block bootstrap5_title %}{% blocktranslate %}Iris workshop management system{% endblocktranslate %}{% endblock %}
 
 {% block bootstrap5_content %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -33,12 +33,12 @@
 					<ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarManagerDropdown">
 						{% if perms.iris.view_work %}
 						<li>
-							<a class="dropdown-item" href="{% url 'iris:index' %}">Works</a>
+							<a class="dropdown-item" href="{% url 'iris:index' %}">{% translate "Works" %}</a>
 						</li>
 						{% endif %}
 						{% if perms.iris.view_delay or perms.iris.view_suspension %}
 						<li>
-							<a class="dropdown-item" href="{% url 'iris:alerts' %}">Alerts</a>
+							<a class="dropdown-item" href="{% url 'iris:alerts' %}">{% translate "Alerts" %}</a>
 						</li>
 						{% endif %}
 						{% if user.is_staff %}
