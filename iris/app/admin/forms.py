@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.timezone import now
+from django.utils.translation import gettext_lazy as _
 
 
 class BrowserDateInput(forms.DateTimeInput):
@@ -7,5 +8,7 @@ class BrowserDateInput(forms.DateTimeInput):
 
 
 class CancelWorksViewForm(forms.Form):
-    reason = forms.CharField()
-    datetime = forms.DateTimeField(widget=BrowserDateInput(), initial=now)
+    reason = forms.CharField(label=_("Reason"))
+    datetime = forms.DateTimeField(
+        label=_("Date/Time"), widget=BrowserDateInput(), initial=now
+    )

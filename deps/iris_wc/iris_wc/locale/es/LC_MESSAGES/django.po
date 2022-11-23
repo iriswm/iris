@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-23 13:39+0100\n"
-"PO-Revision-Date: 2022-11-23 13:53+0100\n"
+"POT-Creation-Date: 2022-11-23 14:35+0100\n"
+"PO-Revision-Date: 2022-11-23 14:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -24,6 +24,12 @@ msgstr "ID de pedido de WooCommerce"
 msgid "WooCommerce order notes"
 msgstr "Notas de pedido de WooCommerce"
 
+msgid "order"
+msgstr "pedido"
+
+msgid "orders"
+msgstr "pedidos"
+
 #, python-brace-format
 msgid "WooCommerce order {self.wc_order_id}"
 msgstr "Pedido de WooCommerce {self.wc_order_id}"
@@ -31,8 +37,17 @@ msgstr "Pedido de WooCommerce {self.wc_order_id}"
 msgid "WooCommerce category ID"
 msgstr "ID de categoría de WooCommerce"
 
+msgid "category"
+msgstr "cateogoría"
+
 msgid "WooCommerce order line ID"
 msgstr "ID de línea de pedido de WooCommerce"
+
+msgid "line"
+msgstr "línea"
+
+msgid "lines"
+msgstr "líneas"
 
 #, python-brace-format
 msgid ""
@@ -41,12 +56,27 @@ msgstr ""
 "Línea {self.wc_order_item_id} del pedido {self.order.wc_order_id} de "
 "WooCommerce"
 
+msgid "WooCommerce product ID"
+msgstr "ID de producto de WooCommerce"
+
+msgid "product map"
+msgstr "conexión de productos"
+
+msgid "product maps"
+msgstr "conexiones de productos"
+
 #, python-brace-format
 msgid ""
 "Map: WooCommerce product {self.wc_product_id} -> Category {self.category}"
 msgstr ""
 "Conectar: Producto de WooCommerce {self.wc_product_id} -> Categoría {self."
 "category}"
+
+msgid "category map"
+msgstr "conexión de categorías"
+
+msgid "category maps"
+msgstr "conexiones de categorías"
 
 #, python-brace-format
 msgid ""

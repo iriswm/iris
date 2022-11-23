@@ -13,6 +13,10 @@ class Order(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
         for line in self.lines.all():
             line.cancel(reason)
 
+    class Meta:
+        verbose_name = _("order")
+        verbose_name_plural = _("orders")
+
     def __str__(self):
         return str(_(f"WooCommerce order {self.wc_order_id}"))
 
@@ -30,15 +34,25 @@ class WooCommerceCategoryMixin(models.Model):
 class Line(
     TimestampMixin, CancelableMixin, NotesMixin, WooCommerceCategoryMixin, models.Model
 ):
-    order = models.ForeignKey("Order", on_delete=models.CASCADE, related_name="lines")
+    order = models.ForeignKey(
+        "Order",
+        verbose_name=_("order"),
+        on_delete=models.CASCADE,
+        related_name="lines",
+    )
     category = models.ForeignKey(
         "iris.Category",
+        verbose_name=_("category"),
         on_delete=models.SET_NULL,
         related_name="woocommerce_lines",
         null=True,
         blank=True,
     )
     wc_order_item_id = models.IntegerField(_("WooCommerce order line ID"))
+
+    class Meta:
+        verbose_name = _("line")
+        verbose_name_plural = _("lines")
 
     def __str__(self):
         return str(
@@ -52,12 +66,17 @@ add_note_type("WooCommerce line", "iris_wc.Line")
 
 
 class ProductMap(models.Model):
-    wc_product_id = models.IntegerField(_("WooCommerce order ID"))
+    wc_product_id = models.IntegerField(_("WooCommerce product ID"))
     category = models.ForeignKey(
         "iris.Category",
+        verbose_name=_("category"),
         on_delete=models.CASCADE,
         related_name="mapped_woocommerce_products",
     )
+
+    class Meta:
+        verbose_name = _("product map")
+        verbose_name_plural = _("product maps")
 
     def __str__(self):
         return str(
@@ -70,9 +89,14 @@ class ProductMap(models.Model):
 class CategoryMap(WooCommerceCategoryMixin, models.Model):
     category = models.ForeignKey(
         "iris.Category",
+        verbose_name=_("category"),
         on_delete=models.CASCADE,
         related_name="mapped_woocommerce_categories",
     )
+
+    class Meta:
+        verbose_name = _("category map")
+        verbose_name_plural = _("category maps")
 
     def __str__(self):
         return str(

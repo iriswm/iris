@@ -27,16 +27,21 @@ def add_note_type(name, path):
 
 
 class TimestampMixin(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(_("created"), auto_now_add=True)
+    modified = models.DateTimeField(_("modified"), auto_now=True)
 
     class Meta:
         abstract = True
 
 
 class CancelableMixin(models.Model):
-    cancel_time = models.DateTimeField(editable=False, null=True)
-    cancel_reason = models.CharField(max_length=256, editable=False)
+    cancel_time = models.DateTimeField(_("cancelation time"), editable=False, null=True)
+    cancel_reason = models.CharField(
+        _("cancelation reason"), max_length=256, editable=False
+    )
+
+    class Meta:
+        abstract = True
 
     def cancel(self, reason, datetime_=None):
         if datetime_ is None:
@@ -63,12 +68,9 @@ class CancelableMixin(models.Model):
                 _("Cancelation reason and time must be specified at the same time.")
             )
 
-    class Meta:
-        abstract = True
-
 
 class NotesMixin(models.Model):
-    notes = models.TextField(blank=True)
+    notes = models.TextField(_("notes"), blank=True)
 
     class Meta:
         abstract = True
@@ -77,14 +79,21 @@ class NotesMixin(models.Model):
 class Work(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
     category = models.ForeignKey(
         "Category",
+        verbose_name=_("category"),
         on_delete=models.SET_NULL,
         related_name="works",
         null=True,
         blank=True,
     )
-    description = models.CharField(max_length=128, blank=True)
-    quantity = models.IntegerField(default=1, validators=[MinValueValidator(1)])
-    has_priority = models.BooleanField(default=False)
+    description = models.CharField(_("description"), max_length=128, blank=True)
+    quantity = models.IntegerField(
+        _("quantity"), default=1, validators=[MinValueValidator(1)]
+    )
+    has_priority = models.BooleanField(_("has priority"), default=False)
+
+    class Meta:
+        verbose_name = _("work")
+        verbose_name_plural = _("works")
 
     def __str__(self):
         str_ = str(_(f"Work {self.pk}"))
@@ -109,18 +118,20 @@ add_note_type("Work", "iris.app.Work")
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(_("name"), max_length=64)
     spawned_tasks = models.ManyToManyField(
         "Task",
+        verbose_name=_("spawned tasks"),
         related_name="spawned_by_categories",
         through="CategorySpawnedTasks",
     )
 
+    class Meta:
+        verbose_name = _("category")
+        verbose_name_plural = _("categories")
+
     def __str__(self):
         return str(_(f"'{self.name}' category"))
-
-    class Meta:
-        verbose_name_plural = "categories"
 
 
 class CategorySpawnedTasks(models.Model):
@@ -129,17 +140,31 @@ class CategorySpawnedTasks(models.Model):
 
 
 class Task(models.Model):
-    name = models.CharField(max_length=64)
-    instructions = models.TextField(blank=True)
-    stations = models.ManyToManyField("Station", related_name="tasks", blank=True)
+    name = models.CharField(_("name"), max_length=64)
+    instructions = models.TextField(_("instructions"), blank=True)
+    stations = models.ManyToManyField(
+        "Station", verbose_name=_("stations"), related_name="tasks", blank=True
+    )
+
+    class Meta:
+        verbose_name = _("task")
+        verbose_name_plural = _("tasks")
 
     def __str__(self):
         return str(_(f"Task '{self.name}' ({self.pk})"))
 
 
 class Job(TimestampMixin, models.Model):
-    task = models.ForeignKey("Task", on_delete=models.RESTRICT, related_name="jobs")
-    work = models.ForeignKey("Work", on_delete=models.RESTRICT, related_name="jobs")
+    task = models.ForeignKey(
+        "Task", verbose_name=_("task"), on_delete=models.RESTRICT, related_name="jobs"
+    )
+    work = models.ForeignKey(
+        "Work", verbose_name=_("work"), on_delete=models.RESTRICT, related_name="jobs"
+    )
+
+    class Meta:
+        verbose_name = _("job")
+        verbose_name_plural = _("jobs")
 
     def __str__(self):
         quantity_suffix = "" if self.work.quantity == 1 else f" x{self.work.quantity}"
@@ -152,13 +177,21 @@ class Job(TimestampMixin, models.Model):
 
 class TaskSpawn(models.Model):
     closing_task = models.ForeignKey(
-        "Task", on_delete=models.CASCADE, related_name="spawns"
+        "Task",
+        verbose_name=_("closing task"),
+        on_delete=models.CASCADE,
+        related_name="spawns",
     )
     spawned_tasks = models.ManyToManyField(
         "Task",
+        verbose_name=_("spawned tasks"),
         related_name="spawned_by_tasks",
         through="TaskSpawnSpawnedTasks",
     )
+
+    class Meta:
+        verbose_name = _("task spawn")
+        verbose_name_plural = _("task spawns")
 
     def __str__(self):
         # (task, task, task)
@@ -177,13 +210,21 @@ class TaskSpawnSpawnedTasks(models.Model):
 
 class TaskConsolidation(models.Model):
     closing_tasks = models.ManyToManyField(
-        "Task", related_name="consolidations", through="TaskConsolidationClosingTasks"
+        "Task",
+        verbose_name=_("closing tasks"),
+        related_name="consolidations",
+        through="TaskConsolidationClosingTasks",
     )
     spawned_tasks = models.ManyToManyField(
         "Task",
+        verbose_name=_("spawned tasks"),
         related_name="spawned_by_consolidation",
         through="TaskConsolidationSpawnedTasks",
     )
+
+    class Meta:
+        verbose_name = _("task consolidation")
+        verbose_name_plural = _("task consolidations")
 
     def __str__(self):
         # (task, task, task)
@@ -212,18 +253,33 @@ class TaskConsolidationSpawnedTasks(models.Model):
 
 class Worker(models.Model):
     user = models.OneToOneField(
-        get_user_model(), on_delete=models.SET_NULL, null=True, blank=True
+        get_user_model(),
+        verbose_name=_("user"),
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
     )
+
+    class Meta:
+        verbose_name = _("worker")
+        verbose_name_plural = _("workers")
 
     def __str__(self):
         return str(self.user)
 
 
 class Commit(TimestampMixin, NotesMixin, models.Model):
-    job = models.OneToOneField("Job", on_delete=models.CASCADE)
+    job = models.OneToOneField("Job", verbose_name=_("job"), on_delete=models.CASCADE)
     worker = models.ForeignKey(
-        "Worker", on_delete=models.RESTRICT, related_name="commits"
+        "Worker",
+        verbose_name=_("worker"),
+        on_delete=models.RESTRICT,
+        related_name="commits",
     )
+
+    class Meta:
+        verbose_name = _("commit")
+        verbose_name_plural = _("commits")
 
     def __str__(self):
         return str(
@@ -249,15 +305,23 @@ add_note_type("Commit", "iris.app.Commit")
 
 
 class Station(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(_("name"), max_length=64)
+
+    class Meta:
+        verbose_name = _("station")
+        verbose_name_plural = _("stations")
 
     def __str__(self):
         return self.name
 
 
 class NoteTemplate(models.Model):
-    path = models.CharField(max_length=NOTES_PATH_LIMIT)
-    template = models.CharField(max_length=256)
+    path = models.CharField(_("path"), max_length=NOTES_PATH_LIMIT)
+    template = models.CharField(_("template"), max_length=256)
+
+    class Meta:
+        verbose_name = _("note template")
+        verbose_name_plural = _("note templates")
 
     def __str__(self):
         # "Long string with many things" -> "Long stri..."
@@ -270,11 +334,20 @@ class NoteTemplate(models.Model):
 
 
 class Delay(TimestampMixin, NotesMixin, models.Model):
-    job = models.ForeignKey("Job", on_delete=models.CASCADE, related_name="delays")
-    worker = models.ForeignKey(
-        "Worker", on_delete=models.RESTRICT, related_name="delays"
+    job = models.ForeignKey(
+        "Job", verbose_name=_("job"), on_delete=models.CASCADE, related_name="delays"
     )
-    time = models.DurationField()
+    worker = models.ForeignKey(
+        "Worker",
+        verbose_name=_("worker"),
+        on_delete=models.RESTRICT,
+        related_name="delays",
+    )
+    time = models.DurationField(_("time"))
+
+    class Meta:
+        verbose_name = _("delay")
+        verbose_name_plural = _("delays")
 
     def __str__(self):
         return str(_(f'Delay "{self.job}" for {self.time}'))
@@ -284,10 +357,22 @@ add_note_type("Delay", "iris.app.Delay")
 
 
 class Suspension(TimestampMixin, NotesMixin, models.Model):
-    job = models.ForeignKey("Job", on_delete=models.CASCADE, related_name="suspensions")
-    worker = models.ForeignKey(
-        "Worker", on_delete=models.RESTRICT, related_name="suspensions"
+    job = models.ForeignKey(
+        "Job",
+        verbose_name=_("job"),
+        on_delete=models.CASCADE,
+        related_name="suspensions",
     )
+    worker = models.ForeignKey(
+        "Worker",
+        verbose_name=_("worker"),
+        on_delete=models.RESTRICT,
+        related_name="suspensions",
+    )
+
+    class Meta:
+        verbose_name = _("suspension")
+        verbose_name_plural = _("suspensions")
 
     def __str__(self):
         return str(_(f'Suspension for "{self.job}"'))
