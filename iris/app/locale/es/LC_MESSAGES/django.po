@@ -18,179 +18,137 @@ msgstr ""
 "Language-Team: \n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: iris/app/admin/__init__.py:34 iris/app/admin/__init__.py:51
-#: iris/app/admin/__init__.py:106
 msgid "Completed"
 msgstr "Completados"
 
-#: iris/app/admin/__init__.py:40
 msgid "Canceled"
 msgstr "Cancelados"
 
-#: iris/app/admin/__init__.py:46 iris/app/admin/__init__.py:101
 msgid "completion status"
 msgstr "completado"
 
-#: iris/app/admin/__init__.py:52 iris/app/admin/__init__.py:107
 msgid "Not completed"
 msgstr "No completados"
 
-#: iris/app/admin/actions.py:12
 msgid "Cancel selected works"
 msgstr "Cancelar los proyectos seleccionados"
 
-#: iris/app/admin/actions.py:21
 msgid "Restore selected works"
 msgstr "Restaurar los proyectos seleccionados"
 
-#: iris/app/admin/actions.py:29
 #, python-brace-format
 msgid "The work '{work}' is not canceled."
 msgstr "El proyecto '{work}' no está cancelado."
 
-#: iris/app/admin/actions.py:35
 msgid "The works were restored."
 msgstr "Proyectos restaurados."
 
-#: iris/app/admin/actions.py:39
 msgid "Spawn category jobs"
 msgstr "Crear los trabajos de la categoría"
 
-#: iris/app/admin/actions.py:45
 #, python-brace-format
 msgid "Work '{work}' doesn't have a category assigned."
 msgstr "El proyecto '{work}' no tiene una categoría asignada."
 
-#: iris/app/admin/actions.py:50 iris/app/admin/actions.py:58
 msgid "Jobs spawned."
 msgstr "Trabajos creados."
 
-#: iris/app/admin/actions.py:54
 msgid "Spawn and consolidate jobs"
 msgstr "Crear y consolidar trabajos"
 
-#: iris/app/admin/views.py:42 iris/app/admin/views.py:67
 #, python-brace-format
 msgid "The work '{work}' is already canceled."
 msgstr "El proyecto '{work}' ya está cancelado."
 
-#: iris/app/admin/views.py:52
-#: iris/app/templates/admin/iris/work/cancel_works.html:6
 msgid "Cancel works"
 msgstr "Cancelar proyectos"
 
-#: iris/app/admin/views.py:74
 msgid "The works were canceled."
 msgstr "Proyectos cancelados."
 
-#: iris/app/models.py:63
 msgid "Cancelation reason and time must be specified at the same time."
 msgstr "La razón y el tiempo de la cancelación deben especificarse juntas."
 
-#: iris/app/models.py:90
 #, python-brace-format
 msgid "Work {self.pk}"
 msgstr "Proyecto {self.pk}"
 
-#: iris/app/models.py:120
 #, python-brace-format
 msgid "'{self.name}' category"
 msgstr "Categoría '{self.name}'"
 
-#: iris/app/models.py:137
 #, python-brace-format
 msgid "Task '{self.name}' ({self.pk})"
 msgstr "Tarea '{self.name}' ({self.pk})"
 
-#: iris/app/models.py:146
 #, python-brace-format
 msgid "'{self.task.name}' for work {self.work.pk}{quantity_suffix}"
 msgstr "'{self.task.name}' para el proyecto {self.work.pk}{quantity_suffix}"
 
-#: iris/app/models.py:169
 #, python-brace-format
 msgid "Spawns {spawns_names} when task \"{self.closing_task}\" is closed"
 msgstr "Crea {spawns_names} cuando la tarea \"{self.closing_task}\" se complete"
 
-#: iris/app/models.py:196
 #, python-brace-format
 msgid "Spawns {spawns_names} when tasks {closing_names} are closed"
 msgstr "Crea {spawns_names} cuando las tareas {closing_names} se completen"
 
-#: iris/app/models.py:230
 #, python-brace-format
 msgid "Commit for work \"{self.job}\" by worker {self.worker} ({self.modified})"
 msgstr "Cierre para el proyecto \"{self.job}\" por {self.worker} ({self.modified})"
 
-#: iris/app/models.py:269
 #, python-brace-format
 msgid "{self.path} template: {short_template}"
 msgstr "Plantilla para {self.path}: {short_template}"
 
-#: iris/app/models.py:280
 #, python-brace-format
 msgid "Delay \"{self.job}\" for {self.time}"
 msgstr "Retraso de \"{self.job}\" durante {self.time}"
 
-#: iris/app/models.py:293
 #, python-brace-format
 msgid "Suspension for \"{self.job}\""
 msgstr "Suspensión de \"{self.job}\""
 
-#: iris/app/templates/admin/admin_base_iris.html:8
 msgid "Home"
 msgstr "Inicio"
 
-#: iris/app/templates/admin/iris/work/cancel_works.html:11
 msgid "Canceling works"
 msgstr "Cancelar proyectos"
 
-#: iris/app/templates/iris/alerts.html:7
 msgid "Current alerts"
 msgstr "Avisos actuales"
 
-#: iris/app/templates/iris/base.html:6
 msgid "Iris workshop management system"
 msgstr "Sistema de control de tareas Iris"
 
-#: iris/app/templates/iris/base.html:20
 msgid "Stations"
 msgstr "Estaciones"
 
-#: iris/app/templates/iris/base.html:32
 msgid "Manage"
 msgstr "Gestionar"
 
-#: iris/app/templates/iris/base.html:36
 msgid "Works"
 msgstr "Proyectos"
 
-#: iris/app/templates/iris/base.html:41
 msgid "Alerts"
 msgstr "Avisos"
 
-#: iris/app/templates/iris/base.html:46
 msgid "Admin"
 msgstr "Administración"
 
-#: iris/app/templates/iris/base.html:55
 #, python-format
 msgid "Logged as %(user)s"
 msgstr "Conectado como %(user)s"
 
-#: iris/app/templates/iris/base.html:55
 msgid "Log out"
 msgstr "Desconectar"
 
-#: iris/app/templates/iris/base.html:57 iris/app/templates/iris/login.html:18
 msgid "Log in"
 msgstr "Conectar"
 
-#: iris/app/templates/iris/base.html:67
 msgid "Welcome!"
 msgstr "¡Bienvenido!"
 
-#: iris/app/templates/iris/station_detail.html:7
 #, python-format
 msgid "Works for station %(station_name)s"
 msgstr "Trabajos para la estación %(station_name)s"

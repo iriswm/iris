@@ -18,38 +18,30 @@ msgstr ""
 "Language-Team: \n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: deps/iris_wc/iris_wc/models.py:8 deps/iris_wc/iris_wc/models.py:55
 msgid "WooCommerce order ID"
 msgstr "ID de pedido de WooCommerce"
 
-#: deps/iris_wc/iris_wc/models.py:9
 msgid "WooCommerce order notes"
 msgstr "Notas de pedido de WooCommerce"
 
-#: deps/iris_wc/iris_wc/models.py:17
 #, python-brace-format
 msgid "WooCommerce order {self.wc_order_id}"
 msgstr "Pedido de WooCommerce {self.wc_order_id}"
 
-#: deps/iris_wc/iris_wc/models.py:24
 msgid "WooCommerce category ID"
 msgstr "ID de categoría de WooCommerce"
 
-#: deps/iris_wc/iris_wc/models.py:41
 msgid "WooCommerce order line ID"
 msgstr "ID de línea de pedido de WooCommerce"
 
-#: deps/iris_wc/iris_wc/models.py:46
 #, python-brace-format
 msgid "WooCommerce line {self.wc_order_item_id} for order {self.order.wc_order_id}"
 msgstr "Línea {self.wc_order_item_id} del pedido {self.order.wc_order_id} de WooCommerce"
 
-#: deps/iris_wc/iris_wc/models.py:65
 #, python-brace-format
 msgid "Map: WooCommerce product {self.wc_product_id} -> Category {self.category}"
 msgstr "Conectar: Producto de WooCommerce {self.wc_product_id} -> Categoría {self.category}"
 
-#: deps/iris_wc/iris_wc/models.py:80
 #, python-brace-format
 msgid "Map: WooCommerce category {self.wc_category_id} -> Category {self.category}"
 msgstr "Conectar: Categoría de WooCommerce {self.wc_category_id} -> Categoría {self.category}"

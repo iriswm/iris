@@ -18,10 +18,8 @@ msgstr ""
 "Language-Team: \n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: iris/settings.py:67
 msgid "English"
 msgstr "Inglés"
 
-#: iris/settings.py:68
 msgid "Spanish"
 msgstr "Español"
