@@ -317,3 +317,19 @@ msgstr "Conectar"
 #, python-format
 msgid "Works for station %(station_name)s"
 msgstr "Trabajos para la estación %(station_name)s"
+
+#, python-format
+msgid "%(quantity)s times"
+msgstr "%(quantity)s veces"
+
+msgid "Details"
+msgstr "Detalles"
+
+msgid "Commit"
+msgstr "Cerrar"
+
+msgid "Delay"
+msgstr "Retrasar"
+
+msgid "Suspend"
+msgstr "Suspender"
