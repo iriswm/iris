@@ -6,7 +6,7 @@
 {% block bootstrap5_title %}{% blocktranslate %}Iris workshop management system{% endblocktranslate %}{% endblock %}
 
 {% block bootstrap5_content %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-sm navbar-dark bg-primary">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="{% url 'iris:index' %}">Iris</a>
 		{% if user.is_authenticated %}
@@ -14,11 +14,11 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			<ul class="navbar-nav me-auto mb-2 mb-sm-0">
 				{% if stations %}
 				<li class="nav-item dropdown">
 					<a href="#" class="nav-link dropdown-toggle active" id="navbarStationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% translate "Stations" %}</a>
-					<ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarStationsDropdown">
+					<ul class="dropdown-menu" aria-labelledby="navbarStationsDropdown">
 						{% for station in stations %}
 						<li>
 							<a class="dropdown-item" href="{% url 'iris:station' station.pk %}">{{ station.name }}</a>
@@ -30,7 +30,7 @@
 				{% if user.is_staff or perms.iris.view_work or perms.iris.view_delay or perms.iris.view_suspension %}
 				<li class="nav-item dropdown">
 					<a href="#" class="nav-link dropdown-toggle active" id="navbarManagerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% translate "Manage" %}</a>
-					<ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarManagerDropdown">
+					<ul class="dropdown-menu dropdown-menu" aria-labelledby="navbarManagerDropdown">
 						{% if perms.iris.view_work %}
 						<li>
 							<a class="dropdown-item" href="{% url 'iris:index' %}">{% translate "Works" %}</a>
@@ -48,26 +48,25 @@
 						{% endif %}
 					</ul>
 				</li>
-				{% endif %}
 			</ul>
 			{% endif %}
-			{% if user.is_authenticated %}
-			<a class="btn" role="button" href="{% url 'iris:logout' %}">{% blocktranslate %}Logged as {{ user }}{% endblocktranslate %} - {% translate "Log out" %}</a>
-			{% else %}
-			<a class="btn" role="button" href="{% url 'iris:login' %}">{% translate "Log in" %}</a>
-			{% endif %}
+			<form class="d-flex">
+				<span class="navbar-text me-1">{% blocktranslate %}Logged as {{ user }}{% endblocktranslate %}</span>
+				<a class="btn btn-primary" role="button" href="{% url 'iris:logout' %}">{% translate "Log out" %}</a>
+			</form>
 		</div>
+		{% endif %}
 	</div>
 </nav>
 
-<div class="container">
-	{% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
-	{% block content %}
-	<div class="container m-4">
-		<h1>{% translate "Welcome!" %}</h1>
-	</div>
-	{% endblock %}
+<div id="messages" class="container-fluid">
+{% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
 </div>
 
+{% block content %}
+<div class="container mt-4">
+	<p class="text-center">{% translate "Welcome! Use the navigation menu on the top to go to the desired location." %}</span>
+</div>
+{% endblock %}
 
 {% endblock %}

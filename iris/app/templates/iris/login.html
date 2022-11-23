@@ -3,19 +3,19 @@
 {% load i18n %}
 
 {% block content %}
-<div class="container-fluid border my-4 p-4">
+<div class="container-sm mt-4 p-4">
 	<form method="post" action="{% url 'iris:login' %}">
 		{% csrf_token %}
 		<div class="mb-3">
 			<label for="username" class="form-label">{{ form.username.label_tag }}</label>
 			<input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" class="form-control">
 		</div>
-		<div class="mb-3">
+		<div class="mb-4">
 			<label for="password" class="form-label">{{ form.password.label_tag }}</label>
 			<input type="password" name="password" autocomplete="current-password" required="" id="id_password" class="form-control">
 		</div>
-		<div class="col-12">
-			<button type="submit" class="btn btn-primary">{% translate "Log in" %}</button>
+		<div>
+			<button type="submit" class="btn btn-primary w-100">{% translate "Log in" %}</button>
 		</div>
 	</form>
 </div>

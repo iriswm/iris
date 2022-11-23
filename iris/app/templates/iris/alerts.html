@@ -3,8 +3,8 @@
 {% load i18n %}
 
 {% block content %}
+<h1 class="container-fluid fs-6 p-2 bg-light border">{% translate 'Current alerts' %}</h1>
 <div class="container m-4">
-	<h1>{% translate 'Current alerts' %}</h1>
 	<ul>
 		{% if perms.iris.view_delay %}
 		{% for delay in delays %}
