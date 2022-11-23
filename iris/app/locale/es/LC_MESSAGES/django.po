@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-23 14:35+0100\n"
-"PO-Revision-Date: 2022-11-23 14:41+0100\n"
+"POT-Creation-Date: 2022-11-23 15:34+0100\n"
+"PO-Revision-Date: 2022-11-23 15:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -37,8 +37,8 @@ msgid "Restore selected works"
 msgstr "Restaurar los proyectos seleccionados"
 
 #, python-brace-format
-msgid "The work '{work}' is not canceled."
-msgstr "El proyecto '{work}' no está cancelado."
+msgid "The work '{work_name}' is not canceled."
+msgstr "El proyecto '{work_name}' no está cancelado."
 
 msgid "The works were restored."
 msgstr "Proyectos restaurados."
@@ -47,8 +47,8 @@ msgid "Spawn category jobs"
 msgstr "Crear los trabajos de la categoría"
 
 #, python-brace-format
-msgid "Work '{work}' doesn't have a category assigned."
-msgstr "El proyecto '{work}' no tiene una categoría asignada."
+msgid "Work '{work_name}' doesn't have a category assigned."
+msgstr "El proyecto '{work_name}' no tiene una categoría asignada."
 
 msgid "Jobs spawned."
 msgstr "Trabajos creados."
@@ -63,8 +63,8 @@ msgid "Date/Time"
 msgstr "Fecha/Hora"
 
 #, python-brace-format
-msgid "The work '{work}' is already canceled."
-msgstr "El proyecto '{work}' ya está cancelado."
+msgid "The work '{work_name}' is already canceled."
+msgstr "El proyecto '{work_name}' ya está cancelado."
 
 msgid "Cancel works"
 msgstr "Cancelar proyectos"
@@ -109,8 +109,8 @@ msgid "works"
 msgstr "proyectos"
 
 #, python-brace-format
-msgid "Work {self.pk}"
-msgstr "Proyecto {self.pk}"
+msgid "Work {obj.pk}"
+msgstr "Proyecto {obj.pk}"
 
 msgid "name"
 msgstr "nombre"
@@ -122,8 +122,8 @@ msgid "categories"
 msgstr "categorías"
 
 #, python-brace-format
-msgid "'{self.name}' category"
-msgstr "Categoría '{self.name}'"
+msgid "'{obj.name}' category"
+msgstr "Categoría '{obj.name}'"
 
 msgid "instructions"
 msgstr "instrucciones"
@@ -138,8 +138,8 @@ msgid "tasks"
 msgstr "tareas"
 
 #, python-brace-format
-msgid "Task '{self.name}' ({self.pk})"
-msgstr "Tarea '{self.name}' ({self.pk})"
+msgid "Task '{obj.name}' ({obj.pk})"
+msgstr "Tarea '{obj.name}' ({obj.pk})"
 
 msgid "job"
 msgstr "trabajo"
@@ -148,8 +148,8 @@ msgid "jobs"
 msgstr "trabajos"
 
 #, python-brace-format
-msgid "'{self.task.name}' for work {self.work.pk}{quantity_suffix}"
-msgstr "'{self.task.name}' para el proyecto {self.work.pk}{quantity_suffix}"
+msgid "'{obj.task.name}' for work {obj.work.pk}{quantity_suffix}"
+msgstr "'{obj.task.name}' para el proyecto {obj.work.pk}{quantity_suffix}"
 
 msgid "closing task"
 msgstr "tarea de cierre"
@@ -161,9 +161,8 @@ msgid "task spawns"
 msgstr "expansiones de tareas"
 
 #, python-brace-format
-msgid "Spawns {spawns_names} when task \"{self.closing_task}\" is closed"
-msgstr ""
-"Crea {spawns_names} cuando la tarea \"{self.closing_task}\" se complete"
+msgid "Spawns {spawns_names} when task \"{obj.closing_task}\" is closed"
+msgstr "Crea {spawns_names} cuando la tarea \"{obj.closing_task}\" se complete"
 
 msgid "closing tasks"
 msgstr "tareas de cierre"
@@ -194,10 +193,9 @@ msgid "commits"
 msgstr "cierres"
 
 #, python-brace-format
-msgid ""
-"Commit for work \"{self.job}\" by worker {self.worker} ({self.modified})"
+msgid "Commit for work \"{obj.job}\" by worker {obj.worker} ({obj.modified})"
 msgstr ""
-"Cierre para el proyecto \"{self.job}\" por {self.worker} ({self.modified})"
+"Cierre para el proyecto \"{obj.job}\" por {obj.worker} ({obj.modified})"
 
 msgid "station"
 msgstr "estación"
@@ -215,8 +213,8 @@ msgid "note templates"
 msgstr "plantillas de notas"
 
 #, python-brace-format
-msgid "{self.path} template: {short_template}"
-msgstr "Plantilla para {self.path}: {short_template}"
+msgid "{obj.path} template: {short_template}"
+msgstr "Plantilla para {obj.path}: {short_template}"
 
 msgid "time"
 msgstr "hora"
@@ -228,8 +226,8 @@ msgid "delays"
 msgstr "retrasos"
 
 #, python-brace-format
-msgid "Delay \"{self.job}\" for {self.time}"
-msgstr "Retraso de \"{self.job}\" durante {self.time}"
+msgid "Delay \"{obj.job}\" for {obj.time}"
+msgstr "Retraso de \"{obj.job}\" durante {obj.time}"
 
 msgid "suspension"
 msgstr "suspensión"
@@ -238,8 +236,8 @@ msgid "suspensions"
 msgstr "suspensiones"
 
 #, python-brace-format
-msgid "Suspension for \"{self.job}\""
-msgstr "Suspensión de \"{self.job}\""
+msgid "Suspension for \"{obj.job}\""
+msgstr "Suspensión de \"{obj.job}\""
 
 msgid "Home"
 msgstr "Inicio"

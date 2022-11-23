@@ -26,7 +26,12 @@ def restore_works(self, request, queryset):
         with transaction.atomic():
             for work in queryset.all():
                 if not work.canceled:
-                    messages.error(request, _(f"The work '{work}' is not canceled."))
+                    messages.error(
+                        request,
+                        _("The work '{work_name}' is not canceled.").format(
+                            work_name=str(work),
+                        ),
+                    )
                     raise NotCanceledError()
                 else:
                     work.restore()
@@ -42,7 +47,10 @@ def spawn_jobs(self, request, queryset):
     for work in all_works:
         if work.category is None:
             messages.error(
-                request, _(f"Work '{work}' doesn't have a category assigned.")
+                request,
+                _("Work '{work_name}' doesn't have a category assigned.").format(
+                    work_name=str(work),
+                ),
             )
             return HttpResponseRedirect(reverse("admin:iris_work_changelist"))
     for work in all_works:

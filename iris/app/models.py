@@ -96,7 +96,7 @@ class Work(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
         verbose_name_plural = _("works")
 
     def __str__(self):
-        str_ = str(_(f"Work {self.pk}"))
+        str_ = _("Work {obj.pk}").format(obj=self)
         if self.description != "":
             str_ = f"{str_}: {self.description}"
         return str_
@@ -131,7 +131,7 @@ class Category(models.Model):
         verbose_name_plural = _("categories")
 
     def __str__(self):
-        return str(_(f"'{self.name}' category"))
+        return _("'{obj.name}' category").format(obj=self)
 
 
 class CategorySpawnedTasks(models.Model):
@@ -151,7 +151,7 @@ class Task(models.Model):
         verbose_name_plural = _("tasks")
 
     def __str__(self):
-        return str(_(f"Task '{self.name}' ({self.pk})"))
+        return _("Task '{obj.name}' ({obj.pk})").format(obj=self)
 
 
 class Job(TimestampMixin, models.Model):
@@ -168,7 +168,10 @@ class Job(TimestampMixin, models.Model):
 
     def __str__(self):
         quantity_suffix = "" if self.work.quantity == 1 else f" x{self.work.quantity}"
-        return str(_(f"'{self.task.name}' for work {self.work.pk}{quantity_suffix}"))
+        return _("'{obj.task.name}' for work {obj.work.pk}{quantity_suffix}").format(
+            obj=self,
+            quantity_suffix=quantity_suffix,
+        )
 
     @property
     def completed(self):
@@ -198,8 +201,11 @@ class TaskSpawn(models.Model):
         spawns_names = (
             "(" + ", ".join([f'"{task}"' for task in self.spawned_tasks.all()]) + ")"
         )
-        return str(
-            _(f'Spawns {spawns_names} when task "{self.closing_task}" is closed')
+        return _(
+            'Spawns {spawns_names} when task "{obj.closing_task}" is closed'
+        ).format(
+            obj=self,
+            spawns_names=spawns_names,
         )
 
 
@@ -234,7 +240,10 @@ class TaskConsolidation(models.Model):
         closing_names = (
             "(" + ", ".join([f'"{task}"' for task in self.closing_tasks.all()]) + ")"
         )
-        return str(_(f"Spawns {spawns_names} when tasks {closing_names} are closed"))
+        return _("Spawns {spawns_names} when tasks {closing_names} are closed").format(
+            spawns_names=spawns_names,
+            closing_names=closing_names,
+        )
 
 
 class TaskConsolidationClosingTasks(models.Model):
@@ -282,8 +291,10 @@ class Commit(TimestampMixin, NotesMixin, models.Model):
         verbose_name_plural = _("commits")
 
     def __str__(self):
-        return str(
-            _(f'Commit for work "{self.job}" by worker {self.worker} ({self.modified})')
+        return _(
+            'Commit for work "{obj.job}" by worker {obj.worker} ({obj.modified})'
+        ).format(
+            obj=self,
         )
 
     def spawn_and_consolidate_jobs(self):
@@ -330,7 +341,10 @@ class NoteTemplate(models.Model):
             if len(self.template) < NOTES_MAX_DISPLAY_LENGTH
             else self.template[: NOTES_MAX_DISPLAY_LENGTH - 3] + "..."
         )
-        return str(_(f"{self.path} template: {short_template}"))
+        return _("{obj.path} template: {short_template}").format(
+            obj=self,
+            short_template=short_template,
+        )
 
 
 class Delay(TimestampMixin, NotesMixin, models.Model):
@@ -350,7 +364,7 @@ class Delay(TimestampMixin, NotesMixin, models.Model):
         verbose_name_plural = _("delays")
 
     def __str__(self):
-        return str(_(f'Delay "{self.job}" for {self.time}'))
+        return _('Delay "{obj.job}" for {obj.time}').format(obj=self)
 
 
 add_note_type("Delay", "iris.app.Delay")
@@ -375,7 +389,7 @@ class Suspension(TimestampMixin, NotesMixin, models.Model):
         verbose_name_plural = _("suspensions")
 
     def __str__(self):
-        return str(_(f'Suspension for "{self.job}"'))
+        return _('Suspension for "{obj.job}"').format(obj=self)
 
 
 add_note_type("Suspension", "iris.app.Suspension")

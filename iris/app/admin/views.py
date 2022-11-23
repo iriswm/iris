@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext as _
 from django.views.generic.edit import FormView
 
 from iris.app.admin.forms import CancelWorksViewForm
@@ -39,7 +39,10 @@ class CancelWorksView(AdminContextMixin, PermissionRequiredMixin, FormView):
         for work in works:
             if work.canceled:
                 messages.error(
-                    self.request, _(f"The work '{work}' is already canceled.")
+                    self.request,
+                    _("The work '{work_name}' is already canceled.").format(
+                        work_name=str(work),
+                    ),
                 )
                 return HttpResponseRedirect(reverse("admin:iris_work_changelist"))
         return super().get(request, *args, **kwargs)
@@ -64,7 +67,10 @@ class CancelWorksView(AdminContextMixin, PermissionRequiredMixin, FormView):
                 for work in works:
                     if work.canceled:
                         messages.error(
-                            self.request, _(f"The work '{work}' is already canceled.")
+                            self.request,
+                            _("The work '{work_name}' is already canceled.").format(
+                                work_name=str(work),
+                            ),
                         )
                         raise AlreadyCanceledError()
                     else:

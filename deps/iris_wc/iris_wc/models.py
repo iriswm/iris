@@ -18,7 +18,7 @@ class Order(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
         verbose_name_plural = _("orders")
 
     def __str__(self):
-        return str(_(f"WooCommerce order {self.wc_order_id}"))
+        return _("WooCommerce order {obj.wc_order_id}").format(obj=self)
 
 
 add_note_type("WooCommerce order", "iris_wc.Order")
