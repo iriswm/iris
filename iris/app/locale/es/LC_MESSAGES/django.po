@@ -97,6 +97,14 @@ msgstr "fecha de cancelación"
 msgid "cancelation reason"
 msgstr "razón de cancelación"
 
+#, python-brace-format
+msgid "'{obj_name}' is already canceled."
+msgstr "'{obj_name}' ya está cancelado."
+
+#, python-brace-format
+msgid "'{obj_name}' is not canceled."
+msgstr "'{obj_name}' no está cancelado."
+
 msgid "Cancelation reason and time must be specified at the same time."
 msgstr "La razón y el tiempo de la cancelación deben especificarse juntas."
 
@@ -124,6 +132,10 @@ msgstr "proyectos"
 #, python-brace-format
 msgid "Work {obj.pk}"
 msgstr "Proyecto {obj.pk}"
+
+#, python-brace-format
+msgid "Work '{work_name}' doesn't have a category assigned."
+msgstr "El proyecto '{work_name}' no tiene una categoría asignada."
 
 msgid "name"
 msgstr "nombre"
@@ -250,6 +262,10 @@ msgstr "suspensión"
 
 msgid "suspensions"
 msgstr "suspensiones"
+
+#, python-brace-format
+msgid "Suspension '{suspension_name}' is already lifted."
+msgstr "La suspensión '{suspension_name}' ya está levantada."
 
 #, python-brace-format
 msgid "Suspension for \"{obj.job}\""

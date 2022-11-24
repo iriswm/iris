@@ -10,6 +10,22 @@ NOTES_PATH_LIMIT = 64
 NOTES_MAX_DISPLAY_LENGTH = 32
 
 
+class NotCanceledError(Exception):
+    pass
+
+
+class AlreadyCanceledError(Exception):
+    pass
+
+
+class NoCategoryError(Exception):
+    pass
+
+
+class NotSuspendedError(Exception):
+    pass
+
+
 _notes_registry = set()
 
 
@@ -48,11 +64,23 @@ class CancelableMixin(models.Model):
     def cancel(self, reason, datetime_=None):
         if datetime_ is None:
             datetime_ = now()
+        if self.canceled:
+            raise AlreadyCanceledError(
+                _("'{obj_name}' is already canceled.").format(
+                    obj_name=str(self),
+                ),
+            )
         self.cancel_time = datetime_
         self.cancel_reason = reason
         self.save()
 
     def restore(self):
+        if not self.canceled:
+            raise NotCanceledError(
+                _("'{obj_name}' is not canceled.").format(
+                    obj_name=str(self),
+                ),
+            )
         self.cancel_time = None
         self.cancel_reason = ""
         self.save()
@@ -110,7 +138,11 @@ class Work(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
 
     def spawn_jobs(self):
         if self.category is None:
-            return
+            raise NoCategoryError(
+                _("Work '{work_name}' doesn't have a category assigned.").format(
+                    work_name=str(self),
+                ),
+            )
         for task in self.category.spawned_tasks.all():
             new_job = Job(work=self, task=task)
             new_job.save()
@@ -398,6 +430,12 @@ class Suspension(TimestampMixin, NotesMixin, models.Model):
         verbose_name_plural = _("suspensions")
 
     def lift(self, datetime_=None):
+        if suspension.lifted:
+            raise NotSuspendedError(
+                _("Suspension '{suspension_name}' is already lifted.").format(
+                    suspension_name=str(suspension),
+                )
+            )
         if datetime_ is None:
             datetime_ = now()
         self.lifted_at = datetime_

@@ -4,17 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-
-class NotCanceledError(Exception):
-    pass
-
-
-class NoCategoryError(Exception):
-    pass
-
-
-class NotSuspendedError(Exception):
-    pass
+from iris.app.models import NoCategoryError, NotCanceledError, NotSuspendedError
 
 
 @admin.action(description=str(_("Cancel selected works")))
@@ -31,42 +21,22 @@ def restore_works(self, request, queryset):
     try:
         with transaction.atomic():
             for work in queryset.all():
-                if not work.canceled:
-                    messages.error(
-                        request,
-                        _("The work '{work_name}' is not canceled.").format(
-                            work_name=str(work),
-                        ),
-                    )
-                    raise NotCanceledError()
-                else:
-                    work.restore()
-    except NotCanceledError:
-        return HttpResponseRedirect(reverse("admin:iris_work_changelist"))
-    messages.info(request, _("The works were restored."))
+                work.restore()
+    except NotCanceledError as e:
+        messages.error(request, str(e))
+    else:
+        messages.info(request, _("The works were restored."))
     return HttpResponseRedirect(reverse("admin:iris_work_changelist"))
 
 
 @admin.action(description=str(_("Spawn category jobs")))
 def spawn_jobs(self, request, queryset):
-    all_works = queryset.all()
     try:
         with transaction.atomic():
-            for work in all_works:
-                if work.category is None:
-                    messages.error(
-                        request,
-                        _(
-                            "Work '{work_name}' doesn't have a category assigned."
-                        ).format(
-                            work_name=str(work),
-                        ),
-                    )
-                    raise NoCategoryError()
-                else:
-                    work.spawn_jobs()
-    except NoCategoryError:
-        pass
+            for work in queryset.all():
+                work.spawn_jobs()
+    except NoCategoryError as e:
+        messages.error(request, str(e))
     else:
         messages.info(request, _("Jobs spawned."))
     return HttpResponseRedirect(reverse("admin:iris_work_changelist"))
@@ -85,18 +55,9 @@ def lift_suspensions(self, request, queryset):
     try:
         with transaction.atomic():
             for suspension in queryset.all():
-                if suspension.lifted:
-                    messages.error(
-                        request,
-                        _("Suspension '{suspension_name}' is already lifted.").format(
-                            suspension_name=str(suspension),
-                        ),
-                    )
-                    raise NotSuspendedError()
-                else:
-                    suspension.lift()
-    except NotSuspendedError:
-        pass
+                suspension.lift()
+    except NotSuspendedError as e:
+        messages.error(request, str(e))
     else:
         messages.info(request, _("Suspensions lifted."))
     return HttpResponseRedirect(reverse("admin:iris_suspension_changelist"))
