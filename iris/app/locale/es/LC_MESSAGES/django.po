@@ -207,7 +207,8 @@ msgstr "cierres"
 
 #, python-brace-format
 msgid "Commit for work \"{obj.job}\" by worker {obj.worker} ({obj.modified})"
-msgstr "Cierre para el proyecto \"{obj.job}\" por {obj.worker} ({obj.modified})"
+msgstr ""
+"Cierre para el proyecto \"{obj.job}\" por {obj.worker} ({obj.modified})"
 
 msgid "station"
 msgstr "estación"
@@ -288,8 +289,11 @@ msgstr "Conectado como %(user)s"
 msgid "Log out"
 msgstr "Desconectar"
 
-msgid "Welcome! Use the navigation menu on the top to go to the desired location."
-msgstr "¡Bienvenido! Usa el menú de navegación en la parte superior de la página para navegar por la web."
+msgid ""
+"Welcome! Use the navigation menu on the top to go to the desired location."
+msgstr ""
+"¡Bienvenido! Usa el menú de navegación en la parte superior de la página "
+"para navegar por la web."
 
 msgid "Log in"
 msgstr "Conectar"
