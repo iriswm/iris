@@ -1,10 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
-from django.views.generic import DetailView
+from django.views.generic import CreateView, DetailView
 from django.views.generic.base import TemplateView
 
-from iris.app.models import Delay, Job, Station, Suspension
+from iris.app.models import Commit, Delay, Job, Station, Suspension
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
@@ -50,3 +50,19 @@ class AlertsView(SomePermissionRequiredMixin, TemplateView):
             "suspensions": Suspension.objects.all(),
         }
         return context
+
+
+class JobDetailView(DetailView):
+    model = Job
+
+
+class CreateCommitView(CreateView):
+    model = Commit
+
+
+class CreateDelayView(CreateView):
+    model = Delay
+
+
+class CreateSuspensionView(CreateView):
+    model = Suspension
