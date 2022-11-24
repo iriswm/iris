@@ -24,8 +24,6 @@ def cancel_works(self, request, queryset):
 
 @admin.action(description=str(_("Restore selected works")))
 def restore_works(self, request, queryset):
-    selected = queryset.values_list("pk", flat=True)
-    selected_joined = ",".join(str(pk) for pk in selected)
     try:
         with transaction.atomic():
             for work in queryset.all():
