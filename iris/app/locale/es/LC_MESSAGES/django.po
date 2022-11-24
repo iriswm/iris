@@ -215,8 +215,8 @@ msgstr "plantillas de notas"
 msgid "{obj.path} template: {short_template}"
 msgstr "Plantilla para {obj.path}: {short_template}"
 
-msgid "time"
-msgstr "hora"
+msgid "duration"
+msgstr "duración"
 
 msgid "delay"
 msgstr "retraso"
@@ -225,8 +225,11 @@ msgid "delays"
 msgstr "retrasos"
 
 #, python-brace-format
-msgid "Delay \"{obj.job}\" for {obj.time}"
-msgstr "Retraso de \"{obj.job}\" durante {obj.time}"
+msgid "Delay \"{obj.job}\" for {obj.duration}"
+msgstr "Retraso de \"{obj.job}\" durante {obj.duration}"
+
+msgid "lifted_at"
+msgstr "levantado el"
 
 msgid "suspension"
 msgstr "suspensión"

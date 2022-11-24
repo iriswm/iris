@@ -357,14 +357,14 @@ class Delay(TimestampMixin, NotesMixin, models.Model):
         on_delete=models.RESTRICT,
         related_name="delays",
     )
-    time = models.DurationField(_("time"))
+    duration = models.DurationField(_("duration"))
 
     class Meta:
         verbose_name = _("delay")
         verbose_name_plural = _("delays")
 
     def __str__(self):
-        return _('Delay "{obj.job}" for {obj.time}').format(obj=self)
+        return _('Delay "{obj.job}" for {obj.duration}').format(obj=self)
 
 
 add_note_type("Delay", "iris.app.Delay")
@@ -383,10 +383,25 @@ class Suspension(TimestampMixin, NotesMixin, models.Model):
         on_delete=models.RESTRICT,
         related_name="suspensions",
     )
+    lifted_at = models.DateTimeField(
+        _("lifted_at"),
+        editable=False,
+        null=True,
+    )
 
     class Meta:
         verbose_name = _("suspension")
         verbose_name_plural = _("suspensions")
+
+    def lift(self, datetime_=None):
+        if datetime_ is None:
+            datetime_ = now()
+        self.lifted_at = datetime_
+        self.save()
+
+    @property
+    def lifted(self):
+        return self.lifted_at < now()
 
     def __str__(self):
         return _('Suspension for "{obj.job}"').format(obj=self)
