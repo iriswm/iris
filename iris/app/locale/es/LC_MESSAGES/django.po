@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-23 18:18+0100\n"
-"PO-Revision-Date: 2022-11-23 18:19+0100\n"
+"POT-Creation-Date: 2022-11-24 05:39+0100\n"
+"PO-Revision-Date: 2022-11-24 05:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -39,19 +39,11 @@ msgstr "Cancelar los proyectos seleccionados"
 msgid "Restore selected works"
 msgstr "Restaurar los proyectos seleccionados"
 
-#, python-brace-format
-msgid "The work '{work_name}' is not canceled."
-msgstr "El proyecto '{work_name}' no está cancelado."
-
 msgid "The works were restored."
 msgstr "Proyectos restaurados."
 
 msgid "Spawn category jobs"
 msgstr "Crear los trabajos de la categoría"
-
-#, python-brace-format
-msgid "Work '{work_name}' doesn't have a category assigned."
-msgstr "El proyecto '{work_name}' no tiene una categoría asignada."
 
 msgid "Jobs spawned."
 msgstr "Trabajos creados."
@@ -61,10 +53,6 @@ msgstr "Crear y consolidar trabajos"
 
 msgid "Lift suspensions"
 msgstr "Levantar suspensiones"
-
-#, python-brace-format
-msgid "Suspension '{suspension_name}' is already lifted."
-msgstr "La suspensión '{suspension_name}' ya está levantada."
 
 msgid "Suspensions lifted."
 msgstr "Suspensiones levantadas."
@@ -311,19 +299,28 @@ msgstr ""
 "¡Bienvenido! Usa el menú de navegación en la parte superior de la página "
 "para navegar por la web."
 
-msgid "Log in"
-msgstr "Conectar"
-
 #, python-format
-msgid "Works for station %(station_name)s"
-msgstr "Trabajos para la estación %(station_name)s"
+msgid "Details for job %(job_name)s"
+msgstr "Detalles del trabajo %(job_name)s"
 
 #, python-format
 msgid "%(quantity)s times"
 msgstr "%(quantity)s veces"
 
-msgid "Details"
-msgstr "Detalles"
+msgid "No instructions."
+msgstr "No hay instrucciones."
+
+msgid "This job has been completed."
+msgstr "El trabajo ha sido completado."
+
+msgid "This job is delayed."
+msgstr "El trabajo está retrasado."
+
+msgid "This job is suspended."
+msgstr "El trabajo está suspendido."
+
+msgid "This job has been canceled."
+msgstr "El trabajo ha sido cancelado."
 
 msgid "Commit"
 msgstr "Cerrar"
@@ -333,3 +330,13 @@ msgstr "Retrasar"
 
 msgid "Suspend"
 msgstr "Suspender"
+
+msgid "Log in"
+msgstr "Conectar"
+
+#, python-format
+msgid "Works for station %(station_name)s"
+msgstr "Trabajos para la estación %(station_name)s"
+
+msgid "Details"
+msgstr "Detalles"

@@ -210,8 +210,27 @@ class Job(TimestampMixin, models.Model):
         )
 
     @property
+    def canceled(self):
+        return self.work.canceled
+
+    @property
     def completed(self):
         return Commit.objects.filter(job=self).exists()
+
+    @property
+    def delayed(self):
+        return any(
+            [(delay.created + delay.duration) > now() for delay in self.delays.all()]
+        )
+
+    @property
+    def suspended(self):
+        return any(
+            [
+                suspension.lifted_at is None or suspension.lifted_at > now()
+                for suspension in self.suspensions.all()
+            ]
+        )
 
 
 class TaskSpawn(models.Model):
@@ -430,10 +449,10 @@ class Suspension(TimestampMixin, NotesMixin, models.Model):
         verbose_name_plural = _("suspensions")
 
     def lift(self, datetime_=None):
-        if suspension.lifted:
+        if self.lifted:
             raise NotSuspendedError(
                 _("Suspension '{suspension_name}' is already lifted.").format(
-                    suspension_name=str(suspension),
+                    suspension_name=str(self),
                 )
             )
         if datetime_ is None:
