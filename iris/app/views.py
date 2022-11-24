@@ -26,11 +26,7 @@ class StationView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         station = self.get_object()
-        context["jobs"] = [
-            job
-            for job in Job.objects.filter(task__stations=station).all()
-            if not job.completed
-        ]
+        context["jobs"] = Job.objects.pending(station=station)
         return context
 
 

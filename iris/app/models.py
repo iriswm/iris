@@ -4,6 +4,8 @@ from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
+from iris.app.managers import JobManager
+
 NOTES_PATH_LIMIT = 64
 NOTES_MAX_DISPLAY_LENGTH = 32
 
@@ -161,6 +163,8 @@ class Job(TimestampMixin, models.Model):
     work = models.ForeignKey(
         "Work", verbose_name=_("work"), on_delete=models.RESTRICT, related_name="jobs"
     )
+
+    objects = JobManager()
 
     class Meta:
         verbose_name = _("job")
