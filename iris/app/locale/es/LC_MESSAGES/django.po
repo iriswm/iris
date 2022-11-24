@@ -30,6 +30,9 @@ msgstr "completado"
 msgid "Not completed"
 msgstr "No completados"
 
+msgid "Lifted"
+msgstr "Levantado"
+
 msgid "Cancel selected works"
 msgstr "Cancelar los proyectos seleccionados"
 
@@ -55,6 +58,16 @@ msgstr "Trabajos creados."
 
 msgid "Spawn and consolidate jobs"
 msgstr "Crear y consolidar trabajos"
+
+msgid "Lift suspensions"
+msgstr "Levantar suspensiones"
+
+#, python-brace-format
+msgid "Suspension '{suspension_name}' is already lifted."
+msgstr "La suspensión '{suspension_name}' ya está levantada."
+
+msgid "Suspensions lifted."
+msgstr "Suspensiones levantadas."
 
 msgid "Reason"
 msgstr "Razón"

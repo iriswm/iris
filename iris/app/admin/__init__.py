@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 from iris.app.admin.actions import (
     cancel_works,
+    lift_suspensions,
     restore_works,
     spawn_and_consolidate_jobs,
     spawn_jobs,
@@ -172,4 +173,9 @@ class DelayAdmin(admin.ModelAdmin):
 
 @admin.register(Suspension)
 class SuspensionAdmin(admin.ModelAdmin):
-    pass
+    actions = [lift_suspensions]
+    list_display = ["__str__", "lifted"]
+
+    @admin.display(description=_("Lifted"), boolean=True)
+    def lifted(self, obj):
+        return obj.lifted

@@ -401,7 +401,7 @@ class Suspension(TimestampMixin, NotesMixin, models.Model):
 
     @property
     def lifted(self):
-        return self.lifted_at < now()
+        return self.lifted_at is not None and self.lifted_at < now()
 
     def __str__(self):
         return _('Suspension for "{obj.job}"').format(obj=self)

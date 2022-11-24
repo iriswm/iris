@@ -9,6 +9,10 @@ class NotCanceledError(Exception):
     pass
 
 
+class NotSuspendedError(Exception):
+    pass
+
+
 @admin.action(description=str(_("Cancel selected works")))
 def cancel_works(self, request, queryset):
     selected = queryset.values_list("pk", flat=True)
@@ -65,3 +69,25 @@ def spawn_and_consolidate_jobs(self, request, queryset):
         commit.spawn_and_consolidate_jobs()
     messages.info(request, _("Jobs spawned."))
     return HttpResponseRedirect(reverse("admin:iris_commit_changelist"))
+
+
+@admin.action(description=str(_("Lift suspensions")))
+def lift_suspensions(self, request, queryset):
+    try:
+        with transaction.atomic():
+            for suspension in queryset.all():
+                if suspension.lifted:
+                    messages.error(
+                        request,
+                        _("Suspension '{suspension_name}' is already lifted.").format(
+                            suspension_name=str(suspension),
+                        ),
+                    )
+                    raise NotSuspendedError()
+                else:
+                    suspension.lift()
+    except NotSuspendedError:
+        pass
+    else:
+        messages.info(request, _("Suspensions lifted."))
+    return HttpResponseRedirect(reverse("admin:iris_suspension_changelist"))
