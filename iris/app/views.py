@@ -44,8 +44,8 @@ class AlertsView(SomePermissionRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context |= {
-            "delays": Delay.objects.all(),
-            "suspensions": Suspension.objects.all(),
+            "delays": Delay.objects.current(),
+            "suspensions": Suspension.objects.current(),
         }
         return context
 

@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
-from iris.app.managers import JobManager
+from iris.app.managers import DelayManager, JobManager, SuspensionManager
 
 NOTES_PATH_LIMIT = 64
 NOTES_MAX_DISPLAY_LENGTH = 32
@@ -414,6 +414,8 @@ class Delay(TimestampMixin, NotesMixin, models.Model):
     )
     duration = models.DurationField(_("duration"))
 
+    objects = DelayManager()
+
     class Meta:
         verbose_name = _("delay")
         verbose_name_plural = _("delays")
@@ -443,6 +445,8 @@ class Suspension(TimestampMixin, NotesMixin, models.Model):
         editable=False,
         null=True,
     )
+
+    objects = SuspensionManager()
 
     class Meta:
         verbose_name = _("suspension")
