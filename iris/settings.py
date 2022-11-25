@@ -27,8 +27,12 @@ DJANGO_DEFAULT_DB = getenv("DJANGO_DEFAULT_DB", None)
 DATABASES = {
     "default": (
         {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": STATE_DIR / "db.sqlite3",
+            "ENGINE": "django.db.backends.postgresql",
+            "HOST": "localhost",
+            "PORT": 15432,
+            "NAME": "iris",
+            "USER": "iris",
+            "PASSWORD": "iris",
         }
         if DJANGO_DEFAULT_DB is None
         else loads(DJANGO_DEFAULT_DB)

@@ -1,0 +1,23 @@
+version: "3"
+services:
+  webapp:
+    build: .
+    env_file: .env
+    ports:
+      - "8000:8000"
+    links:
+      - "db"
+    volumes:
+      - state:/app/state
+  db:
+    image: docker.io/library/postgres:15.1-alpine3.16
+    environment:
+      POSTGRES_DB: iris
+      POSTGRES_USER: iris
+      POSTGRES_PASSWORD: iris
+      PGDATA: /app/state/pg_data
+    volumes:
+      - state:/app/state
+
+volumes:
+  state:
