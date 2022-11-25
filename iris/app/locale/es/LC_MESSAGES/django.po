@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-24 05:39+0100\n"
-"PO-Revision-Date: 2022-11-24 05:41+0100\n"
+"POT-Creation-Date: 2022-11-25 05:18+0100\n"
+"PO-Revision-Date: 2022-11-25 05:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -293,6 +293,16 @@ msgstr "Conectado como %(user)s"
 msgid "Log out"
 msgstr "Desconectar"
 
+#, python-format
+msgid "Create commit for %(job_name)s"
+msgstr "Cerrar el trabajo %(job_name)s"
+
+msgid "Notes"
+msgstr "Notas"
+
+msgid "Commit"
+msgstr "Cerrar"
+
 msgid ""
 "Welcome! Use the navigation menu on the top to go to the desired location."
 msgstr ""
@@ -322,17 +332,11 @@ msgstr "El trabajo está suspendido."
 msgid "This job has been canceled."
 msgstr "El trabajo ha sido cancelado."
 
-msgid "Commit"
-msgstr "Cerrar"
-
 msgid "Delay"
 msgstr "Retrasar"
 
 msgid "Suspend"
 msgstr "Suspender"
-
-msgid "Log in"
-msgstr "Conectar"
 
 #, python-format
 msgid "Works for station %(station_name)s"
@@ -340,3 +344,12 @@ msgstr "Trabajos para la estación %(station_name)s"
 
 msgid "Details"
 msgstr "Detalles"
+
+msgid "Log in"
+msgstr "Conectar"
+
+msgid "A job is required in this view."
+msgstr "Esta vista requiere especificar un trabajo."
+
+msgid "An existing job is required in this view."
+msgstr "Esta vista requiere especificar un trabajo existente."

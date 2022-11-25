@@ -16,10 +16,10 @@
 				<li class="list-group-item">{{ job.work }}</li>
 			</ul>
 			<div class="card-footer">
-				<a class="btn btn-primary" href="{% url 'iris:job_detail' job.pk %}">{% translate "Details" %}</a>
-				<a class="btn btn-success" href="{% url 'iris:commit_add' %}?job={{ job.pk }}">{% translate "Commit" %}</a>
-				<a class="btn btn-warning" href="{% url 'iris:delay_add' %}?job={{ job.pk }}">{% translate "Delay" %}</a>
-				<a class="btn btn-danger" href="{% url 'iris:suspension_add' %}?job={{ job.pk }}">{% translate "Suspend" %}</a>
+				<a class="btn btn-primary" href="{% url 'iris:job_detail' job.pk %}?station={{ object.pk }}">{% translate "Details" %}</a>
+				<a class="btn btn-success" href="{% url 'iris:commit_add' %}?job={{ job.pk }}&station={{ object.pk }}">{% translate "Commit" %}</a>
+				<a class="btn btn-warning" href="{% url 'iris:delay_add' %}?job={{ job.pk }}&station={{ object.pk }}">{% translate "Delay" %}</a>
+				<a class="btn btn-danger" href="{% url 'iris:suspension_add' %}?job={{ job.pk }}&station={{ object.pk }}">{% translate "Suspend" %}</a>
 			</div>
 		</div>
 		{% endfor %}

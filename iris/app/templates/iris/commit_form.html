@@ -1,0 +1,19 @@
+{% extends 'iris/base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<h1 class="container-fluid fs-6 p-2 bg-light border">{% blocktranslate with job_name=job %}Create commit for {{ job_name }}{% endblocktranslate %}</h1>
+<div class="container-sm mt-4 p-4">
+	<form method="post">
+		{% csrf_token %}
+		<div class="mb-3">
+			<label for="id_notes" class="form-label">{% translate "Notes" %}</label>
+			<textarea id="id_notes" name="notes" class="form-control"></textarea>
+		</div>
+		<div>
+			<button type="submit" class="btn btn-primary w-100">{% translate "Commit" %}</button>
+		</div>
+	</form>
+</div>
+{% endblock %}
