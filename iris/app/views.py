@@ -85,6 +85,12 @@ class JobItemCreateViewMixin(LoginRequiredMixin, CreateView):
             return HttpResponseRedirect(reverse("iris:index"))
         return super().get(*args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        job, worker = self.get_job_and_worker()
+        context["job"] = job
+        return context
+
     def form_valid(self, form):
         job, worker = self.get_job_and_worker()
         form.instance.job = job
@@ -105,14 +111,19 @@ class JobItemCreateViewMixin(LoginRequiredMixin, CreateView):
         return success_url
 
 
-class CreateCommitView(JobItemCreateViewMixin, CreateView):
+class CreateCommitView(JobItemCreateViewMixin, PermissionRequiredMixin, CreateView):
     model = Commit
+    permission_required = "iris.add_commit"
     fields = ["notes"]
 
 
-class CreateDelayView(CreateView):
+class CreateDelayView(JobItemCreateViewMixin, PermissionRequiredMixin, CreateView):
     model = Delay
+    permission_required = "iris.add_delay"
+    fields = ["notes"]
 
 
-class CreateSuspensionView(CreateView):
+class CreateSuspensionView(JobItemCreateViewMixin, PermissionRequiredMixin, CreateView):
     model = Suspension
+    permission_required = "iris.add_suspension"
+    fields = ["notes"]
