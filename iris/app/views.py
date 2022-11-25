@@ -8,11 +8,10 @@ from iris.app.models import Commit, Delay, Job, Station, Suspension
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
-    template_name = "iris/base.html"
+    template_name = "iris/index.html"
 
 
 class IrisLoginView(LoginView):
-    template_name = "iris/login.html"
     next_page = reverse_lazy("iris:index")
 
 
