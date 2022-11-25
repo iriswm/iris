@@ -1,23 +1,38 @@
+from json import loads
+from os import getenv
 from pathlib import Path
 
 from django.utils.translation import gettext_lazy as _
+from dotenv import load_dotenv
+
+# dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-
 BASE_DIR = Path(__file__).resolve().parent.parent
-STATE_DIR = BASE_DIR / "state"
-
+DJANGO_STATE_DIR = getenv("DJANGO_STATE_DIR", "state")
+STATE_DIR = (
+    (BASE_DIR / DJANGO_STATE_DIR)
+    if DJANGO_STATE_DIR.startswith("/")
+    else Path(DJANGO_STATE_DIR)
+)
 
 # Security
-SECRET_KEY = "django-insecure-gs=xloqs7ztt*v)e_w=!moh+_vvfu25#_$c^yhdspv_wosx&om"
-DEBUG = True
+DEBUG = getenv("DJANGO_DEBUG", False)
+SECRET_KEY = getenv("DJANGO_SECRET_KEY")
 
 # Database
+DJANGO_DEFAULT_DB = getenv("DJANGO_DEFAULT_DB", None)
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": STATE_DIR / "db.sqlite3",
-    }
+    "default": (
+        {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": STATE_DIR / "db.sqlite3",
+        }
+        if DJANGO_DEFAULT_DB is None
+        else loads(DJANGO_DEFAULT_DB)
+    )
 }
 
 # General framework
