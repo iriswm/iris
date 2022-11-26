@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-26 15:26+0100\n"
-"PO-Revision-Date: 2022-11-26 15:28+0100\n"
+"POT-Creation-Date: 2022-11-26 20:30+0100\n"
+"PO-Revision-Date: 2022-11-26 20:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -72,6 +72,12 @@ msgstr "Cancelar proyectos"
 
 msgid "The works were canceled."
 msgstr "Proyectos cancelados."
+
+msgid "Can't calculate a valid delay duration."
+msgstr "No se pudo calcular una duración válida para el retraso."
+
+msgid "You can't create delays with no duration."
+msgstr "No puedes crear retrasos sin duración."
 
 msgid "created"
 msgstr "creado"
@@ -310,6 +316,26 @@ msgstr "Notas"
 msgid "Commit"
 msgstr "Cerrar"
 
+#, python-format
+msgid "Create delay for job %(job_id)s"
+msgstr "Retrasar el trabajo %(job_id)s"
+
+#, python-format
+msgid "Create delay for %(job_name)s"
+msgstr "Retrasar %(job_name)s"
+
+msgid "Days"
+msgstr "Días"
+
+msgid "Hours"
+msgstr "Horas"
+
+msgid "Minutes"
+msgstr "Minutos"
+
+msgid "Delay"
+msgstr "Retrasar"
+
 msgid "Index"
 msgstr "Índice"
 
@@ -345,9 +371,6 @@ msgstr "El trabajo está suspendido."
 
 msgid "This job has been canceled."
 msgstr "El trabajo ha sido cancelado."
-
-msgid "Delay"
-msgstr "Retrasar"
 
 msgid "Suspend"
 msgstr "Suspender"

@@ -1,8 +1,11 @@
+from datetime import timedelta
+
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DetailView, TemplateView
 
+from iris.app.forms import CreateDelayForm
 from iris.app.models import Commit, Delay, Job, Station, Suspension, Worker
 
 
@@ -119,8 +122,16 @@ class CreateCommitView(JobItemCreateViewMixin, PermissionRequiredMixin, CreateVi
 
 class CreateDelayView(JobItemCreateViewMixin, PermissionRequiredMixin, CreateView):
     model = Delay
+    form_class = CreateDelayForm
     permission_required = "iris.add_delay"
-    fields = ["notes"]
+
+    def form_valid(self, form):
+        form.instance.duration = timedelta(
+            days=form.cleaned_data["days"],
+            hours=form.cleaned_data["hours"],
+            minutes=form.cleaned_data["minutes"],
+        )
+        return super().form_valid(form)
 
 
 class CreateSuspensionView(JobItemCreateViewMixin, PermissionRequiredMixin, CreateView):
