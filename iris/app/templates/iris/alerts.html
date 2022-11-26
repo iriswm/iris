@@ -2,8 +2,9 @@
 
 {% load i18n %}
 
+{% block iris_title %}{% block iris_header %}{% translate 'Current alerts' %}{% endblock %}{% endblock %}
+
 {% block content %}
-<h1 class="container-fluid fs-6 p-2 bg-light border">{% translate 'Current alerts' %}</h1>
 <div class="container m-4">
 	<ul>
 		{% if perms.iris.view_delay %}

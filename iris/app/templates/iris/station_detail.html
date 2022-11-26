@@ -2,8 +2,9 @@
 
 {% load i18n %}
 
+{% block iris_title %}{% block iris_header %}{% blocktranslate with station_name=object.name %}Works for station {{ station_name }}{% endblocktranslate %}{% endblock %}{% endblock %}
+
 {% block content %}
-<h1 class="container-fluid fs-6 p-2 bg-light border">{% blocktranslate with station_name=object.name %}Works for station {{ station_name }}{% endblocktranslate %}</h1>
 <div class="container mt-4">
 	<ul>
 		{% for job in jobs %}

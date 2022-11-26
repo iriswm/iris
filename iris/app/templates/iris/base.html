@@ -3,7 +3,7 @@
 {% load bootstrap5 %}
 {% load i18n %}
 
-{% block bootstrap5_title %}{% blocktranslate %}Iris workshop management system{% endblocktranslate %}{% endblock %}
+{% block bootstrap5_title %}{% translate "Iris workshop management system" %} | {% block iris_title %}{% translate "Untitled page" %}{% endblock %}{% endblock %}
 
 {% block bootstrap5_content %}
 <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
@@ -63,6 +63,7 @@
 {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
 </div>
 
+<h1 class="container-fluid fs-6 p-2 bg-light border">{% block iris_header %}{% translate "Untitled page" %}{% endblock %}</h1>
 {% block content %}{% endblock %}
 
 {% endblock %}

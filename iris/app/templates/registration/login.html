@@ -2,6 +2,8 @@
 
 {% load i18n %}
 
+{% block iris_title %}{% block iris_header %}{% translate "Log in" %}{% endblock %}{% endblock %}
+
 {% block content %}
 <div class="container-sm mt-4 p-4">
 	<form method="post" action="{% url 'iris:login' %}">

@@ -2,8 +2,10 @@
 
 {% load i18n %}
 
+{% block iris_title %}{% blocktranslate with job_id=job.pk %}Create suspension for job {{ job_id }}{% endblocktranslate %}{% endblock %}
+{% block iris_header %}{% blocktranslate with job_name=job %}Create suspension for {{ job_name }}{% endblocktranslate %}{% endblock %}
+
 {% block content %}
-<h1 class="container-fluid fs-6 p-2 bg-light border">{% blocktranslate with job_name=job %}Create suspension for {{ job_name }}{% endblocktranslate %}</h1>
 <div class="container-sm mt-4 p-4">
 	<form method="post">
 		{% csrf_token %}

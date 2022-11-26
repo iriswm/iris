@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-25 05:29+0100\n"
-"PO-Revision-Date: 2022-11-25 05:29+0100\n"
+"POT-Creation-Date: 2022-11-26 15:26+0100\n"
+"PO-Revision-Date: 2022-11-26 15:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -271,6 +271,9 @@ msgstr "Avisos actuales"
 msgid "Iris workshop management system"
 msgstr "Sistema de control de tareas Iris"
 
+msgid "Untitled page"
+msgstr "Página sin título"
+
 msgid "Stations"
 msgstr "Estaciones"
 
@@ -294,14 +297,21 @@ msgid "Log out"
 msgstr "Desconectar"
 
 #, python-format
+msgid "Create commit for job %(job_id)s"
+msgstr "Cerrar el trabajo %(job_id)s"
+
+#, python-format
 msgid "Create commit for %(job_name)s"
-msgstr "Cerrar el trabajo %(job_name)s"
+msgstr "Cerrar %(job_name)s"
 
 msgid "Notes"
 msgstr "Notas"
 
 msgid "Commit"
 msgstr "Cerrar"
+
+msgid "Index"
+msgstr "Índice"
 
 msgid ""
 "Welcome! Use the navigation menu on the top to go to the desired location."
@@ -310,8 +320,12 @@ msgstr ""
 "para navegar por la web."
 
 #, python-format
-msgid "Details for job %(job_name)s"
-msgstr "Detalles del trabajo %(job_name)s"
+msgid "Details for job %(job_id)s"
+msgstr "Detalles del trabajo %(job_id)s"
+
+#, python-format
+msgid "Details for %(job_name)s"
+msgstr "Detalles de %(job_name)s"
 
 #, python-format
 msgid "%(quantity)s times"
@@ -346,8 +360,12 @@ msgid "Details"
 msgstr "Detalles"
 
 #, python-format
+msgid "Create suspension for job %(job_id)s"
+msgstr "Suspender el trabajo %(job_id)s"
+
+#, python-format
 msgid "Create suspension for %(job_name)s"
-msgstr "Suspender el trabajo %(job_name)s"
+msgstr "Suspender %(job_name)s"
 
 msgid "Log in"
 msgstr "Conectar"
