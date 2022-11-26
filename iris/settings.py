@@ -86,7 +86,7 @@ LANGUAGES = [
     ("en", _("English")),
     ("es", _("Spanish")),
 ]
-TIME_ZONE = "UTC"
+USE_TZ = True
 
 # Media and static files
 MEDIA_ROOT = STATE_DIR / "media"
