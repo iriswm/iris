@@ -7,23 +7,7 @@
 {% block content %}
 <div class="container mt-4">
 	<ul>
-		{% for job in jobs %}
-		<div class="card">
-			<div class="card-header">
-				<h4 class="card-title">{{ job.task.name }}</h4>
-				{% if job.work.quantity != 1 %}<h5 class="card-subtitle mb-2 text-muted">{% blocktranslate with quantity=job.work.quantity %}{{ quantity }} times{% endblocktranslate %}</h5>{% endif %}
-			</div>
-			<ul class="list-group list-group-flush">
-				<li class="list-group-item">{{ job.work }}</li>
-			</ul>
-			<div class="card-footer">
-				<a class="btn btn-primary" href="{% url 'iris:job_detail' job.pk %}?station={{ object.pk }}">{% translate "Details" %}</a>
-				<a class="btn btn-success" href="{% url 'iris:commit_add' %}?job={{ job.pk }}&station={{ object.pk }}">{% translate "Commit" %}</a>
-				<a class="btn btn-warning" href="{% url 'iris:delay_add' %}?job={{ job.pk }}&station={{ object.pk }}">{% translate "Delay" %}</a>
-				<a class="btn btn-danger" href="{% url 'iris:suspension_add' %}?job={{ job.pk }}&station={{ object.pk }}">{% translate "Suspend" %}</a>
-			</div>
-		</div>
-		{% endfor %}
+		{% for job in jobs %}{% include "iris/job_card_actions.html" %}{% endfor %}
 	</ul>
 </div>
 {% endblock %}
