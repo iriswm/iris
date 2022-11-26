@@ -215,7 +215,7 @@ class Job(TimestampMixin, models.Model):
 
     @property
     def completed(self):
-        return Commit.objects.filter(job=self).exists()
+        return self.commit is not None
 
     @property
     def delayed(self):
@@ -226,10 +226,7 @@ class Job(TimestampMixin, models.Model):
     @property
     def suspended(self):
         return any(
-            [
-                suspension.lifted_at is None or suspension.lifted_at > now()
-                for suspension in self.suspensions.all()
-            ]
+            [suspension.lifted_at is None for suspension in self.suspensions.all()]
         )
 
 
@@ -423,6 +420,10 @@ class Delay(TimestampMixin, NotesMixin, models.Model):
     def __str__(self):
         return _('Delay "{obj.job}" for {obj.duration}').format(obj=self)
 
+    @property
+    def in_effect(self):
+        return self.created + self.duration > now()
+
 
 add_note_type("Delay", "iris.app.Delay")
 
@@ -466,7 +467,7 @@ class Suspension(TimestampMixin, NotesMixin, models.Model):
 
     @property
     def lifted(self):
-        return self.lifted_at is not None and self.lifted_at < now()
+        return self.lifted_at is not None
 
     def __str__(self):
         return _('Suspension for "{obj.job}"').format(obj=self)
