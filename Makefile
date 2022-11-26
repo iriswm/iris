@@ -10,6 +10,7 @@ style:
 	@$(exec) black manage.py iris deps/iris_wc
 .PHONY: db-up
 db-up:
+	@$(exec) mkdir -p ./state/pg_data
 	@$(exec) podman run --rm -d --name iris_db -p 15432:5432 \
 		-v ./state/pg_data:/var/lib/postgresql/data \
 		-e POSTGRES_DB=iris \
