@@ -64,11 +64,44 @@
 	</div>
 </nav>
 
-<div id="messages" class="container-fluid">
-{% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
-</div>
+<h1 class="container-fluid fs-6 p-2 bg-light border mb-0">{% block iris_header %}{% translate "Untitled page" %}{% endblock %}</h1>
 
-<h1 class="container-fluid fs-6 p-2 bg-light border">{% block iris_header %}{% translate "Untitled page" %}{% endblock %}</h1>
+{% if messages %}
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+{% for message in messages %}
+	{% if message.level_tag == "success" %}
+	<div class="toast show fade bg-success" role="alert" aria-live="assertive" aria-atomic="true">
+		<div class="d-flex">
+			<div class="toast-body">{{ message }}</div>
+			<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+		</div>
+	</div>
+	{% elif message.level_tag == "warning" %}
+	<div class="toast show fade bg-warning" role="alert" aria-live="assertive" aria-atomic="true">
+		<div class="d-flex">
+			<div class="toast-body">{{ message }}</div>
+			<button type="button" class="btn-close btn-close-black me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+		</div>
+	</div>
+	{% elif message.level_tag == "error" %}
+	<div class="toast show fade bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+		<div class="d-flex">
+			<div class="toast-body text-white">{{ message }}</div>
+			<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+		</div>
+	</div>
+	{% else %}
+	<div class="toast show fade bg-light" role="alert" aria-live="assertive" aria-atomic="true">
+		<div class="d-flex">
+			<div class="toast-body">{{ message }}</div>
+			<button type="button" class="btn-close btn-close-black me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+		</div>
+	</div>
+	{% endif %}
+{% endfor %}
+</div>
+{% endif %}
+
 {% block content %}{% endblock %}
 
 {% endblock %}
