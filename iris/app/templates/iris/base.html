@@ -48,8 +48,8 @@
 						{% endif %}
 					</ul>
 				</li>
+				{% endif %}
 			</ul>
-			{% endif %}
 			<form class="d-flex">
 				<span class="navbar-text me-1">{% blocktranslate %}Logged as {{ user }}{% endblocktranslate %}</span>
 				<a class="btn btn-primary" role="button" href="{% url 'iris:logout' %}">{% translate "Log out" %}</a>
