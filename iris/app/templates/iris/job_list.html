@@ -1,0 +1,13 @@
+{% extends 'iris/base.html' %}
+
+{% load i18n %}
+
+{% block iris_title %}{% block iris_header %}{% translate "All jobs" %}{% endblock %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+	<ul>
+		{% for job in object_list %}{% include "iris/job_card_actions.html" %}{% endfor %}
+	</ul>
+</div>
+{% endblock %}

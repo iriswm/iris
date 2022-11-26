@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-26 20:30+0100\n"
-"PO-Revision-Date: 2022-11-26 20:32+0100\n"
+"POT-Creation-Date: 2022-11-26 21:14+0100\n"
+"PO-Revision-Date: 2022-11-26 21:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -289,6 +289,9 @@ msgstr "Gestionar"
 msgid "Works"
 msgstr "Proyectos"
 
+msgid "Jobs"
+msgstr "Trabajos"
+
 msgid "Alerts"
 msgstr "Avisos"
 
@@ -346,16 +349,14 @@ msgstr ""
 "para navegar por la web."
 
 #, python-format
-msgid "Details for job %(job_id)s"
-msgstr "Detalles del trabajo %(job_id)s"
-
-#, python-format
-msgid "Details for %(job_name)s"
-msgstr "Detalles de %(job_name)s"
-
-#, python-format
 msgid "%(quantity)s times"
 msgstr "%(quantity)s veces"
+
+msgid "Details"
+msgstr "Detalles"
+
+msgid "Suspend"
+msgstr "Suspender"
 
 msgid "No instructions."
 msgstr "No hay instrucciones."
@@ -372,15 +373,20 @@ msgstr "El trabajo está suspendido."
 msgid "This job has been canceled."
 msgstr "El trabajo ha sido cancelado."
 
-msgid "Suspend"
-msgstr "Suspender"
+#, python-format
+msgid "Details for job %(job_id)s"
+msgstr "Detalles del trabajo %(job_id)s"
+
+#, python-format
+msgid "Details for %(job_name)s"
+msgstr "Detalles de %(job_name)s"
+
+msgid "All jobs"
+msgstr "Todos los trabajos"
 
 #, python-format
 msgid "Works for station %(station_name)s"
 msgstr "Trabajos para la estación %(station_name)s"
-
-msgid "Details"
-msgstr "Detalles"
 
 #, python-format
 msgid "Create suspension for job %(job_id)s"
@@ -389,6 +395,18 @@ msgstr "Suspender el trabajo %(job_id)s"
 #, python-format
 msgid "Create suspension for %(job_name)s"
 msgstr "Suspender %(job_name)s"
+
+msgid "All works"
+msgstr "Todos los proyectos"
+
+msgid "This work has been completed."
+msgstr "El proyecto ha sido completado."
+
+msgid "This work has been canceled."
+msgstr "El proyecto ha sido cancelado."
+
+msgid "Job list"
+msgstr "Lista de trabajos"
 
 msgid "Log in"
 msgstr "Conectar"

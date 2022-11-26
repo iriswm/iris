@@ -1,0 +1,39 @@
+{% extends 'iris/base.html' %}
+
+{% load i18n %}
+
+{% block iris_title %}{% block iris_header %}{% translate "All works" %}{% endblock %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+	<ul>
+		{% for work in object_list %}
+			{% if work.completed %}
+			<div class="card border-success">
+			{% elif work.canceled %}
+			<div class="card border-danger">
+			{% else %}
+			<div class="card">
+			{% endif %}
+				<div class="card-header">
+					<h5 class="card-title">{{ work }}</h5>
+					{% if work.quantity != 1 %}<h6 class="card-subtitle mb-2 text-muted">{% blocktranslate with quantity=work.quantity %}{{ quantity }} times{% endblocktranslate %}</h6>{% endif %}
+				</div>
+				<ul class="list-group list-group-flush">
+				{% if work.completed %}
+				<li class="list-group-item"><div class="card-body text-success">{% translate "This work has been completed." %}</div></li>
+				{% elif work.canceled %}
+				<li class="list-group-item"><div class="card-body text-danger">{% translate "This work has been canceled." %}</div></li>
+				{% endif %}
+				<li class="list-group-item">
+					<div class="card-body">{% translate "Job list" %}</div>
+					{% for job in work.jobs.all %}
+						{% include "iris/job_card_inline.html" %}
+					{% endfor %}
+				</li>
+				</ul>
+			</div>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}

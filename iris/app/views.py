@@ -3,10 +3,10 @@ from datetime import timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DetailView, TemplateView
+from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
 from iris.app.forms import CreateDelayForm
-from iris.app.models import Commit, Delay, Job, Station, Suspension, Worker
+from iris.app.models import Commit, Delay, Job, Station, Suspension, Work, Worker
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
@@ -29,6 +29,14 @@ class StationView(LoginRequiredMixin, DetailView):
         station = self.get_object()
         context["jobs"] = Job.objects.pending(station=station)
         return context
+
+
+class WorkListView(ListView):
+    model = Work
+
+
+class JobListView(ListView):
+    model = Job
 
 
 class SomePermissionRequiredMixin(PermissionRequiredMixin):

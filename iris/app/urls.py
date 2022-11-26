@@ -9,7 +9,9 @@ from iris.app.views import (
     IrisLoginView,
     IrisLogoutView,
     JobDetailView,
+    JobListView,
     StationView,
+    WorkListView,
 )
 
 app_name = "iris"
@@ -24,4 +26,6 @@ urlpatterns = [
     path("commit/add/", CreateCommitView.as_view(), name="commit_add"),
     path("delay/add/", CreateDelayView.as_view(), name="delay_add"),
     path("suspension/add/", CreateSuspensionView.as_view(), name="suspension_add"),
+    path("jobs/", JobListView.as_view(), name="job_list"),
+    path("work/", WorkListView.as_view(), name="work_list"),
 ]
