@@ -202,6 +202,11 @@ class CreateCommitForJobView(CreateForJobMixin, PermissionRequiredMixin, CreateV
     permission_required = "iris.add_commit"
     fields = ["notes"]
 
+    def post(self, *args, **kwargs):
+        returned = super().post(*args, **kwargs)
+        self.object.spawn_and_consolidate_jobs()
+        return returned
+
 
 class CreateDelayForJobView(CreateForJobMixin, PermissionRequiredMixin, CreateView):
     model = Delay
