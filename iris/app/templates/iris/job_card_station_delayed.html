@@ -17,8 +17,8 @@
 		{% endif %}
 		<div class="card-footer">
 			<a class="btn btn-primary" href="{% url 'iris:job_detail' job.pk %}">{% translate "Job details" %}</a>
-			<a class="btn btn-success" href="{% url 'iris:delay_change' job.delayed_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit delay notes" %}</a>
-			<a class="btn btn-warning" href="{% url 'iris:delay_end' job.delayed_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "End delay" %}</a>
+			<a class="btn btn-primary" href="{% url 'iris:delay_change' job.delayed_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit delay notes" %}</a>
+			<a class="btn btn-danger" href="{% url 'iris:delay_end' job.delayed_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "End delay" %}</a>
 		</div>
 	</div>
 </div>

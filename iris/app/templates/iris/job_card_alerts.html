@@ -1,14 +1,16 @@
 {% load i18n %}
 
 <div class="container mt-4">
-	{% if job.delayed %}
+	{% if job.delayed and current_mode != "delays" %}
 	<div class="card border-warning">
-	{% elif job.suspended %}
+	{% elif job.suspended and current_mode != "suspensions" %}
 	<div class="card border-danger">
+	{% else %}
+	<div class="card">
 	{% endif %}
-		{% if job.delayed %}
+		{% if job.delayed and current_mode != "delays" %}
 		<div class="card-header text-dark text-warning">{% translate "This job is delayed." %}</div>
-		{% elif job.suspended %}
+		{% elif job.suspended and current_mode != "suspensions" %}
 		<div class="card-header text-danger">{% translate "This job is suspended." %}</div>
 		{% endif %}
 		<div class="card-header">
@@ -42,11 +44,11 @@
 		<div class="card-footer">
 			<a class="btn btn-primary" href="{% url 'iris:job_detail' job.pk %}">{% translate "Job details" %}</a>
 			{% if job.delayed %}
-			<a class="btn btn-success" href="{% url 'iris:delay_change' job.delayed_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit delay notes" %}</a>
-			<a class="btn btn-warning" href="{% url 'iris:delay_end' job.delayed_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "End delay" %}</a>
+			<a class="btn btn-primary" href="{% url 'iris:delay_change' job.delayed_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit delay notes" %}</a>
+			<a class="btn btn-danger" href="{% url 'iris:delay_end' job.delayed_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "End delay" %}</a>
 			{% elif job.suspended %}
-			<a class="btn btn-success" href="{% url 'iris:suspension_change' job.suspended_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit suspension notes" %}</a>
-			<a class="btn btn-warning" href="{% url 'iris:suspension_lift' job.suspended_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Lift suspension" %}</a>
+			<a class="btn btn-primary" href="{% url 'iris:suspension_change' job.suspended_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit suspension notes" %}</a>
+			<a class="btn btn-danger" href="{% url 'iris:suspension_lift' job.suspended_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Lift suspension" %}</a>
 			{% endif %}
 		</div>
 	</div>
