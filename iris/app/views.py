@@ -17,7 +17,7 @@ from django.views.generic import (
 )
 from django.views.generic.edit import ContextMixin, ModelFormMixin, SingleObjectMixin
 
-from iris.app.forms import CreateDelayForJobForm
+from iris.app.forms import DelayModelForm
 from iris.app.models import Commit, Delay, Job, Station, Suspension, Work, Worker
 
 
@@ -196,16 +196,8 @@ class CreateCommitForJobView(CreateForJobMixin, PermissionRequiredMixin, CreateV
 
 class CreateDelayForJobView(CreateForJobMixin, PermissionRequiredMixin, CreateView):
     model = Delay
-    form_class = CreateDelayForJobForm
+    form_class = DelayModelForm
     permission_required = "iris.add_delay"
-
-    def form_valid(self, form):
-        form.instance.duration = timedelta(
-            days=form.cleaned_data["days"],
-            hours=form.cleaned_data["hours"],
-            minutes=form.cleaned_data["minutes"],
-        )
-        return super().form_valid(form)
 
 
 class CommitFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
@@ -216,8 +208,8 @@ class CommitFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
 
 class DelayFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
     model = Delay
+    form_class = DelayModelForm
     permission_required = "iris.change_delay"
-    fields = ["notes"]
 
 
 class DelayEndView(

@@ -7,7 +7,7 @@ from django.utils.translation import gettext as _
 from iris.app.models import Delay
 
 
-class CreateDelayForJobForm(forms.ModelForm):
+class DelayModelForm(forms.ModelForm):
     days = forms.IntegerField(min_value=0, initial=0, required=False)
     hours = forms.IntegerField(min_value=0, initial=0, required=False)
     minutes = forms.IntegerField(min_value=0, initial=0, required=False)
@@ -15,6 +15,25 @@ class CreateDelayForJobForm(forms.ModelForm):
     class Meta:
         model = Delay
         fields = ["notes"]
+
+    def __init__(self, *args, **kwargs):
+        instance = kwargs["instance"]
+        if instance is not None:
+            remainder = int(instance.duration.total_seconds())
+            days = kwargs["initial"]["days"] = remainder // 86400
+            remainder -= days * 86400
+            hours = kwargs["initial"]["hours"] = remainder // 3600
+            remainder -= hours * 3600
+            minutes = kwargs["initial"]["minutes"] = remainder // 60
+            remainder -= minutes * 60
+            kwargs["initial"].update(
+                {
+                    "days": days,
+                    "hours": hours,
+                    "minutes": minutes,
+                }
+            )
+        super().__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = super().clean()
@@ -26,10 +45,16 @@ class CreateDelayForJobForm(forms.ModelForm):
             )
         except:
             raise ValidationError(
-                _("Can't calculate a valid delay duration."), code="invalid"
+                _("Delays must have a valid duration."), code="invalid"
             )
         else:
             if duration == timedelta():
-                raise ValidationError(
-                    _("You can't create delays with no duration."), code="invalid"
-                )
+                raise ValidationError(_("Delays must have a duration."), code="invalid")
+
+    def save(self):
+        self.instance.duration = timedelta(
+            days=self.cleaned_data["days"],
+            hours=self.cleaned_data["hours"],
+            minutes=self.cleaned_data["minutes"],
+        )
+        return super().save()
