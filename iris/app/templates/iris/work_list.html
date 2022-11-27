@@ -20,6 +20,12 @@
 					{% if work.quantity != 1 %}<h6 class="card-subtitle mb-2 text-muted">{% blocktranslate with quantity=work.quantity %}{{ quantity }} times{% endblocktranslate %}</h6>{% endif %}
 				</div>
 				<ul class="list-group list-group-flush">
+				{% if work.notes %}
+				<li class="list-group-item">
+					<p>{% translate "Work notes" %}</p>
+					<p>{{ work.notes|linebreaks }}</p>
+				</li>
+				{% endif %}
 				{% if work.completed %}
 				<li class="list-group-item"><div class="card-body text-success">{% translate "This work has been completed." %}</div></li>
 				{% elif work.canceled %}
