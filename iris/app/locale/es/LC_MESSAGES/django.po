@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 11:13+0100\n"
-"PO-Revision-Date: 2022-11-27 11:13+0100\n"
+"POT-Creation-Date: 2022-11-27 13:20+0100\n"
+"PO-Revision-Date: 2022-11-27 13:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -348,6 +348,13 @@ msgstr "Minutos"
 msgid "Delay"
 msgstr "Retrasar"
 
+#, python-format
+msgid "Editing delay %(object.pk)s"
+msgstr "Editando retraso %(object.pk)s"
+
+msgid "Save changes"
+msgstr "Guardar los cambios"
+
 msgid "Index"
 msgstr "Índice"
 
@@ -367,17 +374,39 @@ msgstr "Detalles"
 msgid "Suspend"
 msgstr "Suspender"
 
-msgid "No instructions."
-msgstr "No hay instrucciones."
-
-msgid "This job has been completed."
-msgstr "El trabajo ha sido completado."
-
 msgid "This job is delayed."
 msgstr "El trabajo está retrasado."
 
 msgid "This job is suspended."
 msgstr "El trabajo está suspendido."
+
+#, python-format
+msgid "Ends at %(ends_at)s"
+msgstr "Termina el %(ends_at)s"
+
+msgid "Work notes"
+msgstr "Notas del trabajo"
+
+msgid "Delay notes"
+msgstr "Notas del retraso"
+
+msgid "Suspension notes"
+msgstr "Notas de la suspensión"
+
+msgid "Edit notes"
+msgstr "Editar notas"
+
+msgid "End delay"
+msgstr "Terminar retraso"
+
+msgid "Lift suspension"
+msgstr "Levantar suspensión"
+
+msgid "No instructions."
+msgstr "No hay instrucciones."
+
+msgid "This job has been completed."
+msgstr "El trabajo ha sido completado."
 
 msgid "This job has been canceled."
 msgstr "El trabajo ha sido cancelado."
@@ -405,6 +434,10 @@ msgstr "Suspender el trabajo %(job_id)s"
 msgid "Create suspension for %(job_name)s"
 msgstr "Suspender %(job_name)s"
 
+#, python-format
+msgid "Editing suspension %(object.pk)s"
+msgstr "Editando suspensión %(object.pk)s"
+
 msgid "All works"
 msgstr "Todos los proyectos"
 
@@ -419,9 +452,3 @@ msgstr "Lista de trabajos"
 
 msgid "Log in"
 msgstr "Conectar"
-
-msgid "A job is required in this view."
-msgstr "Esta vista requiere especificar un trabajo."
-
-msgid "An existing job is required in this view."
-msgstr "Esta vista requiere especificar un trabajo existente."

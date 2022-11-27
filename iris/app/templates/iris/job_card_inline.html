@@ -1,7 +1,18 @@
 {% load i18n %}
 
 <div class="container mt-4">
+	{% if job.completed %}
+	<div class="card border-success">
+		<div class="card-header text-success">{% translate "This job has been completed." %}</div>
+	{% elif job.delayed %}
+	<div class="card border-warning">
+		<div class="card-header text-dark text-warning">{% translate "This job is delayed." %}</div>
+	{% elif job.suspended %}
+	<div class="card border-danger">
+		<div class="card-header text-danger">{% translate "This job is suspended." %}</div>
+	{% else %}
 	<div class="card">
+	{% endif %}
 		<div class="card-header">
 			<h5 class="card-title">{{ job.task.name }}</h5>
 			{% if job.work.quantity != 1 %}<h6 class="card-subtitle mb-2 text-muted">{% blocktranslate with quantity=job.work.quantity %}{{ quantity }} times{% endblocktranslate %}</h6>{% endif %}
@@ -10,7 +21,7 @@
 			<li class="list-group-item">{{ job.work }}</li>
 		</ul>
 		<div class="card-footer">
-			<a class="btn btn-primary" href="{% url 'iris:job_detail' job.pk %}{% if station is not None %}?station={{ station.pk }}{% endif %}">{% translate "Details" %}</a>
+			<a class="btn btn-primary" href="{% url 'iris:job_detail' job.pk %}">{% translate "Details" %}</a>
 		</div>
 	</div>
 </div>

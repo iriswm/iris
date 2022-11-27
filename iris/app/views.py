@@ -6,13 +6,22 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext as _
-from django.views.generic import CreateView, DetailView, ListView, TemplateView
+from django.views.generic import (
+    CreateView,
+    DetailView,
+    FormView,
+    ListView,
+    TemplateView,
+    UpdateView,
+    View,
+)
+from django.views.generic.edit import ContextMixin, ModelFormMixin, SingleObjectMixin
 
-from iris.app.forms import CreateDelayForm
+from iris.app.forms import CreateDelayForJobForm
 from iris.app.models import Commit, Delay, Job, Station, Suspension, Work, Worker
 
 
-class PageModeMixin:
+class PageModeMixin(ContextMixin):
     default_mode = 0
     page_modes = ["default"]
     page_mode_param = "mode"
@@ -33,6 +42,39 @@ class PageModeMixin:
         context = super().get_context_data(**kwargs)
         context["current_mode"] = self.current_mode
         return context
+
+
+class NextUrlParamMixin:
+    next_url_param = "next"
+
+    def get_next_url(self):
+        if self.next_url_param in self.request.GET:
+            return self.request.GET[self.next_url_param]
+
+
+class NextUrlFieldMixin(NextUrlParamMixin, ModelFormMixin):
+    next_url_field = "next_url"
+
+    def get_next_url(self):
+        if self.next_url_field in self.request.POST:
+            return self.request.GET[self.next_url_field]
+        else:
+            return super().get_next_url()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["next_url"] = self.get_next_url()
+        return context
+
+    def get_success_url(self):
+        next_url = self.get_next_url()
+        return next_url if next_url is not None else super().get_success_url()
+
+
+class SomePermissionRequiredMixin(PermissionRequiredMixin):
+    def has_permission(self):
+        perms = self.get_permission_required()
+        return any([self.request.user.has_perm(perm) for perm in perms])
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
@@ -63,12 +105,6 @@ class WorkListView(ListView):
 
 class JobListView(ListView):
     model = Job
-
-
-class SomePermissionRequiredMixin(PermissionRequiredMixin):
-    def has_permission(self):
-        perms = self.get_permission_required()
-        return any([self.request.user.has_perm(perm) for perm in perms])
 
 
 class AlertsView(SomePermissionRequiredMixin, PageModeMixin, TemplateView):
@@ -109,59 +145,29 @@ class JobDetailView(DetailView):
         return context
 
 
-class JobItemCreateViewMixin(LoginRequiredMixin, CreateView):
-    def get_job_and_worker(self):
-        job_pk = self.request.GET["job"]
-        job = Job.objects.get(pk=job_pk)
-        worker = Worker.objects.get(user=self.request.user)
-        return job, worker
-
-    def get(self, *args, **kwargs):
-        try:
-            self.get_job_and_worker()
-        except KeyError:
-            messages.error(self.request, _("A job is required in this view."))
-            return HttpResponseRedirect(reverse("iris:index"))
-        except Job.DoesNotExist:
-            messages.error(self.request, _("An existing job is required in this view."))
-            return HttpResponseRedirect(reverse("iris:index"))
-        return super().get(*args, **kwargs)
+class CreateForJobMixin(LoginRequiredMixin, NextUrlFieldMixin, CreateView):
+    template_name_suffix = "_create_for_job"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        job, worker = self.get_job_and_worker()
-        context["job"] = job
+        context["job"] = Job.objects.get(pk=self.kwargs["pk"])
         return context
 
     def form_valid(self, form):
-        job, worker = self.get_job_and_worker()
-        form.instance.job = job
-        form.instance.worker = worker
+        form.instance.job = Job.objects.get(pk=self.kwargs["pk"])
+        form.instance.worker = Worker.objects.get(user=self.request.user)
         return super().form_valid(form)
 
-    def get_success_url(self):
-        success_url = reverse("iris:index")
-        try:
-            station_pk = self.request.GET["station"]
-            _station = Station.objects.get(pk=station_pk)
-        except KeyError:
-            pass
-        except Station.DoesNotExist:
-            pass
-        else:
-            success_url = reverse("iris:station", args=[station_pk])
-        return success_url
 
-
-class CreateCommitView(JobItemCreateViewMixin, PermissionRequiredMixin, CreateView):
+class CreateCommitForJobView(CreateForJobMixin, PermissionRequiredMixin, CreateView):
     model = Commit
     permission_required = "iris.add_commit"
     fields = ["notes"]
 
 
-class CreateDelayView(JobItemCreateViewMixin, PermissionRequiredMixin, CreateView):
+class CreateDelayForJobView(CreateForJobMixin, PermissionRequiredMixin, CreateView):
     model = Delay
-    form_class = CreateDelayForm
+    form_class = CreateDelayForJobForm
     permission_required = "iris.add_delay"
 
     def form_valid(self, form):
@@ -173,7 +179,49 @@ class CreateDelayView(JobItemCreateViewMixin, PermissionRequiredMixin, CreateVie
         return super().form_valid(form)
 
 
-class CreateSuspensionView(JobItemCreateViewMixin, PermissionRequiredMixin, CreateView):
+class DelayFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
+    model = Delay
+    permission_required = "iris.change_delay"
+    fields = ["notes"]
+
+
+class DelayEndView(
+    PermissionRequiredMixin,
+    SingleObjectMixin,
+    NextUrlParamMixin,
+    View,
+):
+    model = Delay
+    permission_required = "iris.change_delay"
+
+    def get(self, request, *args, **kwargs):
+        self.get_object().end()
+        return HttpResponseRedirect(self.get_next_url())
+
+
+class CreateSuspensionForJobView(
+    CreateForJobMixin, PermissionRequiredMixin, CreateView
+):
     model = Suspension
     permission_required = "iris.add_suspension"
     fields = ["notes"]
+
+
+class SuspensionFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
+    model = Suspension
+    permission_required = "iris.change_suspension"
+    fields = ["notes"]
+
+
+class SuspensionLiftView(
+    PermissionRequiredMixin,
+    SingleObjectMixin,
+    NextUrlParamMixin,
+    View,
+):
+    model = Suspension
+    permission_required = "iris.change_suspension"
+
+    def get(self, request, *args, **kwargs):
+        self.get_object().lift()
+        return HttpResponseRedirect(self.get_next_url())

@@ -7,7 +7,7 @@ from django.utils.translation import gettext as _
 from iris.app.models import Delay
 
 
-class CreateDelayForm(forms.ModelForm):
+class CreateDelayForJobForm(forms.ModelForm):
     days = forms.IntegerField(min_value=0, initial=0, required=False)
     hours = forms.IntegerField(min_value=0, initial=0, required=False)
     minutes = forms.IntegerField(min_value=0, initial=0, required=False)

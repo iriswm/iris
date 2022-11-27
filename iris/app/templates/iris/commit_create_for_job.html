@@ -1,0 +1,35 @@
+{% extends 'iris/base.html' %}
+
+{% load i18n %}
+
+{% block iris_title %}{% blocktranslate with job_id=job.pk %}Create commit for job {{ job_id }}{% endblocktranslate %}{% endblock %}
+{% block iris_header %}{% blocktranslate with job_name=job %}Create commit for {{ job_name }}{% endblocktranslate %}{% endblock %}
+
+{% block content %}
+<div class="container-sm mt-4 p-4">
+	<form method="post">
+		{% csrf_token %}
+		{% if form.non_field_errors %}
+		<ul class="mb-3 text-danger">
+			{% for error in form.non_field_errors %}
+			<li>{{ error }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		<div class="mb-3">
+			<label for="id_notes" class="form-label">{% translate "Notes" %}</label>
+			<textarea id="id_notes" name="notes" class="form-control" rows="10"></textarea>
+			{% if form.notes.errors %}
+			<ul class="text-danger">
+				{% for error in form.notes.errors %}
+				<li>{{ error }}</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+		</div>
+		<div>
+			<button type="submit" class="btn btn-primary w-100">{% translate "Commit" %}</button>
+		</div>
+	</form>
+</div>
+{% endblock %}

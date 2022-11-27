@@ -224,10 +224,20 @@ class Job(TimestampMixin, models.Model):
         )
 
     @property
+    def delayed_by(self):
+        for delay in self.delays.all():
+            if (delay.created + delay.duration) > now():
+                return delay
+
+    @property
     def suspended(self):
-        return any(
-            [suspension.lifted_at is None for suspension in self.suspensions.all()]
-        )
+        return any([not suspension.lifted for suspension in self.suspensions.all()])
+
+    @property
+    def suspended_by(self):
+        for suspension in self.suspensions.all():
+            if not suspension.lifted:
+                return suspension
 
 
 class TaskSpawn(models.Model):
@@ -423,6 +433,14 @@ class Delay(TimestampMixin, NotesMixin, models.Model):
     @property
     def in_effect(self):
         return self.created + self.duration > now()
+
+    @property
+    def ends(self):
+        return self.created + self.duration
+
+    def end(self):
+        self.duration = self.created - now()
+        self.save()
 
 
 add_note_type("Delay", "iris.app.Delay")

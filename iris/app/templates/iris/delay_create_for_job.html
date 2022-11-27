@@ -1,0 +1,72 @@
+{% extends 'iris/base.html' %}
+
+{% load i18n %}
+
+{% block iris_title %}{% blocktranslate with job_id=job.pk %}Create delay for job {{ job_id }}{% endblocktranslate %}{% endblock %}
+{% block iris_header %}{% blocktranslate with job_name=job %}Create delay for {{ job_name }}{% endblocktranslate %}{% endblock %}
+
+{% block content %}
+<div class="container-sm mt-4 p-4">
+	<form method="post">
+		{% csrf_token %}
+		{% if form.non_field_errors %}
+		<ul class="mb-3 row text-danger">
+			{% for error in form.non_field_errors %}
+			<li>{{ error }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		<div class="mb-3 row">
+			<div class="col">
+				<label class="form-label" for="id_days">{% translate "Days" %}</label>
+				<input class="form-control" type="number" name="days" id="id_days" value="0">
+				{% if form.days.errors %}
+				<ul class="text-danger">
+					{% for error in form.days.errors %}
+					<li>{{ error }}</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
+			</div>
+			<div class="col">
+				<label class="form-label" for="id_hours">{% translate "Hours" %}</label>
+				<input class="form-control" type="number" name="hours" id="id_hours" value="0">
+				{% if form.hours.errors %}
+				<ul class="text-danger">
+					{% for error in form.hours.errors %}
+					<li>{{ error }}</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
+			</div>
+			<div class="col">
+				<label class="form-label" for="id_minutes">{% translate "Minutes" %}</label>
+				<input class="form-control" type="number" name="minutes" id="id_minutes" value="0">
+				{% if form.minutes.errors %}
+				<ul class="text-danger">
+					{% for error in form.minutes.errors %}
+					<li>{{ error }}</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<div class="col">
+				<label for="id_notes" class="form-label">{% translate "Notes" %}</label>
+				<textarea id="id_notes" name="notes" class="form-control" rows="10"></textarea>
+				{% if form.notes.errors %}
+				<ul class="text-danger">
+					{% for error in form.notes.errors %}
+					<li>{{ error }}</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
+			</div>
+		</div>
+		<div>
+			<button type="submit" class="btn btn-primary w-100">{% translate "Delay" %}</button>
+		</div>
+	</form>
+</div>
+{% endblock %}
