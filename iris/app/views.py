@@ -71,19 +71,24 @@ class SomePermissionRequiredMixin(PermissionRequiredMixin):
         return any([self.request.user.has_perm(perm) for perm in perms])
 
 
-class AlertsView(SomePermissionRequiredMixin, TemplateView):
+class AlertsView(SomePermissionRequiredMixin, PageModeMixin, TemplateView):
     template_name = "iris/alerts.html"
     permission_required = (
         "iris.view_delay",
         "iris.view_suspension",
     )
+    page_modes = ["both", "delays", "suspensions"]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context |= {
-            "delays": Delay.objects.in_effect(),
-            "suspensions": Suspension.objects.in_effect(),
-        }
+        if self.current_mode in ["both", "delays"]:
+            context |= {
+                "delays": Delay.objects.in_effect(),
+            }
+        if self.current_mode in ["both", "suspensions"]:
+            context |= {
+                "suspensions": Suspension.objects.in_effect(),
+            }
         return context
 
 

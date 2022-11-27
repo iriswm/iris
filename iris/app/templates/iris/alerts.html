@@ -6,6 +6,11 @@
 
 {% block content %}
 <div class="container mt-4">
+	<div class="btn-group">
+		<a href="{% url "iris:alerts" %}" class="btn btn-primary{% if current_mode == "both" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Both" %}</a>
+		<a href="{% url "iris:alerts" %}?mode=delays" class="btn btn-primary{% if current_mode == "delays" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Delays" %}</a>
+		<a href="{% url "iris:alerts" %}?mode=suspensions" class="btn btn-primary{% if current_mode == "suspensions" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Suspensions" %}</a>
+	</div>
 	<ul>
 		{% if perms.iris.view_delay %}
 		{% for delay in delays %}
