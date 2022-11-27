@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 20:48+0100\n"
-"PO-Revision-Date: 2022-11-27 20:49+0100\n"
+"POT-Creation-Date: 2022-11-27 21:56+0100\n"
+"PO-Revision-Date: 2022-11-27 21:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -78,6 +78,9 @@ msgstr "Los retrasos necesitan una duración válida."
 
 msgid "Delays must have a duration."
 msgstr "Los retrasos necesitan una duración."
+
+msgid "Works require a valid category."
+msgstr "Los proyectos requieren una categoría válida."
 
 msgid "created"
 msgstr "creado"
@@ -463,6 +466,21 @@ msgstr "Suspender %(job_name)s"
 msgid "Editing suspension %(object.pk)s"
 msgstr "Editando suspensión %(object.pk)s"
 
+msgid "Create a new work"
+msgstr "Crear un nuevo proyecto"
+
+msgid "Category"
+msgstr "Categoría"
+
+msgid "Select a category"
+msgstr "Selecciona una categoría"
+
+msgid "Quantity"
+msgstr "Cantidad"
+
+msgid "Description"
+msgstr "Descripción"
+
 #, python-format
 msgid "Editing work %(work_id)s"
 msgstr "Editando proyecto %(work_id)s"
@@ -471,11 +489,11 @@ msgstr "Editando proyecto %(work_id)s"
 msgid "Editing %(object)s"
 msgstr "Editando %(object)s"
 
-msgid "Description"
-msgstr "Descripción"
-
 msgid "All works"
 msgstr "Todos los proyectos"
+
+msgid "Create new work"
+msgstr "Crear proyecto"
 
 msgid "This work has been completed."
 msgstr "El proyecto ha sido completado."

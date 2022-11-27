@@ -17,8 +17,17 @@ from django.views.generic import (
 )
 from django.views.generic.edit import ContextMixin, ModelFormMixin, SingleObjectMixin
 
-from iris.app.forms import DelayModelForm
-from iris.app.models import Commit, Delay, Job, Station, Suspension, Work, Worker
+from iris.app.forms import CreateWorkModelForm, DelayModelForm
+from iris.app.models import (
+    Category,
+    Commit,
+    Delay,
+    Job,
+    Station,
+    Suspension,
+    Work,
+    Worker,
+)
 
 
 class PageModeMixin(ContextMixin):
@@ -258,3 +267,15 @@ class WorkFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
     model = Work
     permission_required = "iris.change_work"
     fields = ["description", "notes"]
+
+
+class CreateWorkView(PermissionRequiredMixin, NextUrlFieldMixin, CreateView):
+    template_name_suffix = "_create"
+    model = Work
+    permission_required = "iris.add_work"
+    form_class = CreateWorkModelForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all().values("pk", "name")
+        return context

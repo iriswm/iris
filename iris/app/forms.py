@@ -4,7 +4,7 @@ from django import forms
 from django.core.validators import ValidationError
 from django.utils.translation import gettext as _
 
-from iris.app.models import Delay
+from iris.app.models import Delay, Work
 
 
 class DelayModelForm(forms.ModelForm):
@@ -58,3 +58,19 @@ class DelayModelForm(forms.ModelForm):
             minutes=self.cleaned_data["minutes"],
         )
         return super().save()
+
+
+class CreateWorkModelForm(forms.ModelForm):
+    class Meta:
+        model = Work
+        fields = ["category", "description", "notes", "quantity"]
+
+    def clean(self):
+        category = self.cleaned_data.get("category")
+        if category is None:
+            raise ValidationError(_("Works require a valid category."), code="invalid")
+
+    def save(self):
+        instance = super().save()
+        instance.spawn_jobs()
+        return instance

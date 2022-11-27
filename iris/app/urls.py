@@ -6,6 +6,7 @@ from iris.app.views import (
     CreateCommitForJobView,
     CreateDelayForJobView,
     CreateSuspensionForJobView,
+    CreateWorkView,
     DelayEndView,
     DelayFormView,
     IndexView,
@@ -62,4 +63,5 @@ urlpatterns = [
     ),
     path("works/", WorkListView.as_view(), name="work_list"),
     path("work/<int:pk>/change/", WorkFormView.as_view(), name="work_change"),
+    path("work/add/", CreateWorkView.as_view(), name="work_add"),
 ]
