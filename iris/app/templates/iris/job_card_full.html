@@ -18,6 +18,12 @@
 		</div>
 		<ul class="list-group list-group-flush">
 			<li class="list-group-item">{{ job.work }}</li>
+			{% if job.work.notes %}
+			<li class="list-group-item">
+				<p>{% translate "Work notes" %}</p>
+				<p>{{ job.work.notes|linebreaks }}</p>
+			</li>
+			{% endif %}
 			{% if job.task.instructions %}
 			<li class="list-group-item">{{ job.task.instructions }}</li>
 			{% else %}
