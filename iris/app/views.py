@@ -12,6 +12,29 @@ from iris.app.forms import CreateDelayForm
 from iris.app.models import Commit, Delay, Job, Station, Suspension, Work, Worker
 
 
+class PageModeMixin:
+    default_mode = 0
+    page_modes = ["default"]
+    page_mode_param = "mode"
+
+    @property
+    def current_mode(self):
+        try:
+            query_mode = self.request.GET[self.page_mode_param]
+        except KeyError:
+            return self.page_modes[self.default_mode]
+        else:
+            if query_mode in self.page_modes:
+                return query_mode
+            else:
+                return self.page_modes[self.default_mode]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["current_mode"] = self.current_mode
+        return context
+
+
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "iris/index.html"
 
