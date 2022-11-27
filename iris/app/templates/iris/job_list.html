@@ -6,8 +6,20 @@
 
 {% block content %}
 <div class="container mt-4">
+	<div class="btn-group">
+		<a href="{% url "iris:job_list" %}" class="btn btn-primary{% if current_mode == "pending" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Pending" %}</a>
+		<a href="{% url "iris:job_list" %}?mode=delayed" class="btn btn-primary{% if current_mode == "delayed" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Delayed" %}</a>
+		<a href="{% url "iris:job_list" %}?mode=suspended" class="btn btn-primary{% if current_mode == "suspended" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Suspended" %}</a>
+		<a href="{% url "iris:job_list" %}?mode=completed" class="btn btn-primary{% if current_mode == "completed" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Completed" %}</a>
+	</div>
 	<ul>
-		{% for job in object_list %}{% include "iris/job_card_actions.html" %}{% endfor %}
+		{% if current_mode == "pending" %}
+		{% for job in jobs %}{% include "iris/job_card_station.html" %}{% endfor %}
+		{% elif current_mode == "delayed" %}
+		{% for job in jobs %}{% include "iris/job_card_station_delayed.html" %}{% endfor %}
+		{% elif current_mode == "suspended" %}
+		{% for job in jobs %}{% include "iris/job_card_station_suspended.html" %}{% endfor %}
+		{% endif %}
 	</ul>
 </div>
 {% endblock %}
