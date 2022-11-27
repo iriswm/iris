@@ -1,0 +1,37 @@
+{% extends 'iris/base.html' %}
+
+{% load i18n %}
+
+{% block iris_title %}{% block iris_header %}{% blocktranslate %}Editing commit {{ object.pk }}{% endblocktranslate %}{% endblock %}{% endblock %}
+
+{% block content %}
+<div class="container-sm mt-4 p-4">
+	<form method="post">
+		{% csrf_token %}
+		<input type="hidden" id="next_url" value="{{ next_url }}">
+		{% if form.non_field_errors %}
+		<ul class="mb-3 row text-danger">
+			{% for error in form.non_field_errors %}
+			<li>{{ error }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		<div class="mb-3 row">
+			<div class="col">
+				<label for="id_notes" class="form-label">{% translate "Notes" %}</label>
+				<textarea id="id_notes" name="notes" class="form-control" rows="10">{{ object.notes }}</textarea>
+				{% if form.notes.errors %}
+				<ul class="text-danger">
+					{% for error in form.notes.errors %}
+					<li>{{ error }}</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
+			</div>
+		</div>
+		<div>
+			<button type="submit" class="btn btn-primary w-100">{% translate "Save changes" %}</button>
+		</div>
+	</form>
+</div>
+{% endblock %}

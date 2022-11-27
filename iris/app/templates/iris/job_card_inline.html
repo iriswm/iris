@@ -19,9 +19,18 @@
 		</div>
 		<ul class="list-group list-group-flush">
 			<li class="list-group-item">{{ job.work }}</li>
+			{% if job.completed and job.commit.notes %}
+			<li class="list-group-item">
+				<p>{% translate "Commit notes" %}</p>
+				<p>{{ job.commit.notes|linebreaks }}</p>
+			</li>
+			{% endif %}
 		</ul>
 		<div class="card-footer">
-			<a class="btn btn-primary" href="{% url 'iris:job_detail' job.pk %}">{% translate "Details" %}</a>
+			<a class="btn btn-primary" href="{% url 'iris:job_detail' job.pk %}">{% translate "Job details" %}</a>
+			{% if job.completed %}
+			<a class="btn btn-primary" href="{% url 'iris:commit_change' job.commit.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit commit notes" %}</a>
+			{% endif %}
 		</div>
 	</div>
 </div>

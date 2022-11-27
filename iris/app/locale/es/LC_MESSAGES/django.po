@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 16:13+0100\n"
-"PO-Revision-Date: 2022-11-27 16:14+0100\n"
+"POT-Creation-Date: 2022-11-27 19:09+0100\n"
+"PO-Revision-Date: 2022-11-27 19:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -329,6 +329,13 @@ msgid "Commit"
 msgstr "Cerrar"
 
 #, python-format
+msgid "Editing commit %(object.pk)s"
+msgstr "Editando cierre %(object.pk)s"
+
+msgid "Save changes"
+msgstr "Guardar los cambios"
+
+#, python-format
 msgid "Create delay for job %(job_id)s"
 msgstr "Retrasar el trabajo %(job_id)s"
 
@@ -351,9 +358,6 @@ msgstr "Retrasar"
 #, python-format
 msgid "Editing delay %(object.pk)s"
 msgstr "Editando retraso %(object.pk)s"
-
-msgid "Save changes"
-msgstr "Guardar los cambios"
 
 msgid "Index"
 msgstr "Índice"
@@ -417,6 +421,12 @@ msgstr "El trabajo ha sido completado."
 msgid "This job has been canceled."
 msgstr "El trabajo ha sido cancelado."
 
+msgid "Commit notes"
+msgstr "Notas del cierre"
+
+msgid "Edit commit notes"
+msgstr "Editar notas del cierre"
+
 #, python-format
 msgid "Details for job %(job_id)s"
 msgstr "Detalles del trabajo %(job_id)s"
@@ -428,10 +438,6 @@ msgstr "Detalles de %(job_name)s"
 msgid "All jobs"
 msgstr "Todos los trabajos"
 
-#, python-format
-msgid "Works for station %(station_name)s"
-msgstr "Trabajos para la estación %(station_name)s"
-
 msgid "Pending"
 msgstr "Pendientes"
 
@@ -440,6 +446,10 @@ msgstr "Retrasados"
 
 msgid "Suspended"
 msgstr "Suspendidos"
+
+#, python-format
+msgid "Works for station %(station_name)s"
+msgstr "Trabajos para la estación %(station_name)s"
 
 #, python-format
 msgid "Create suspension for job %(job_id)s"

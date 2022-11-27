@@ -122,7 +122,7 @@ class JobListView(PageModeMixin, ListView):
         return context
 
 
-class WorkListView(ListView):
+class WorkListView(LoginRequiredMixin, ListView):
     model = Work
 
 
@@ -196,6 +196,12 @@ class CreateDelayForJobView(CreateForJobMixin, PermissionRequiredMixin, CreateVi
             minutes=form.cleaned_data["minutes"],
         )
         return super().form_valid(form)
+
+
+class CommitFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
+    model = Commit
+    permission_required = "iris.change_commit"
+    fields = ["notes"]
 
 
 class DelayFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):

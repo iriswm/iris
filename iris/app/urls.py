@@ -2,6 +2,7 @@ from django.urls import path
 
 from iris.app.views import (
     AlertsView,
+    CommitFormView,
     CreateCommitForJobView,
     CreateDelayForJobView,
     CreateSuspensionForJobView,
@@ -40,6 +41,11 @@ urlpatterns = [
         "job/<int:pk>/suspension/add/",
         CreateSuspensionForJobView.as_view(),
         name="job_add_suspension",
+    ),
+    path(
+        "commit/<int:pk>/change/",
+        CommitFormView.as_view(),
+        name="commit_change",
     ),
     path("delay/<int:pk>/change/", DelayFormView.as_view(), name="delay_change"),
     path("delay/<int:pk>/end/", DelayEndView.as_view(), name="delay_end"),
