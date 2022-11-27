@@ -19,6 +19,8 @@
 		{% for job in jobs %}{% include "iris/job_card_station_delayed.html" %}{% endfor %}
 		{% elif current_mode == "suspended" %}
 		{% for job in jobs %}{% include "iris/job_card_station_suspended.html" %}{% endfor %}
+		{% elif current_mode == "completed" %}
+		{% for job in jobs %}{% include "iris/job_card_station_completed.html" %}{% endfor %}
 		{% endif %}
 	</ul>
 </div>
