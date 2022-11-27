@@ -36,13 +36,15 @@ class JobManager(Manager):
             queryset = queryset.filter(task__stations=station)
         return queryset.annotate(
             max_delay=Max(F("delays__created") + F("delays__duration")),
-        ).filter(Q(max_delay__isnull=False) | (Q(max_delay__gt=now())))
+        ).filter(Q(max_delay__isnull=False) & (Q(max_delay__gt=now())))
 
     def suspended(self, station=None):
         queryset = self.get_queryset()
         if station is not None:
             queryset = queryset.filter(task__stations=station)
-        return queryset.filter(Q(suspensions__lifted_at__isnull=True))
+        return queryset.filter(
+            Q(suspensions__isnull=False) & Q(suspensions__lifted_at__isnull=True)
+        )
 
 
 class DelayManager(Manager):
