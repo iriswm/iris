@@ -8,13 +8,34 @@
 <div class="container-sm mt-4 p-4">
 	<form method="post" action="{% url 'iris:login' %}">
 		{% csrf_token %}
+		{% if form.non_field_errors %}
+		<ul class="mb-3 text-danger">
+			{% for error in form.non_field_errors %}
+			<li>{{ error }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
 		<div class="mb-3">
 			<label for="username" class="form-label">{{ form.username.label_tag }}</label>
 			<input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" class="form-control">
+			{% if form.username.errors %}
+			<ul class="text-danger">
+				{% for error in form.username.errors %}
+				<li>{{ error }}</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
 		</div>
 		<div class="mb-4">
 			<label for="password" class="form-label">{{ form.password.label_tag }}</label>
 			<input type="password" name="password" autocomplete="current-password" required="" id="id_password" class="form-control">
+			{% if form.password.errors %}
+			<ul class="text-danger">
+				{% for error in form.password.errors %}
+				<li>{{ error }}</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
 		</div>
 		<div>
 			<button type="submit" class="btn btn-primary w-100">{% translate "Log in" %}</button>
