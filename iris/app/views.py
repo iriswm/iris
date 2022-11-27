@@ -122,8 +122,18 @@ class JobListView(PageModeMixin, ListView):
         return context
 
 
-class WorkListView(LoginRequiredMixin, ListView):
+class WorkListView(LoginRequiredMixin, PageModeMixin, ListView):
     model = Work
+    page_modes = ["pending", "completed", "canceled"]
+
+    def get_queryset(self):
+        if self.current_mode == "pending":
+            return Work.objects.pending()
+        elif self.current_mode == "completed":
+            return Work.objects.completed()
+        elif self.current_mode == "canceled":
+            return Work.objects.canceled()
+        return super().get_queryset()
 
 
 class AlertsView(SomePermissionRequiredMixin, PageModeMixin, TemplateView):

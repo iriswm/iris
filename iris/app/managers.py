@@ -1,5 +1,26 @@
-from django.db.models import F, Manager, Max, Q
+from django.db.models import Count, F, Manager, Max, Q
 from django.utils.timezone import now
+
+
+class WorkManager(Manager):
+    def pending(self):
+        queryset = self.get_queryset()
+        return (
+            queryset.annotate(
+                number_of_jobs=Count("jobs"), number_of_commits=Count("jobs__commit")
+            )
+            .filter(cancel_time__isnull=True)
+            .exclude(number_of_jobs=F("number_of_commits"))
+        )
+
+    def completed(self, station=None):
+        queryset = self.get_queryset()
+        return queryset.annotate(
+            number_of_jobs=Count("jobs"), number_of_commits=Count("jobs__commit")
+        ).filter(number_of_jobs=F("number_of_commits"))
+
+    def canceled(self, station=None):
+        return self.get_queryset().filter(cancel_time__isnull=False)
 
 
 class JobManager(Manager):

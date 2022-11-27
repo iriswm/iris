@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
-from iris.app.managers import DelayManager, JobManager, SuspensionManager
+from iris.app.managers import DelayManager, JobManager, SuspensionManager, WorkManager
 
 NOTES_PATH_LIMIT = 64
 NOTES_MAX_DISPLAY_LENGTH = 32
@@ -120,6 +120,8 @@ class Work(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
         _("quantity"), default=1, validators=[MinValueValidator(1)]
     )
     has_priority = models.BooleanField(_("has priority"), default=False)
+
+    objects = WorkManager()
 
     class Meta:
         verbose_name = _("work")

@@ -6,8 +6,14 @@
 
 {% block content %}
 <div class="container mt-4">
+	<div class="btn-group">
+		<a href="{% url "iris:work_list" %}" class="btn btn-primary{% if current_mode == "pending" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Pending" %}</a>
+		<a href="{% url "iris:work_list" %}?mode=completed" class="btn btn-primary{% if current_mode == "completed" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Completed" %}</a>
+		<a href="{% url "iris:work_list" %}?mode=canceled" class="btn btn-primary{% if current_mode == "canceled" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Canceled" %}</a>
+	</div>
 	<ul>
 		{% for work in object_list %}
+		<div class="container mt-4">
 			{% if work.completed %}
 			<div class="card border-success">
 			{% elif work.canceled %}
@@ -42,6 +48,7 @@
 				</li>
 				</ul>
 			</div>
+		</div>
 		{% endfor %}
 	</ul>
 </div>
