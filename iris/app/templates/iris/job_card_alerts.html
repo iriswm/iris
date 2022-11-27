@@ -40,11 +40,12 @@
 			{% endif %}
 		</ul>
 		<div class="card-footer">
+			<a class="btn btn-primary" href="{% url 'iris:job_detail' job.pk %}">{% translate "Job details" %}</a>
 			{% if job.delayed %}
-			<a class="btn btn-success" href="{% url 'iris:delay_change' job.delayed_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit notes" %}</a>
+			<a class="btn btn-success" href="{% url 'iris:delay_change' job.delayed_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit delay notes" %}</a>
 			<a class="btn btn-warning" href="{% url 'iris:delay_end' job.delayed_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "End delay" %}</a>
 			{% elif job.suspended %}
-			<a class="btn btn-success" href="{% url 'iris:suspension_change' job.suspended_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit notes" %}</a>
+			<a class="btn btn-success" href="{% url 'iris:suspension_change' job.suspended_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit suspension notes" %}</a>
 			<a class="btn btn-warning" href="{% url 'iris:suspension_lift' job.suspended_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Lift suspension" %}</a>
 			{% endif %}
 		</div>

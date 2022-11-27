@@ -1,0 +1,25 @@
+{% load i18n %}
+
+<div class="container mt-4">
+	<div class="card">
+		<div class="card-header">
+			<h5 class="card-title">{{ job.task.name }}</h5>
+			{% if job.work.quantity != 1 %}<h6 class="card-subtitle mb-2 text-muted">{% blocktranslate with quantity=job.work.quantity %}{{ quantity }} times{% endblocktranslate %}</h6>{% endif %}
+			<p class="card-text">{{ job.work }}</p>
+		</div>
+		{% if job.work.notes %}
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item">
+				<p>{% translate "Work notes" %}</p>
+				<p>{{ job.work.notes|linebreaks }}</p>
+			</li>
+		</ul>
+		{% endif %}
+		<div class="card-footer">
+			<a class="btn btn-primary" href="{% url 'iris:job_detail' job.pk %}">{% translate "Job details" %}</a>
+			<a class="btn btn-success" href="{% url 'iris:job_add_commit' job.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Commit" %}</a>
+			<a class="btn btn-warning" href="{% url 'iris:job_add_delay' job.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Delay" %}</a>
+			<a class="btn btn-danger" href="{% url 'iris:job_add_suspension' job.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Suspend" %}</a>
+		</div>
+	</div>
+</div>

@@ -6,8 +6,19 @@
 
 {% block content %}
 <div class="container mt-4">
+	<div class="btn-group">
+		<a href="{% url "iris:station" object.pk %}" class="btn btn-primary{% if current_mode == "pending" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Pending" %}</a>
+		<a href="{% url "iris:station" object.pk %}?mode=delayed" class="btn btn-primary{% if current_mode == "delayed" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Delayed" %}</a>
+		<a href="{% url "iris:station" object.pk %}?mode=suspended" class="btn btn-primary{% if current_mode == "suspended" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Suspended" %}</a>
+	</div>
 	<ul>
-		{% for job in jobs %}{% include "iris/job_card_actions.html" %}{% endfor %}
+		{% if current_mode == "pending" %}
+		{% for job in jobs %}{% include "iris/job_card_station.html" %}{% endfor %}
+		{% elif current_mode == "delayed" %}
+		{% for job in jobs %}{% include "iris/job_card_station_delayed.html" %}{% endfor %}
+		{% elif current_mode == "suspended" %}
+		{% for job in jobs %}{% include "iris/job_card_station_suspended.html" %}{% endfor %}
+		{% endif %}
 	</ul>
 </div>
 {% endblock %}

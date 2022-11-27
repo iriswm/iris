@@ -16,7 +16,6 @@ from django.views.generic import (
     View,
 )
 from django.views.generic.edit import ContextMixin, ModelFormMixin, SingleObjectMixin
-
 from iris.app.forms import CreateDelayForJobForm
 from iris.app.models import Commit, Delay, Job, Station, Suspension, Work, Worker
 
@@ -89,13 +88,19 @@ class IrisLogoutView(LogoutView):
     next_page = reverse_lazy("iris:index")
 
 
-class StationView(LoginRequiredMixin, DetailView):
+class StationView(LoginRequiredMixin, PageModeMixin, DetailView):
     model = Station
+    page_modes = ["pending", "delayed", "suspended"]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         station = self.get_object()
-        context["jobs"] = Job.objects.pending(station=station)
+        if self.current_mode == "pending":
+            context["jobs"] = Job.objects.pending(station=station)
+        elif self.current_mode == "delayed":
+            context["jobs"] = Job.objects.delayed(station=station)
+        elif self.current_mode == "suspended":
+            context["jobs"] = Job.objects.suspended(station=station)
         return context
 
 

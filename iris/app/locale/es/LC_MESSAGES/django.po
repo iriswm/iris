@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 13:20+0100\n"
-"PO-Revision-Date: 2022-11-27 13:22+0100\n"
+"POT-Creation-Date: 2022-11-27 16:13+0100\n"
+"PO-Revision-Date: 2022-11-27 16:14+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -393,11 +393,17 @@ msgstr "Notas del retraso"
 msgid "Suspension notes"
 msgstr "Notas de la suspensión"
 
-msgid "Edit notes"
-msgstr "Editar notas"
+msgid "Job details"
+msgstr "Detalles del trabajo"
+
+msgid "Edit delay notes"
+msgstr "Editar notas del retraso"
 
 msgid "End delay"
 msgstr "Terminar retraso"
+
+msgid "Edit suspension notes"
+msgstr "Editar notas de la suspensión"
 
 msgid "Lift suspension"
 msgstr "Levantar suspensión"
@@ -425,6 +431,15 @@ msgstr "Todos los trabajos"
 #, python-format
 msgid "Works for station %(station_name)s"
 msgstr "Trabajos para la estación %(station_name)s"
+
+msgid "Pending"
+msgstr "Pendientes"
+
+msgid "Delayed"
+msgstr "Retrasados"
+
+msgid "Suspended"
+msgstr "Suspendidos"
 
 #, python-format
 msgid "Create suspension for job %(job_id)s"
