@@ -42,18 +42,14 @@ class JobManager(Manager):
 
 
 class DelayManager(Manager):
-    def in_effect(self, station=None):
+    def in_effect(self):
         queryset = self.get_queryset()
-        if station is not None:
-            queryset = queryset.filter(job__task__stations=station)
         return queryset.annotate(
             delay_limit=F("created") + F("duration"),
         ).filter(delay_limit__gt=now())
 
 
 class SuspensionManager(Manager):
-    def in_effect(self, station=None):
+    def in_effect(self):
         queryset = self.get_queryset()
-        if station is not None:
-            queryset = queryset.filter(job__task__stations=station)
         return queryset.filter(Q(lifted_at__isnull=True))
