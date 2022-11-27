@@ -18,12 +18,6 @@ class JobManager(Manager):
             )
         )
 
-    def canceled(self, station=None):
-        queryset = self.get_queryset()
-        if station is not None:
-            queryset = queryset.filter(task__stations=station)
-        return queryset.filter(work__cancel_time__isnull=False)
-
     def completed(self, station=None):
         queryset = self.get_queryset()
         if station is not None:
