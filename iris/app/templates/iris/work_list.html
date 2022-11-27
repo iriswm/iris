@@ -25,6 +25,9 @@
 					{% if work.quantity != 1 %}<h6 class="card-subtitle mb-2 text-muted">{% blocktranslate with quantity=work.quantity %}{{ quantity }} times{% endblocktranslate %}</h6>{% endif %}
 				</div>
 				<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+					<a class="btn btn-primary" href="{% url 'iris:work_change' work.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit work details" %}</a>
+				</li>
 				{% if work.notes %}
 				<li class="list-group-item">
 					<p>{% translate "Work notes" %}</p>

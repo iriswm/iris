@@ -16,6 +16,7 @@ from iris.app.views import (
     StationView,
     SuspensionFormView,
     SuspensionLiftView,
+    WorkFormView,
     WorkListView,
 )
 
@@ -60,4 +61,5 @@ urlpatterns = [
         name="suspension_lift",
     ),
     path("works/", WorkListView.as_view(), name="work_list"),
+    path("work/<int:pk>/change/", WorkFormView.as_view(), name="work_change"),
 ]

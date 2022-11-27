@@ -250,3 +250,9 @@ class SuspensionLiftView(
     def get(self, request, *args, **kwargs):
         self.get_object().lift()
         return HttpResponseRedirect(self.get_next_url())
+
+
+class WorkFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
+    model = Work
+    permission_required = "iris.change_work"
+    fields = ["description", "notes"]

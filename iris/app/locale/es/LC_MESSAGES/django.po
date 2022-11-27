@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 19:09+0100\n"
-"PO-Revision-Date: 2022-11-27 19:09+0100\n"
+"POT-Creation-Date: 2022-11-27 19:23+0100\n"
+"PO-Revision-Date: 2022-11-27 19:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -463,6 +463,17 @@ msgstr "Suspender %(job_name)s"
 msgid "Editing suspension %(object.pk)s"
 msgstr "Editando suspensión %(object.pk)s"
 
+#, python-format
+msgid "Editing work %(work_id)s"
+msgstr "Editando proyecto %(work_id)s"
+
+#, python-format
+msgid "Editing %(object)s"
+msgstr "Editando %(object)s"
+
+msgid "Description"
+msgstr "Descripción"
+
 msgid "All works"
 msgstr "Todos los proyectos"
 
@@ -471,6 +482,9 @@ msgstr "El proyecto ha sido completado."
 
 msgid "This work has been canceled."
 msgstr "El proyecto ha sido cancelado."
+
+msgid "Edit work details"
+msgstr "Editar detalles del proyecto"
 
 msgid "Job list"
 msgstr "Lista de trabajos"
