@@ -367,10 +367,13 @@ class Commit(TimestampMixin, NotesMixin, models.Model):
                 new_job = Job(work=self.job.work, task=task)
                 new_job.save()
         for consolidation in self.job.task.consolidations.all():
+            closing_tasks = consolidation.closing_tasks.all()
             closing_jobs = Job.objects.filter(
-                work=self.job.work, task__in=consolidation.closing_tasks.all()
+                work=self.job.work, task__in=closing_tasks
             )
-            if all([job.completed for job in closing_jobs]):
+            if len(closing_tasks) == len(closing_jobs) and all(
+                [job.completed for job in closing_jobs]
+            ):
                 for task in consolidation.spawned_tasks.all():
                     new_job = Job(work=self.job.work, task=task)
                     new_job.save()
