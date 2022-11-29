@@ -217,7 +217,7 @@ class Job(TimestampMixin, models.Model):
 
     @property
     def completed(self):
-        return self.commit is not None
+        return hasattr(self, "commit")
 
     @property
     def delayed(self):
