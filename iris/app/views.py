@@ -99,6 +99,7 @@ class IrisLogoutView(LogoutView):
 
 
 class StationView(LoginRequiredMixin, PageModeMixin, DetailView):
+    template_name = "iris/screens/station.html"
     model = Station
     page_modes = ["pending", "delayed", "suspended"]
 
@@ -115,6 +116,7 @@ class StationView(LoginRequiredMixin, PageModeMixin, DetailView):
 
 
 class JobListView(PageModeMixin, ListView):
+    template_name = "iris/screens/jobs.html"
     model = Job
     page_modes = ["pending", "delayed", "suspended", "completed"]
 
@@ -132,6 +134,7 @@ class JobListView(PageModeMixin, ListView):
 
 
 class WorkListView(LoginRequiredMixin, PageModeMixin, ListView):
+    template_name = "iris/screens/works.html"
     model = Work
     page_modes = ["pending", "completed", "canceled"]
 
@@ -146,7 +149,7 @@ class WorkListView(LoginRequiredMixin, PageModeMixin, ListView):
 
 
 class AlertsView(SomePermissionRequiredMixin, PageModeMixin, TemplateView):
-    template_name = "iris/alerts.html"
+    template_name = "iris/screens/alerts.html"
     permission_required = (
         "iris.view_delay",
         "iris.view_suspension",
@@ -167,6 +170,7 @@ class AlertsView(SomePermissionRequiredMixin, PageModeMixin, TemplateView):
 
 
 class JobDetailView(DetailView):
+    template_name = "iris/detail/job.html"
     model = Job
 
     def get_context_data(self, **kwargs):
