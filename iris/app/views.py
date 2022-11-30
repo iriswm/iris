@@ -184,8 +184,6 @@ class JobDetailView(DetailView):
 
 
 class CreateForJobMixin(LoginRequiredMixin, NextUrlFieldMixin, CreateView):
-    template_name_suffix = "_create_for_job"
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["job"] = Job.objects.get(pk=self.kwargs["pk"])
@@ -198,6 +196,7 @@ class CreateForJobMixin(LoginRequiredMixin, NextUrlFieldMixin, CreateView):
 
 
 class CreateCommitForJobView(CreateForJobMixin, PermissionRequiredMixin, CreateView):
+    template_name = "iris/forms/create_commit_for_job.html"
     model = Commit
     permission_required = "iris.add_commit"
     fields = ["notes"]
@@ -209,18 +208,21 @@ class CreateCommitForJobView(CreateForJobMixin, PermissionRequiredMixin, CreateV
 
 
 class CreateDelayForJobView(CreateForJobMixin, PermissionRequiredMixin, CreateView):
+    template_name = "iris/forms/create_delay_for_job.html"
     model = Delay
     form_class = DelayModelForm
     permission_required = "iris.add_delay"
 
 
 class CommitFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
+    template_name = "iris/forms/edit_commit.html"
     model = Commit
     permission_required = "iris.change_commit"
     fields = ["notes"]
 
 
 class DelayFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
+    template_name = "iris/forms/edit_delay.html"
     model = Delay
     form_class = DelayModelForm
     permission_required = "iris.change_delay"
@@ -243,12 +245,14 @@ class DelayEndView(
 class CreateSuspensionForJobView(
     CreateForJobMixin, PermissionRequiredMixin, CreateView
 ):
+    template_name = "iris/forms/create_suspension_for_job.html"
     model = Suspension
     permission_required = "iris.add_suspension"
     fields = ["notes"]
 
 
 class SuspensionFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
+    template_name = "iris/forms/edit_suspension.html"
     model = Suspension
     permission_required = "iris.change_suspension"
     fields = ["notes"]
@@ -269,13 +273,14 @@ class SuspensionLiftView(
 
 
 class WorkFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
+    template_name = "iris/forms/edit_work.html"
     model = Work
     permission_required = "iris.change_work"
     fields = ["description", "notes"]
 
 
 class CreateWorkView(PermissionRequiredMixin, NextUrlFieldMixin, CreateView):
-    template_name_suffix = "_create"
+    template_name = "iris/forms/create_work.html"
     model = Work
     permission_required = "iris.add_work"
     form_class = CreateWorkModelForm

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 21:56+0100\n"
+"POT-Creation-Date: 2022-11-30 13:15+0100\n"
 "PO-Revision-Date: 2022-11-27 21:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -292,9 +292,6 @@ msgstr "Sistema de control de tareas Iris"
 msgid "Untitled page"
 msgstr "Página sin título"
 
-msgid "Stations"
-msgstr "Estaciones"
-
 msgid "Manage"
 msgstr "Gestionar"
 
@@ -309,6 +306,9 @@ msgstr "Avisos"
 
 msgid "Admin"
 msgstr "Administración"
+
+msgid "Stations"
+msgstr "Estaciones"
 
 #, python-format
 msgid "Logged as %(user)s"
@@ -332,13 +332,6 @@ msgid "Commit"
 msgstr "Cerrar"
 
 #, python-format
-msgid "Editing commit %(object.pk)s"
-msgstr "Editando cierre %(object.pk)s"
-
-msgid "Save changes"
-msgstr "Guardar los cambios"
-
-#, python-format
 msgid "Create delay for job %(job_id)s"
 msgstr "Retrasar el trabajo %(job_id)s"
 
@@ -359,8 +352,53 @@ msgid "Delay"
 msgstr "Retrasar"
 
 #, python-format
+msgid "Create suspension for job %(job_id)s"
+msgstr "Suspender el trabajo %(job_id)s"
+
+#, python-format
+msgid "Create suspension for %(job_name)s"
+msgstr "Suspender %(job_name)s"
+
+msgid "Suspend"
+msgstr "Suspender"
+
+msgid "Create a new work"
+msgstr "Crear un nuevo proyecto"
+
+msgid "Category"
+msgstr "Categoría"
+
+msgid "Select a category"
+msgstr "Selecciona una categoría"
+
+msgid "Quantity"
+msgstr "Cantidad"
+
+msgid "Description"
+msgstr "Descripción"
+
+msgid "Save changes"
+msgstr "Guardar los cambios"
+
+#, python-format
+msgid "Editing commit %(object.pk)s"
+msgstr "Editando cierre %(object.pk)s"
+
+#, python-format
 msgid "Editing delay %(object.pk)s"
 msgstr "Editando retraso %(object.pk)s"
+
+#, python-format
+msgid "Editing suspension %(object.pk)s"
+msgstr "Editando suspensión %(object.pk)s"
+
+#, python-format
+msgid "Editing work %(work_id)s"
+msgstr "Editando proyecto %(work_id)s"
+
+#, python-format
+msgid "Editing %(object)s"
+msgstr "Editando %(object)s"
 
 msgid "Index"
 msgstr "Índice"
@@ -377,9 +415,6 @@ msgstr "%(quantity)s veces"
 
 msgid "Details"
 msgstr "Detalles"
-
-msgid "Suspend"
-msgstr "Suspender"
 
 msgid "This job is delayed."
 msgstr "El trabajo está retrasado."
@@ -453,41 +488,6 @@ msgstr "Suspendidos"
 #, python-format
 msgid "Works for station %(station_name)s"
 msgstr "Trabajos para la estación %(station_name)s"
-
-#, python-format
-msgid "Create suspension for job %(job_id)s"
-msgstr "Suspender el trabajo %(job_id)s"
-
-#, python-format
-msgid "Create suspension for %(job_name)s"
-msgstr "Suspender %(job_name)s"
-
-#, python-format
-msgid "Editing suspension %(object.pk)s"
-msgstr "Editando suspensión %(object.pk)s"
-
-msgid "Create a new work"
-msgstr "Crear un nuevo proyecto"
-
-msgid "Category"
-msgstr "Categoría"
-
-msgid "Select a category"
-msgstr "Selecciona una categoría"
-
-msgid "Quantity"
-msgstr "Cantidad"
-
-msgid "Description"
-msgstr "Descripción"
-
-#, python-format
-msgid "Editing work %(work_id)s"
-msgstr "Editando proyecto %(work_id)s"
-
-#, python-format
-msgid "Editing %(object)s"
-msgstr "Editando %(object)s"
 
 msgid "All works"
 msgstr "Todos los proyectos"
