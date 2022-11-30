@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "bootstrap5",
     "iris.app",
     "iris_wc",
 ]
@@ -72,6 +71,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "iris.app.context.stations",
+                "iris.app.context.current_language",
             ],
         },
     },

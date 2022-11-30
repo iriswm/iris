@@ -1,0 +1,58 @@
+{% load i18n %}
+<nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="{% url 'iris:index' %}">Iris</a>
+		{% if user.is_authenticated %}
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-sm-0">
+				{% if stations %}
+				<li class="nav-item dropdown">
+					<a href="#" class="nav-link dropdown-toggle active" id="navbarStationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% translate "Stations" %}</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarStationsDropdown">
+						{% for station in stations %}
+						<li>
+							<a class="dropdown-item" href="{% url 'iris:station' station.pk %}">{{ station.name }}</a>
+						</li>
+						{% endfor %}
+					</ul>
+				</li>
+				{% endif %}
+				{% if user.is_staff or perms.iris.view_work or perms.iris.view_job or perms.iris.view_delay or perms.iris.view_suspension %}
+				<li class="nav-item dropdown">
+					<a href="#" class="nav-link dropdown-toggle active" id="navbarManagerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% translate "Manage" %}</a>
+					<ul class="dropdown-menu dropdown-menu" aria-labelledby="navbarManagerDropdown">
+						{% if perms.iris.view_work %}
+						<li>
+							<a class="dropdown-item" href="{% url 'iris:work_list' %}">{% translate "Works" %}</a>
+						</li>
+						{% endif %}
+						{% if perms.iris.view_job %}
+						<li>
+							<a class="dropdown-item" href="{% url 'iris:job_list' %}">{% translate "Jobs" %}</a>
+						</li>
+						{% endif %}
+						{% if perms.iris.view_delay or perms.iris.view_suspension %}
+						<li>
+							<a class="dropdown-item" href="{% url 'iris:alerts' %}">{% translate "Alerts" %}</a>
+						</li>
+						{% endif %}
+						{% if user.is_staff %}
+						<li>
+							<a class="dropdown-item" href="{% url 'admin:index' %}">{% translate "Admin" %}</a>
+						</li>
+						{% endif %}
+					</ul>
+				</li>
+				{% endif %}
+			</ul>
+			<form class="d-flex">
+				<span class="navbar-text me-1">{% blocktranslate %}Logged as {{ user }}{% endblocktranslate %}</span>
+				<a class="btn btn-primary" role="button" href="{% url 'iris:logout' %}">{% translate "Log out" %}</a>
+			</form>
+		</div>
+		{% endif %}
+	</div>
+</nav>
