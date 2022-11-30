@@ -1,0 +1,5 @@
+*
+!requirements.txt
+!deps/*
+!manage.py
+!iris/*
