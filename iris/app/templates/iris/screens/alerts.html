@@ -15,14 +15,14 @@
 		{% if perms.iris.view_delay %}
 		{% for delay in delays %}
 		{% with delay.job as job %}
-		{% include "iris/job_card_alerts.html" %}
+		{% include "iris/job_cards/alerts.html" %}
 		{% endwith %}
 		{% endfor %}
 		{% endif %}
 		{% if perms.iris.view_suspension %}
 		{% for suspension in suspensions %}
 		{% with suspension.job as job %}
-		{% include "iris/job_card_alerts.html" %}
+		{% include "iris/job_cards/alerts.html" %}
 		{% endwith %}
 		{% endfor %}
 		{% endif %}
