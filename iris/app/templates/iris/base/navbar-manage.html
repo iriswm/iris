@@ -1,0 +1,26 @@
+{% load i18n %}
+<li class="nav-item dropdown">
+	<a href="#" class="nav-link dropdown-toggle active" id="navbarManagerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% translate "Manage" %}</a>
+	<ul class="dropdown-menu dropdown-menu" aria-labelledby="navbarManagerDropdown">
+		{% if perms.iris.view_work %}
+		<li>
+			<a class="dropdown-item" href="{% url 'iris:work_list' %}">{% translate "Works" %}</a>
+		</li>
+		{% endif %}
+		{% if perms.iris.view_job %}
+		<li>
+			<a class="dropdown-item" href="{% url 'iris:job_list' %}">{% translate "Jobs" %}</a>
+		</li>
+		{% endif %}
+		{% if perms.iris.view_delay or perms.iris.view_suspension %}
+		<li>
+			<a class="dropdown-item" href="{% url 'iris:alerts' %}">{% translate "Alerts" %}</a>
+		</li>
+		{% endif %}
+		{% if user.is_staff %}
+		<li>
+			<a class="dropdown-item" href="{% url 'admin:index' %}">{% translate "Admin" %}</a>
+		</li>
+		{% endif %}
+	</ul>
+</li>

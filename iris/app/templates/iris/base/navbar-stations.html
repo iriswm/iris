@@ -1,0 +1,11 @@
+{% load i18n %}
+<li class="nav-item dropdown">
+	<a href="#" class="nav-link dropdown-toggle active" id="navbarStationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% translate "Stations" %}</a>
+	<ul class="dropdown-menu" aria-labelledby="navbarStationsDropdown">
+		{% for station in stations %}
+		<li>
+			<a class="dropdown-item" href="{% url 'iris:station' station.pk %}">{{ station.name }}</a>
+		</li>
+		{% endfor %}
+	</ul>
+</li>
