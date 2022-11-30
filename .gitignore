@@ -5,3 +5,4 @@ __pycache__/
 /.dbeaver/
 *.mo
 /.env
+/.exrc
