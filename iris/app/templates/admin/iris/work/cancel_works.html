@@ -16,9 +16,9 @@
 </ul>
 
 <form action="?ids={{ ids }}" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
+	{% csrf_token %}
+	{{ form }}
+	<input type="submit" value="Submit">
 </form>
 
 {% endblock %}
