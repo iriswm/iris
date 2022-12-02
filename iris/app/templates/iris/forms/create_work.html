@@ -12,20 +12,9 @@
 		{% include "iris/forms/include/form_errors.html" %}
 		<div class="mb-3 row">
 			<div class="col">
-				<label class="form-label fw-bold" for="id_category">{% translate "Category" %}</label>
-				<select class="form-select" name="category" id="id_category" required="">
-					<option selected="" value="0">{% translate "Select a category" %}</option>
-					{% for category in categories %}
-					<option value="{{ category.pk }}">{{ category.name }}</option>
-					{% endfor %}
-				</select>
-				{% if form.category.errors %}
-				<ul class="text-danger">
-					{% for error in form.category.errors %}
-					<li>{{ error }}</li>
-					{% endfor %}
-				</ul>
-				{% endif %}
+				{% translate "Category" as category_label %}
+				{% translate "Select a category" as category_select_hint %}</option>
+				{% include "iris/forms/include/select.html" with field=form.category label=category_label select_hint=category_select_hint items=categories required=True %}
 			</div>
 		</div>
 		<div class="mb-3 row">

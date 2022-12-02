@@ -1,0 +1,16 @@
+<label for="id_{{ field.name }}" class="form-label{% if required %} fw-bold{% endif %}">{{ label }}</label>
+{% include "iris/forms/include/field_errors.html" %}
+<select
+	id="id_{{ field.name }}"
+	name="{{ field.name }}"
+	class="form-control"
+	value="{% if field.value is not None %}{{ field.value }}{% endif %}"
+	{% if required is not None %} required=""{% endif %}
+	{% if readonly is not None %} readonly=""{% endif %}
+	{% if autofocus is not None %} autofocus=""{% endif %}
+>
+	<option selected="" value="0">{{ select_hint }}</option>
+	{% for item in items %}
+	<option value="{{ item.pk }}">{{ item.name }}</option>
+	{% endfor %}
+</select>
