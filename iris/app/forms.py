@@ -8,9 +8,9 @@ from iris.app.models import Delay, Work
 
 
 class DelayModelForm(forms.ModelForm):
-    days = forms.IntegerField(min_value=0, initial=0)
-    hours = forms.IntegerField(min_value=0, initial=0)
-    minutes = forms.IntegerField(min_value=0, initial=0)
+    days = forms.IntegerField(min_value=0, initial=0, required=True)
+    hours = forms.IntegerField(min_value=0, initial=0, required=True)
+    minutes = forms.IntegerField(min_value=0, initial=0, required=True)
 
     class Meta:
         model = Delay
@@ -43,10 +43,8 @@ class DelayModelForm(forms.ModelForm):
                 hours=cleaned_data["hours"],
                 minutes=cleaned_data["minutes"],
             )
-        except:
-            raise ValidationError(
-                _("Delays must have a valid duration."), code="invalid"
-            )
+        except KeyError:
+            raise ValidationError(_("Delays must have a duration."), code="invalid")
         else:
             if duration == timedelta():
                 raise ValidationError(_("Delays must have a duration."), code="invalid")
