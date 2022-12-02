@@ -8,9 +8,9 @@ from iris.app.models import Delay, Work
 
 
 class DelayModelForm(forms.ModelForm):
-    days = forms.IntegerField(min_value=0, initial=0, required=False)
-    hours = forms.IntegerField(min_value=0, initial=0, required=False)
-    minutes = forms.IntegerField(min_value=0, initial=0, required=False)
+    days = forms.IntegerField(min_value=0, initial=0)
+    hours = forms.IntegerField(min_value=0, initial=0)
+    minutes = forms.IntegerField(min_value=0, initial=0)
 
     class Meta:
         model = Delay
