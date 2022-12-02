@@ -12,9 +12,11 @@
 			<a href="{% url "iris:work_list" %}?mode=completed" class="btn btn-primary{% if current_mode == "completed" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Completed" %}</a>
 			<a href="{% url "iris:work_list" %}?mode=canceled" class="btn btn-primary{% if current_mode == "canceled" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Canceled" %}</a>
 		</div>
+		{% if perms.iris.add_work %}
 		<div class="btn-group">
 			<a href="{% url "iris:work_add" %}?next={{ request.get_full_path|urlencode }}" class="btn btn-success">{% translate "Create new work" %}</a>
 		</div>
+		{% endif %}
 	</div>
 	<ul>
 		{% for work in object_list %}
