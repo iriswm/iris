@@ -1,4 +1,5 @@
 {% load i18n %}
+{% if stations %}
 <li class="nav-item dropdown">
 	<a href="#" class="nav-link dropdown-toggle active" id="navbarStationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% translate "Stations" %}</a>
 	<ul class="dropdown-menu" aria-labelledby="navbarStationsDropdown">
@@ -8,4 +9,5 @@
 		</li>
 		{% endfor %}
 	</ul>
+{% endif %}
 </li>
