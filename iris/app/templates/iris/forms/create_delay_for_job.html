@@ -13,15 +13,15 @@
 		<div class="mb-3 row">
 			<div class="col">
 				{% translate "Days" as days_label %}
-				{% include "iris/forms/include/input_number.html" with field=form.days label=days_label min=0 %}
+				{% include "iris/forms/include/input_number.html" with field=form.days label=days_label initial=0 min=0 %}
 			</div>
 			<div class="col">
 				{% translate "Hours" as hours_label %}
-				{% include "iris/forms/include/input_number.html" with field=form.hours label=hours_label min=0 %}
+				{% include "iris/forms/include/input_number.html" with field=form.hours label=hours_label initial=0 min=0 %}
 			</div>
 			<div class="col">
 				{% translate "Minutes" as minutes_label %}
-				{% include "iris/forms/include/input_number.html" with field=form.minutes label=minutes_label min=0 %}
+				{% include "iris/forms/include/input_number.html" with field=form.minutes label=minutes_label initial=0 min=0 %}
 			</div>
 		</div>
 		<div class="mb-3 row">

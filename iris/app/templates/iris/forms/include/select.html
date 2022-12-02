@@ -3,7 +3,6 @@
 	id="id_{{ field.name }}"
 	name="{{ field.name }}"
 	class="form-control"
-	value="{% if field.value is not None %}{{ field.value }}{% endif %}"
 	{% if required is not None %} required=""{% endif %}
 	{% if readonly is not None %} readonly=""{% endif %}
 	{% if autofocus is not None %} autofocus=""{% endif %}
