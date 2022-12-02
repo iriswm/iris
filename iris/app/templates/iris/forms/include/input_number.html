@@ -4,12 +4,11 @@
 	id="id_{{ field.name }}"
 	name="{{ field.name }}"
 	class="form-control"
-	{% if required is not None %} required=""{% endif %}
-	{% if readonly is not None %} readonly=""{% endif %}
 	{% if field.value is not None %}value="{{ field.value }}"{% elif initial is not None %}value="{{ initial }}"{% endif %}
+	{% if required is not None %} required{% endif %}
+	{% if readonly is not None %} readonly{% endif %}
+	{% if autofocus is not None %} autofocus{% endif %}
 	{% if autocomplete is not None %} autocomplete="{{ autocomplete }}"{% endif %}
-	{% if autofocus is not None %} autofocus=""{% endif %}
 	{% if min is not None %} min="{{ min }}"{% endif %}
-	{% if max is not None %} max="{{ max }}"{% endif %}
 >
 {% include "iris/forms/include/field_errors.html" %}

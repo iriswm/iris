@@ -3,9 +3,9 @@
 	id="id_{{ field.name }}"
 	name="{{ field.name }}"
 	class="form-control"
-	{% if required is not None %} required=""{% endif %}
-	{% if readonly is not None %} readonly=""{% endif %}
-	{% if autofocus is not None %} autofocus=""{% endif %}
+	{% if required is not None %} required{% endif %}
+	{% if readonly is not None %} readonly{% endif %}
+	{% if autofocus is not None %} autofocus{% endif %}
 >
 	<option selected="" value="0">{{ select_hint }}</option>
 	{% for item in items %}

@@ -4,8 +4,8 @@
 	name="{{ field.name }}"
 	class="form-control"
 	rows="10"
-	{% if required is not None %} required=""{% endif %}
-	{% if readonly is not None %} readonly=""{% endif %}
-	{% if autofocus is not None %} autofocus=""{% endif %}
+	{% if required is not None %} required{% endif %}
+	{% if readonly is not None %} readonly{% endif %}
+	{% if autofocus is not None %} autofocus{% endif %}
 >{% if field.value is not None %}{{ field.value }}{% elif initial is not None %}{{ initial }}{% endif %}</textarea>
 {% include "iris/forms/include/field_errors.html" %}
