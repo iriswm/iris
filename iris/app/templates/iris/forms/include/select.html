@@ -7,9 +7,9 @@
 	{% if readonly is not None %} readonly{% endif %}
 	{% if autofocus is not None %} autofocus{% endif %}
 >
-	<option selected="" value="0">{{ select_hint }}</option>
+	<option {% if not selected %}selected {% endif %}value="0">{{ select_hint }}</option>
 	{% for item in items %}
-	<option value="{{ item.pk }}">{{ item.name }}</option>
+	<option {% if selected == item.pk %}selected {% endif %} value="{{ item.pk }}">{{ item.name }}</option>
 	{% endfor %}
 </select>
 {% include "iris/forms/include/field_errors.html" %}
