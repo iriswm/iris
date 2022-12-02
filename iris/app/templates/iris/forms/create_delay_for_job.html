@@ -12,37 +12,16 @@
 		{% include "iris/forms/include/form_errors.html" %}
 		<div class="mb-3 row">
 			<div class="col">
-				<label class="form-label" for="id_days">{% translate "Days" %}</label>
-				<input class="form-control" type="number" name="days" id="id_days" value="0">
-				{% if form.days.errors %}
-				<ul class="text-danger">
-					{% for error in form.days.errors %}
-					<li>{{ error }}</li>
-					{% endfor %}
-				</ul>
-				{% endif %}
+				{% translate "Days" as days_label %}
+				{% include "iris/forms/include/input_number.html" with field=form.days label=days_label min=0 %}
 			</div>
 			<div class="col">
-				<label class="form-label" for="id_hours">{% translate "Hours" %}</label>
-				<input class="form-control" type="number" name="hours" id="id_hours" value="0">
-				{% if form.hours.errors %}
-				<ul class="text-danger">
-					{% for error in form.hours.errors %}
-					<li>{{ error }}</li>
-					{% endfor %}
-				</ul>
-				{% endif %}
+				{% translate "Hours" as hours_label %}
+				{% include "iris/forms/include/input_number.html" with field=form.hours label=hours_label min=0 %}
 			</div>
 			<div class="col">
-				<label class="form-label" for="id_minutes">{% translate "Minutes" %}</label>
-				<input class="form-control" type="number" name="minutes" id="id_minutes" value="0">
-				{% if form.minutes.errors %}
-				<ul class="text-danger">
-					{% for error in form.minutes.errors %}
-					<li>{{ error }}</li>
-					{% endfor %}
-				</ul>
-				{% endif %}
+				{% translate "Minutes" as minutes_label %}
+				{% include "iris/forms/include/input_number.html" with field=form.minutes label=minutes_label min=0 %}
 			</div>
 		</div>
 		<div class="mb-3 row">

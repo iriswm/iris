@@ -30,15 +30,8 @@
 		</div>
 		<div class="mb-3 row">
 			<div class="col">
-				<label class="form-label" for="id_quantity">{% translate "Quantity" %}</label>
-				<input class="form-control" type="number" name="quantity" id="id_quantity" value="{{ form.quantity.initial }}">
-				{% if form.quantity.errors %}
-				<ul class="text-danger">
-					{% for error in form.quantity.errors %}
-					<li>{{ error }}</li>
-					{% endfor %}
-				</ul>
-				{% endif %}
+				{% translate "Quantity" as quantity_label %}
+				{% include "iris/forms/include/input_number.html" with field=form.quantity label=quantity_label min=1 %}
 			</div>
 		</div>
 		<div class="mb-3 row">
