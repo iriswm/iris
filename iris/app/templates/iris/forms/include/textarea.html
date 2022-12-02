@@ -1,0 +1,11 @@
+<label for="id_{{ field.name }}" class="form-label">{{ label }}</label>
+{% include "iris/forms/include/field_errors.html" %}
+<textarea
+	id="id_{{ field.name }}"
+	name="{{ field.name }}"
+	class="form-control"
+	rows="10"
+	{% if required is not None %} required=""{% endif %}
+	{% if readonly is not None %} readonly=""{% endif %}
+	{% if autofocus is not None %} autofocus=""{% endif %}
+>{% if field.value is not None %}{{ field.value|stringformat:'s' }}{% endif %}</textarea>
