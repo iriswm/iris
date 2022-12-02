@@ -43,15 +43,8 @@
 		</div>
 		<div class="mb-3 row">
 			<div class="col">
-				<label for="id_description" class="form-label">{% translate "Description" %}</label>
-				<input type="text" id="id_description" name="description" class="form-control" value="{{ object.description }}">
-				{% if form.description.errors %}
-				<ul class="text-danger">
-					{% for error in form.description.errors %}
-					<li>{{ error }}</li>
-					{% endfor %}
-				</ul>
-				{% endif %}
+				{% translate "Description" as description_label %}
+				{% include "iris/forms/include/input_text.html" with field=form.description label=description_label %}
 			</div>
 		</div>
 		<div class="mb-3 row">

@@ -1,0 +1,5 @@
+{% if field.errors %}
+{% for error in field.errors %}
+<div class="form-text text-danger mt-0 mb-2">{{ error }}</div>
+{% endfor %}
+{% endif %}

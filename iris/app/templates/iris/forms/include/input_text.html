@@ -1,0 +1,14 @@
+<label for="id_{{ field.name }}" class="form-label">{{ label }}</label>
+{% include "iris/forms/include/field_errors.html" %}
+<input
+	type="{% if type is None %}text{% else %}{{ type }}{% endif %}"
+	id="id_{{ field.name }}"
+	name="{{ field.name }}"
+	class="form-control"
+	value="{% if field.value is not None %}{{ field.value }}{% endif %}"
+	{% if required is not None %} required=""{% endif %}
+	{% if readonly is not None %} readonly=""{% endif %}
+	{% if autocomplete is not None %} autocomplete="{{ autocomplete }}"{% endif %}
+	{% if autofocus is not None %} autofocus=""{% endif %}
+	{% if autocapitalize is not None %} autocapitalize="{{ autocapitalize }}"{% endif %}
+>
