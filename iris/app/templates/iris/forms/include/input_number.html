@@ -1,5 +1,4 @@
 <label for="id_{{ field.name }}" class="form-label">{{ label }}</label>
-{% include "iris/forms/include/field_errors.html" %}
 <input
 	type="number"
 	id="id_{{ field.name }}"
@@ -13,3 +12,4 @@
 	{% if min is not None %} min="{{ min }}"{% endif %}
 	{% if max is not None %} max="{{ max }}"{% endif %}
 >
+{% include "iris/forms/include/field_errors.html" %}

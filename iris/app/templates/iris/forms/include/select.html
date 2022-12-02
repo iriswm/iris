@@ -1,5 +1,4 @@
 <label for="id_{{ field.name }}" class="form-label{% if required %} fw-bold{% endif %}">{{ label }}</label>
-{% include "iris/forms/include/field_errors.html" %}
 <select
 	id="id_{{ field.name }}"
 	name="{{ field.name }}"
@@ -14,3 +13,4 @@
 	<option value="{{ item.pk }}">{{ item.name }}</option>
 	{% endfor %}
 </select>
+{% include "iris/forms/include/field_errors.html" %}

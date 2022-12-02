@@ -1,5 +1,4 @@
 <label for="id_{{ field.name }}" class="form-label">{{ label }}</label>
-{% include "iris/forms/include/field_errors.html" %}
 <input
 	type="{% if type is None %}text{% else %}{{ type }}{% endif %}"
 	id="id_{{ field.name }}"
@@ -12,3 +11,4 @@
 	{% if autofocus is not None %} autofocus=""{% endif %}
 	{% if autocapitalize is not None %} autocapitalize="{{ autocapitalize }}"{% endif %}
 >
+{% include "iris/forms/include/field_errors.html" %}
