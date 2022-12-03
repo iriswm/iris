@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-02 15:31+0100\n"
-"PO-Revision-Date: 2022-11-27 21:58+0100\n"
+"POT-Creation-Date: 2022-12-03 15:24+0100\n"
+"PO-Revision-Date: 2022-12-03 15:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -403,9 +403,6 @@ msgstr ""
 msgid "%(quantity)s times"
 msgstr "%(quantity)s veces"
 
-msgid "Details"
-msgstr "Detalles"
-
 msgid "This job is delayed."
 msgstr "El trabajo está retrasado."
 
@@ -425,17 +422,23 @@ msgstr "Notas del retraso"
 msgid "Suspension notes"
 msgstr "Notas de la suspensión"
 
-msgid "Job details"
-msgstr "Detalles del trabajo"
+msgid "Edit commit notes"
+msgstr "Editar notas del cierre"
 
 msgid "Edit delay"
 msgstr "Editar retraso"
 
+msgid "Edit suspension notes"
+msgstr "Editar notas de la suspensión"
+
 msgid "End delay"
 msgstr "Terminar retraso"
 
-msgid "Edit suspension notes"
-msgstr "Editar notas de la suspensión"
+msgid "Details"
+msgstr "Detalles"
+
+msgid "Work details"
+msgstr "Detalles del proyecto"
 
 msgid "Lift suspension"
 msgstr "Levantar suspensión"
@@ -451,9 +454,6 @@ msgstr "El trabajo ha sido cancelado."
 
 msgid "Commit notes"
 msgstr "Notas del cierre"
-
-msgid "Edit commit notes"
-msgstr "Editar notas del cierre"
 
 msgid "Current alerts"
 msgstr "Avisos actuales"

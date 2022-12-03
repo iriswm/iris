@@ -16,10 +16,10 @@
 		</ul>
 		{% endif %}
 		<div class="card-footer">
-			<a class="btn btn-primary" href="{% url 'iris:job_detail' job.pk %}">{% translate "Job details" %}</a>
-			<a class="btn btn-success" href="{% url 'iris:job_add_commit' job.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Commit" %}</a>
-			<a class="btn btn-warning" href="{% url 'iris:job_add_delay' job.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Delay" %}</a>
-			<a class="btn btn-danger" href="{% url 'iris:job_add_suspension' job.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Suspend" %}</a>
+			{% include "iris/job_cards/buttons/goto_job.html" %}
+			{% include "iris/job_cards/buttons/create_commit.html" %}
+			{% include "iris/job_cards/buttons/create_delay.html" %}
+			{% include "iris/job_cards/buttons/create_suspension.html" %}
 		</div>
 	</div>
 </div>

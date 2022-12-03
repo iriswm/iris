@@ -16,8 +16,8 @@
 		</ul>
 		{% endif %}
 		<div class="card-footer">
-			<a class="btn btn-primary" href="{% url 'iris:job_detail' job.pk %}">{% translate "Job details" %}</a>
-			<a class="btn btn-primary" href="{% url 'iris:commit_change' job.commit.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit commit notes" %}</a>
+			{% include "iris/job_cards/buttons/goto_job.html" %}
+			{% include "iris/job_cards/buttons/edit_commit.html" %}
 		</div>
 	</div>
 </div>

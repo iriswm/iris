@@ -1,0 +1,5 @@
+{% load i18n %}
+
+{% if perms.iris.change_suspension %}
+<a class="btn btn-danger" href="{% url 'iris:suspension_lift' job.suspended_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Lift suspension" %}</a>
+{% endif %}

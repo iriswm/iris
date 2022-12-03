@@ -14,7 +14,7 @@
 	</div>
 	<ul>
 		{% if current_mode == "pending" %}
-		{% for job in jobs %}{% include "iris/job_cards/station.html" %}{% endfor %}
+		{% for job in jobs %}{% include "iris/job_cards/station_pending.html" %}{% endfor %}
 		{% elif current_mode == "delayed" %}
 		{% for job in jobs %}{% include "iris/job_cards/station_delayed.html" %}{% endfor %}
 		{% elif current_mode == "suspended" %}
