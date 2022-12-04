@@ -88,6 +88,7 @@ LANGUAGES = [
     ("es", _("Spanish")),
 ]
 USE_TZ = True
+TIME_ZONE = getenv("DJANGO_TIME_ZONE")
 
 # Media and static files
 MEDIA_ROOT = STATE_DIR / "media"
