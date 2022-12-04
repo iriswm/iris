@@ -1,0 +1,16 @@
+<label for="id_{{ field.name }}" class="form-label{% if required %} fw-bold{% endif %}">{{ label }}</label>
+<input
+	type="datetime-local"
+	id="id_{{ field.name }}"
+	name="{{ field.name }}"
+	class="form-control"
+	{% if field.value is not None %}
+		value="{{ field.value|date:"Y-m-d" }}T{{ field.value|time:"H:i" }}"
+	{% elif initial is not None %}
+		value="{{ field.value|date:"Y-m-d" }}T{{ field.value|time:"H:i" }}"
+	{% endif %}
+	{% if required is not None %} required{% endif %}
+	{% if readonly is not None %} readonly{% endif %}
+	{% if autofocus is not None %} autofocus{% endif %}
+>
+{% include "iris/forms/include/field_errors.html" %}

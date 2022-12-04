@@ -39,7 +39,14 @@
 				</div>
 				<ul class="list-group list-group-flush">
 				<li class="list-group-item">
-					<a class="btn btn-primary" href="{% url 'iris:work_change' work.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit work details" %}</a>
+					{% if perms.iris.change_work %}
+						<a class="btn btn-primary" href="{% url 'iris:work_change' work.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit work details" %}</a>
+						{% if not work.canceled %}
+							<a class="btn btn-danger" href="{% url 'iris:work_cancel' work.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Cancel work" %}</a>
+						{% else %}
+							<a class="btn btn-primary" href="{% url 'iris:work_restore' work.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Restore work" %}</a>
+						{% endif %}
+					{% endif %}
 				</li>
 				{% if work.notes %}
 				<li class="list-group-item">

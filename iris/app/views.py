@@ -17,12 +17,13 @@ from django.views.generic import (
 )
 from django.views.generic.edit import ContextMixin, ModelFormMixin, SingleObjectMixin
 
-from iris.app.forms import CreateWorkModelForm, DelayModelForm
+from iris.app.forms import CancelWorkForm, CreateWorkModelForm, DelayModelForm
 from iris.app.models import (
     Category,
     Commit,
     Delay,
     Job,
+    NotCanceledError,
     Station,
     Suspension,
     Work,
@@ -293,3 +294,28 @@ class CreateWorkView(PermissionRequiredMixin, NextUrlFieldMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.all().values("pk", "name")
         return context
+
+
+class CancelWorkView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
+    template_name = "iris/forms/cancel_work.html"
+    model = Work
+    permission_required = "iris.change_work"
+    form_class = CancelWorkForm
+
+
+class RestoreWorkView(PermissionRequiredMixin, NextUrlParamMixin, View):
+    permission_required = "iris.change_work"
+
+    def get(self, request, *args, **kwargs):
+        try:
+            work_pk = self.kwargs["pk"]
+            object = Work.objects.get(pk=work_pk)
+            object.restore()
+        except Work.DoesNotExist:
+            messages.error(request, _("The work does not exists."))
+            return HttpResponseRedirect(self.get_next_url())
+        except NotCanceledError:
+            messages.error(request, _("The work is not cancelled."))
+            return HttpResponseRedirect(self.get_next_url())
+        messages.info(request, _("The work was restored."))
+        return HttpResponseRedirect(self.get_next_url())

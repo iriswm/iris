@@ -2,6 +2,7 @@ from django.urls import path
 
 from iris.app.views import (
     AlertsView,
+    CancelWorkView,
     CommitFormView,
     CreateCommitForJobView,
     CreateDelayForJobView,
@@ -14,6 +15,7 @@ from iris.app.views import (
     IrisLogoutView,
     JobDetailView,
     JobListView,
+    RestoreWorkView,
     StationView,
     SuspensionFormView,
     SuspensionLiftView,
@@ -63,5 +65,7 @@ urlpatterns = [
     ),
     path("works/", WorkListView.as_view(), name="work_list"),
     path("work/<int:pk>/change/", WorkFormView.as_view(), name="work_change"),
+    path("work/<int:pk>/cancel/", CancelWorkView.as_view(), name="work_cancel"),
+    path("work/<int:pk>/restore/", RestoreWorkView.as_view(), name="work_restore"),
     path("work/add/", CreateWorkView.as_view(), name="work_add"),
 ]

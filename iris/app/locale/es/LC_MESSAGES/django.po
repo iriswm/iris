@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-03 15:24+0100\n"
-"PO-Revision-Date: 2022-12-03 15:24+0100\n"
+"POT-Creation-Date: 2022-12-04 12:29+0100\n"
+"PO-Revision-Date: 2022-12-04 12:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -308,6 +308,17 @@ msgid "Details for %(job_name)s"
 msgstr "Detalles de %(job_name)s"
 
 #, python-format
+msgid "Cancel work %(work_id)s"
+msgstr "Cancelar proyecto %(work_id)s"
+
+#, python-format
+msgid "Cancelling %(object)s"
+msgstr "Cancelando %(object)s"
+
+msgid "Cancel work"
+msgstr "Cancelar proyecto"
+
+#, python-format
 msgid "Create commit for job %(job_id)s"
 msgstr "Cerrar el trabajo %(job_id)s"
 
@@ -498,8 +509,20 @@ msgstr "El proyecto ha sido cancelado."
 msgid "Edit work details"
 msgstr "Editar detalles del proyecto"
 
+msgid "Restore work"
+msgstr "Restaurar proyecto"
+
 msgid "Job list"
 msgstr "Lista de trabajos"
 
 msgid "Log in"
 msgstr "Conectar"
+
+msgid "The work does not exists."
+msgstr "El proyecto no existe."
+
+msgid "The work is not cancelled."
+msgstr "El proyecto ha sido cancelado."
+
+msgid "The work was restored."
+msgstr "El proyecto ha sido restaurado."

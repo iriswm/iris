@@ -1,0 +1,31 @@
+{% extends 'iris/base.html' %}
+
+{% load i18n %}
+
+{% block iris_title %}{% blocktranslate with work_id=object.pk %}Cancel work {{ work_id }}{% endblocktranslate %}{% endblock %}
+{% block iris_header %}{% blocktranslate %}Cancelling {{ object }}{% endblocktranslate %}{% endblock %}
+
+{% block content %}
+<div class="container-sm mt-4 p-4">
+	<form method="post">
+		{% csrf_token %}
+		<input type="hidden" id="next_url" value="{{ next_url }}">
+		{% include "iris/forms/include/form_errors.html" %}
+		<div class="mb-3 row">
+			<div class="col">
+				{% translate "Date/Time" as time_label %}
+				{% include "iris/forms/include/input_datetime_local.html" with field=form.time label=time_label required=True %}
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<div class="col">
+				{% translate "Reason" as reason_label %}
+				{% include "iris/forms/include/input_text.html" with field=form.reason label=reason_label required=True %}
+			</div>
+		</div>
+		<div>
+			<button type="submit" class="btn btn-primary w-100">{% translate "Cancel work" %}</button>
+		</div>
+	</form>
+</div>
+{% endblock %}

@@ -2,6 +2,7 @@ from datetime import timedelta
 
 from django import forms
 from django.core.validators import ValidationError
+from django.utils.timezone import now
 from django.utils.translation import gettext as _
 
 from iris.app.models import Delay, Work
@@ -67,3 +68,19 @@ class CreateWorkModelForm(forms.ModelForm):
         instance = super().save()
         instance.spawn_jobs()
         return instance
+
+
+class CancelWorkForm(forms.ModelForm):
+    reason = forms.CharField(required=True)
+    time = forms.DateTimeField(required=True, initial=now)
+
+    class Meta:
+        model = Work
+        fields = []
+
+    def save(self):
+        self.instance.cancel(
+            self.cleaned_data["reason"],
+            self.cleaned_data["time"],
+        )
+        return super().save()
