@@ -1,4 +1,4 @@
-<label for="id_{{ field.name }}" class="form-label">{{ label }}</label>
+<label for="id_{{ field.name }}" class="form-label{% if required %} fw-bold{% endif %}">{{ label }}</label>
 <input
 	type="{% if type is None %}text{% else %}{{ type }}{% endif %}"
 	id="id_{{ field.name }}"
