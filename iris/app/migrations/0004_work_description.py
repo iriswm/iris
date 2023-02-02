@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("iris", "0003_alter_commit_worker_alter_delay_worker_and_more"),
     ]

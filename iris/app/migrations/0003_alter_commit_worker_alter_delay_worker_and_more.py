@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("iris", "0002_remove_worker_picture_remove_worker_picture_height_and_more"),
     ]

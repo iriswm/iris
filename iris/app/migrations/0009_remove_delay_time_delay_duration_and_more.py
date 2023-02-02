@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("iris", "0008_alter_category_options_alter_commit_options_and_more"),
     ]
