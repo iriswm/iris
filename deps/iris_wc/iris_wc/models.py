@@ -40,9 +40,9 @@ class Line(
         on_delete=models.CASCADE,
         related_name="lines",
     )
-    category = models.ForeignKey(
-        "iris.Category",
-        verbose_name=_("category"),
+    process = models.ForeignKey(
+        "iris.Process",
+        verbose_name=_("process"),
         on_delete=models.SET_NULL,
         related_name="woocommerce_lines",
         null=True,
@@ -67,9 +67,9 @@ add_note_type("WooCommerce line", "iris_wc.Line")
 
 class ProductMap(models.Model):
     wc_product_id = models.IntegerField(_("WooCommerce product ID"))
-    category = models.ForeignKey(
-        "iris.Category",
-        verbose_name=_("category"),
+    process = models.ForeignKey(
+        "iris.Process",
+        verbose_name=_("process"),
         on_delete=models.CASCADE,
         related_name="mapped_woocommerce_products",
     )
@@ -81,15 +81,15 @@ class ProductMap(models.Model):
     def __str__(self):
         return str(
             _(
-                f"Map: WooCommerce product {self.wc_product_id} -> Category {self.category}"
+                f"Map: WooCommerce product {self.wc_product_id} -> Process {self.process}"
             )
         )
 
 
 class CategoryMap(WooCommerceCategoryMixin, models.Model):
-    category = models.ForeignKey(
-        "iris.Category",
-        verbose_name=_("category"),
+    process = models.ForeignKey(
+        "iris.Process",
+        verbose_name=_("process"),
         on_delete=models.CASCADE,
         related_name="mapped_woocommerce_categories",
     )
@@ -101,6 +101,6 @@ class CategoryMap(WooCommerceCategoryMixin, models.Model):
     def __str__(self):
         return str(
             _(
-                f"Map: WooCommerce category {self.wc_category_id} -> Category {self.category}"
+                f"Map: WooCommerce category {self.wc_category_id} -> Process {self.process}"
             )
         )
