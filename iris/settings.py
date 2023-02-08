@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "iris.app",
-    "iris_wc",
+    #    "iris_wc",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
