@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
-from iris.app.managers import DelayManager, JobManager, SuspensionManager, WorkManager
+from iris.app.managers import DelayManager, ItemManager, SuspensionManager, TaskManager
 
 NOTES_PATH_LIMIT = 64
 NOTES_MAX_DISPLAY_LENGTH = 32
@@ -18,7 +18,7 @@ class AlreadyCanceledError(Exception):
     pass
 
 
-class NoCategoryError(Exception):
+class NoProcessError(Exception):
     pass
 
 
@@ -106,12 +106,12 @@ class NotesMixin(models.Model):
         abstract = True
 
 
-class Work(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
-    category = models.ForeignKey(
-        "Category",
-        verbose_name=_("category"),
+class Item(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
+    process = models.ForeignKey(
+        "Process",
+        verbose_name=_("process"),
         on_delete=models.SET_NULL,
-        related_name="works",
+        related_name="items",
         null=True,
         blank=True,
     )
@@ -121,99 +121,99 @@ class Work(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
     )
     has_priority = models.BooleanField(_("has priority"), default=False)
 
-    objects = WorkManager()
+    objects = ItemManager()
 
     class Meta:
-        verbose_name = _("work")
-        verbose_name_plural = _("works")
+        verbose_name = _("item")
+        verbose_name_plural = _("items")
 
     def __str__(self):
-        str_ = _("Work {obj.pk}").format(obj=self)
+        str_ = _("Item {obj.pk}").format(obj=self)
         if self.description != "":
             str_ = f"{str_}: {self.description}"
         return str_
 
     @property
     def completed(self):
-        all_jobs = Job.objects.filter(work=self)
-        return all([job.completed for job in all_jobs])
+        all_tasks = Task.objects.filter(item=self)
+        return all([task.completed for task in all_tasks])
 
-    def spawn_jobs(self):
-        if self.category is None:
-            raise NoCategoryError(
-                _("Work '{work_name}' doesn't have a category assigned.").format(
-                    work_name=str(self),
+    def spawn_tasks(self):
+        if self.process is None:
+            raise NoProcessError(
+                _("Item '{item_name}' doesn't have a process assigned.").format(
+                    item_name=str(self),
                 ),
             )
-        for task in self.category.spawned_tasks.all():
-            new_job = Job(work=self, task=task)
-            new_job.save()
+        for step in self.process.spawned_steps.all():
+            new_task = Task(item=self, step=step)
+            new_task.save()
 
 
-add_note_type("Work", "iris.app.Work")
+add_note_type("Item", "iris.app.Item")
 
 
-class Category(models.Model):
+class Process(models.Model):
     name = models.CharField(_("name"), max_length=64)
-    spawned_tasks = models.ManyToManyField(
-        "Task",
-        verbose_name=_("spawned tasks"),
-        related_name="spawned_by_categories",
-        through="CategorySpawnedTasks",
+    spawned_steps = models.ManyToManyField(
+        "Step",
+        verbose_name=_("spawned steps"),
+        related_name="spawned_by_processes",
+        through="ProcessSpawnedSteps",
     )
 
     class Meta:
-        verbose_name = _("category")
-        verbose_name_plural = _("categories")
+        verbose_name = _("process")
+        verbose_name_plural = _("processes")
 
     def __str__(self):
-        return _("'{obj.name}' category").format(obj=self)
+        return _("'{obj.name}' process").format(obj=self)
 
 
-class CategorySpawnedTasks(models.Model):
-    category = models.ForeignKey("Category", on_delete=models.CASCADE)
-    task = models.ForeignKey("Task", on_delete=models.RESTRICT)
+class ProcessSpawnedSteps(models.Model):
+    process = models.ForeignKey("Process", on_delete=models.CASCADE)
+    step = models.ForeignKey("Step", on_delete=models.RESTRICT)
 
 
-class Task(models.Model):
+class Step(models.Model):
     name = models.CharField(_("name"), max_length=64)
     instructions = models.TextField(_("instructions"), blank=True)
     stations = models.ManyToManyField(
-        "Station", verbose_name=_("stations"), related_name="tasks", blank=True
+        "Station", verbose_name=_("stations"), related_name="steps", blank=True
     )
+
+    class Meta:
+        verbose_name = _("step")
+        verbose_name_plural = _("steps")
+
+    def __str__(self):
+        return _("Step '{obj.name}' ({obj.pk})").format(obj=self)
+
+
+class Task(TimestampMixin, models.Model):
+    step = models.ForeignKey(
+        "Step", verbose_name=_("step"), on_delete=models.RESTRICT, related_name="tasks"
+    )
+    item = models.ForeignKey(
+        "Item", verbose_name=_("item"), on_delete=models.RESTRICT, related_name="tasks"
+    )
+
+    objects = TaskManager()
 
     class Meta:
         verbose_name = _("task")
         verbose_name_plural = _("tasks")
 
     def __str__(self):
-        return _("Task '{obj.name}' ({obj.pk})").format(obj=self)
-
-
-class Job(TimestampMixin, models.Model):
-    task = models.ForeignKey(
-        "Task", verbose_name=_("task"), on_delete=models.RESTRICT, related_name="jobs"
-    )
-    work = models.ForeignKey(
-        "Work", verbose_name=_("work"), on_delete=models.RESTRICT, related_name="jobs"
-    )
-
-    objects = JobManager()
-
-    class Meta:
-        verbose_name = _("job")
-        verbose_name_plural = _("jobs")
-
-    def __str__(self):
-        quantity_suffix = "" if self.work.quantity == 1 else f" x{self.work.quantity}"
-        return _("'{obj.task.name}' for work {obj.work.pk}{quantity_suffix}").format(
+        quantity_suffix = "" if self.item.quantity == 1 else f" x{self.item.quantity}"
+        return _("'{obj.step.name}' for item {obj.item.pk}{quantity_suffix}").format(
             obj=self,
             quantity_suffix=quantity_suffix,
         )
 
     @property
     def canceled(self):
-        return self.work.canceled
+        return self.item.canceled
 
     @property
     def completed(self):
@@ -242,86 +242,86 @@ class Job(TimestampMixin, models.Model):
                 return suspension
 
 
-class TaskSpawn(models.Model):
-    closing_task = models.ForeignKey(
-        "Task",
-        verbose_name=_("closing task"),
+class StepSpawn(models.Model):
+    closing_step = models.ForeignKey(
+        "Step",
+        verbose_name=_("closing step"),
         on_delete=models.CASCADE,
         related_name="spawns",
     )
-    spawned_tasks = models.ManyToManyField(
-        "Task",
-        verbose_name=_("spawned tasks"),
-        related_name="spawned_by_tasks",
-        through="TaskSpawnSpawnedTasks",
+    spawned_steps = models.ManyToManyField(
+        "Step",
+        verbose_name=_("spawned steps"),
+        related_name="spawned_by_steps",
+        through="StepSpawnSpawnedSteps",
     )
 
     class Meta:
-        verbose_name = _("task spawn")
-        verbose_name_plural = _("task spawns")
+        verbose_name = _("step spawn")
+        verbose_name_plural = _("step spawns")
 
     def __str__(self):
-        # (task, task, task)
+        # (step, step, step)
         spawns_names = (
-            "(" + ", ".join([f'"{task}"' for task in self.spawned_tasks.all()]) + ")"
+            "(" + ", ".join([f'"{step}"' for step in self.spawned_steps.all()]) + ")"
         )
         return _(
-            'Spawns {spawns_names} when task "{obj.closing_task}" is closed'
+            'Spawns {spawns_names} when step "{obj.closing_step}" is closed'
         ).format(
             obj=self,
             spawns_names=spawns_names,
         )
 
 
-class TaskSpawnSpawnedTasks(models.Model):
-    task_spawn = models.ForeignKey("TaskSpawn", on_delete=models.CASCADE)
-    task = models.ForeignKey("Task", on_delete=models.RESTRICT)
+class StepSpawnSpawnedSteps(models.Model):
+    step_spawn = models.ForeignKey("StepSpawn", on_delete=models.CASCADE)
+    step = models.ForeignKey("Step", on_delete=models.RESTRICT)
 
 
-class TaskConsolidation(models.Model):
-    closing_tasks = models.ManyToManyField(
-        "Task",
-        verbose_name=_("closing tasks"),
+class StepConsolidation(models.Model):
+    closing_steps = models.ManyToManyField(
+        "Step",
+        verbose_name=_("closing steps"),
         related_name="consolidations",
-        through="TaskConsolidationClosingTasks",
+        through="StepConsolidationClosingSteps",
     )
-    spawned_tasks = models.ManyToManyField(
-        "Task",
-        verbose_name=_("spawned tasks"),
+    spawned_steps = models.ManyToManyField(
+        "Step",
+        verbose_name=_("spawned steps"),
         related_name="spawned_by_consolidation",
-        through="TaskConsolidationSpawnedTasks",
+        through="StepConsolidationSpawnedSteps",
     )
 
     class Meta:
-        verbose_name = _("task consolidation")
-        verbose_name_plural = _("task consolidations")
+        verbose_name = _("step consolidation")
+        verbose_name_plural = _("step consolidations")
 
     def __str__(self):
-        # (task, task, task)
+        # (step, step, step)
         spawns_names = (
-            "(" + ", ".join([f'"{task}"' for task in self.spawned_tasks.all()]) + ")"
+            "(" + ", ".join([f'"{step}"' for step in self.spawned_steps.all()]) + ")"
         )
         closing_names = (
-            "(" + ", ".join([f'"{task}"' for task in self.closing_tasks.all()]) + ")"
+            "(" + ", ".join([f'"{step}"' for step in self.closing_steps.all()]) + ")"
         )
-        return _("Spawns {spawns_names} when tasks {closing_names} are closed").format(
+        return _("Spawns {spawns_names} when steps {closing_names} are closed").format(
             spawns_names=spawns_names,
             closing_names=closing_names,
         )
 
 
-class TaskConsolidationClosingTasks(models.Model):
-    task_consolidation = models.ForeignKey(
-        "TaskConsolidation", on_delete=models.CASCADE
+class StepConsolidationClosingSteps(models.Model):
+    step_consolidation = models.ForeignKey(
+        "StepConsolidation", on_delete=models.CASCADE
     )
-    task = models.ForeignKey("Task", on_delete=models.RESTRICT)
+    step = models.ForeignKey("Step", on_delete=models.RESTRICT)
 
 
-class TaskConsolidationSpawnedTasks(models.Model):
-    task_consolidation = models.ForeignKey(
-        "TaskConsolidation", on_delete=models.CASCADE
+class StepConsolidationSpawnedSteps(models.Model):
+    step_consolidation = models.ForeignKey(
+        "StepConsolidation", on_delete=models.CASCADE
     )
-    task = models.ForeignKey("Task", on_delete=models.RESTRICT)
+    step = models.ForeignKey("Step", on_delete=models.RESTRICT)
 
 
 class Worker(models.Model):
@@ -342,7 +342,9 @@ class Worker(models.Model):
 
 
 class Commit(TimestampMixin, NotesMixin, models.Model):
-    job = models.OneToOneField("Job", verbose_name=_("job"), on_delete=models.CASCADE)
+    task = models.OneToOneField(
+        "Task", verbose_name=_("task"), on_delete=models.CASCADE
+    )
     worker = models.ForeignKey(
         "Worker",
         verbose_name=_("worker"),
@@ -356,27 +358,27 @@ class Commit(TimestampMixin, NotesMixin, models.Model):
 
     def __str__(self):
         return _(
-            'Commit for work "{obj.job}" by worker {obj.worker} ({obj.modified})'
+            'Commit for item "{obj.task}" by worker {obj.worker} ({obj.modified})'
         ).format(
             obj=self,
         )
 
-    def spawn_and_consolidate_jobs(self):
-        for spawn in self.job.task.spawns.all():
-            for task in spawn.spawned_tasks.all():
-                new_job = Job(work=self.job.work, task=task)
-                new_job.save()
-        for consolidation in self.job.task.consolidations.all():
-            closing_tasks = consolidation.closing_tasks.all()
-            closing_jobs = Job.objects.filter(
-                work=self.job.work, task__in=closing_tasks
+    def spawn_and_consolidate_tasks(self):
+        for spawn in self.task.step.spawns.all():
+            for step in spawn.spawned_steps.all():
+                new_task = Task(item=self.task.item, step=step)
+                new_task.save()
+        for consolidation in self.task.step.consolidations.all():
+            closing_steps = consolidation.closing_steps.all()
+            closing_tasks = Task.objects.filter(
+                item=self.task.item, step__in=closing_steps
             )
-            if len(closing_tasks) == len(closing_jobs) and all(
-                [job.completed for job in closing_jobs]
+            if len(closing_steps) == len(closing_tasks) and all(
+                [task.completed for task in closing_tasks]
             ):
-                for task in consolidation.spawned_tasks.all():
-                    new_job = Job(work=self.job.work, task=task)
-                    new_job.save()
+                for step in consolidation.spawned_steps.all():
+                    new_task = Task(item=self.task.item, step=step)
+                    new_task.save()
 
 
 add_note_type("Commit", "iris.app.Commit")
@@ -415,8 +417,8 @@ class NoteTemplate(models.Model):
 
 
 class Delay(TimestampMixin, NotesMixin, models.Model):
-    job = models.ForeignKey(
-        "Job", verbose_name=_("job"), on_delete=models.CASCADE, related_name="delays"
+    task = models.ForeignKey(
+        "Task", verbose_name=_("task"), on_delete=models.CASCADE, related_name="delays"
     )
     worker = models.ForeignKey(
         "Worker",
@@ -433,7 +435,7 @@ class Delay(TimestampMixin, NotesMixin, models.Model):
         verbose_name_plural = _("delays")
 
     def __str__(self):
-        return _('Delay "{obj.job}" for {obj.duration}').format(obj=self)
+        return _('Delay "{obj.task}" for {obj.duration}').format(obj=self)
 
     @property
     def in_effect(self):
@@ -452,9 +454,9 @@ add_note_type("Delay", "iris.app.Delay")
 
 
 class Suspension(TimestampMixin, NotesMixin, models.Model):
-    job = models.ForeignKey(
-        "Job",
-        verbose_name=_("job"),
+    task = models.ForeignKey(
+        "Task",
+        verbose_name=_("task"),
         on_delete=models.CASCADE,
         related_name="suspensions",
     )
@@ -493,7 +495,7 @@ class Suspension(TimestampMixin, NotesMixin, models.Model):
         return self.lifted_at is not None
 
     def __str__(self):
-        return _('Suspension for "{obj.job}"').format(obj=self)
+        return _('Suspension for "{obj.task}"').format(obj=self)
 
 
 add_note_type("Suspension", "iris.app.Suspension")

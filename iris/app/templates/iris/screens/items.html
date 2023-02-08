@@ -1,0 +1,69 @@
+{% extends 'iris/base.html' %}
+
+{% load i18n %}
+
+{% block iris_title %}{% block iris_header %}{% translate "All items" %}{% endblock %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+	<div class="container-flex">
+		<div class="btn-group">
+			<a href="{% url "iris:item_list" %}" class="btn btn-primary{% if current_mode == "pending" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Pending" %}</a>
+			<a href="{% url "iris:item_list" %}?mode=completed" class="btn btn-primary{% if current_mode == "completed" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Completed" %}</a>
+			<a href="{% url "iris:item_list" %}?mode=canceled" class="btn btn-primary{% if current_mode == "canceled" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Canceled" %}</a>
+		</div>
+		{% if perms.iris.add_item %}
+		<div class="btn-group">
+			<a href="{% url "iris:item_add" %}?next={{ request.get_full_path|urlencode }}" class="btn btn-success">{% translate "Create new item" %}</a>
+		</div>
+		{% endif %}
+	</div>
+	<ul>
+		{% for item in object_list %}
+		<div class="container mt-4">
+			{% if item.completed %}
+			<div class="card border-success">
+			{% elif item.canceled %}
+			<div class="card border-danger">
+			{% else %}
+			<div class="card">
+			{% endif %}
+				{% if item.completed %}
+				<div class="card-header text-success">{% translate "This item has been completed." %}</div>
+				{% elif item.canceled %}
+				<div class="card-header text-danger">{% translate "This item has been canceled." %}</div>
+				{% endif %}
+				<div class="card-header">
+					<h5 class="card-title">{{ item }}</h5>
+					{% if item.quantity != 1 %}<h6 class="card-subtitle mb-2 text-muted">{% blocktranslate with quantity=item.quantity %}{{ quantity }} times{% endblocktranslate %}</h6>{% endif %}
+				</div>
+				<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+					{% if perms.iris.change_item %}
+						<a class="btn btn-primary" href="{% url 'iris:item_change' item.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit item details" %}</a>
+						{% if not item.canceled %}
+							<a class="btn btn-danger" href="{% url 'iris:item_cancel' item.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Cancel item" %}</a>
+						{% else %}
+							<a class="btn btn-primary" href="{% url 'iris:item_restore' item.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Restore item" %}</a>
+						{% endif %}
+					{% endif %}
+				</li>
+				{% if item.notes %}
+				<li class="list-group-item">
+					<p>{% translate "Item notes" %}</p>
+					<p>{{ item.notes|linebreaks }}</p>
+				</li>
+				{% endif %}
+				<li class="list-group-item">
+					<div class="card-body">{% translate "Task list" %}</div>
+					{% for task in item.tasks.all %}
+						{% include "iris/task_cards/inline.html" %}
+					{% endfor %}
+				</li>
+				</ul>
+			</div>
+		</div>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}

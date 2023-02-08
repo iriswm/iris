@@ -6,8 +6,8 @@ from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic.edit import FormView
 
-from iris.app.admin.forms import CancelWorksViewForm
-from iris.app.models import AlreadyCanceledError, Work
+from iris.app.admin.forms import CancelItemsViewForm
+from iris.app.models import AlreadyCanceledError, Item
 
 
 class AdminContextMixin:
@@ -23,48 +23,48 @@ class AdminContextMixin:
         return context
 
 
-class CancelWorksView(AdminContextMixin, PermissionRequiredMixin, FormView):
-    permission_required = "iris.change_work"
-    template_name = "admin/iris/work/cancel_works.html"
-    form_class = CancelWorksViewForm
-    success_url = reverse_lazy("admin:iris_work_changelist")
+class CancelItemsView(AdminContextMixin, PermissionRequiredMixin, FormView):
+    permission_required = "iris.change_item"
+    template_name = "admin/iris/item/cancel_items.html"
+    form_class = CancelItemsViewForm
+    success_url = reverse_lazy("admin:iris_item_changelist")
 
     def get(self, request, *args, **kwargs):
         ids = self.request.GET["ids"]
-        works = Work.objects.filter(pk__in=ids.split(","))
-        for work in works:
-            if work.canceled:
+        items = Item.objects.filter(pk__in=ids.split(","))
+        for item in items:
+            if item.canceled:
                 messages.error(
                     self.request,
-                    _("The work '{work_name}' is already canceled.").format(
-                        work_name=str(work),
+                    _("The item '{item_name}' is already canceled.").format(
+                        item_name=str(item),
                     ),
                 )
-                return HttpResponseRedirect(reverse("admin:iris_work_changelist"))
+                return HttpResponseRedirect(reverse("admin:iris_item_changelist"))
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         ids = self.request.GET["ids"]
-        works = Work.objects.filter(pk__in=ids.split(","))
+        items = Item.objects.filter(pk__in=ids.split(","))
         return {
             **super().get_context_data(**kwargs),
-            "title": _("Cancel works"),
+            "title": _("Cancel items"),
             "ids": ids,
-            "works": works,
+            "items": items,
         }
 
     def form_valid(self, form):
         ids = self.request.GET["ids"]
-        works = Work.objects.filter(pk__in=ids.split(","))
+        items = Item.objects.filter(pk__in=ids.split(","))
         reason = form.cleaned_data["reason"]
         datetime_ = form.cleaned_data["datetime"]
         try:
             with transaction.atomic():
-                for work in works:
-                    work.cancel(reason, datetime_)
+                for item in items:
+                    item.cancel(reason, datetime_)
         except AlreadyCanceledError as e:
             messages.error(self.request, str(e))
-            return HttpResponseRedirect(reverse("admin:cancel_works") + f"?ids={ids}")
+            return HttpResponseRedirect(reverse("admin:cancel_items") + f"?ids={ids}")
         else:
-            messages.info(self.request, _("The works were canceled."))
+            messages.info(self.request, _("The items were canceled."))
             return super().form_valid(form)

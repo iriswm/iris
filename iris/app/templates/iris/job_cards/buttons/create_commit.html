@@ -1,5 +1,0 @@
-{% load i18n %}
-
-{% if perms.iris.add_commit %}
-<a class="btn btn-success" href="{% url 'iris:job_add_commit' job.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Commit" %}</a>
-{% endif %}

@@ -1,0 +1,5 @@
+{% load i18n %}
+
+{% if perms.iris.change_delay %}
+<a class="btn btn-primary" href="{% url 'iris:delay_change' task.delayed_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit delay" %}</a>
+{% endif %}

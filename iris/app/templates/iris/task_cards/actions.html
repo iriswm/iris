@@ -1,0 +1,19 @@
+{% load i18n %}
+
+<div class="container mt-4">
+	<div class="card">
+		<div class="card-header">
+			<h5 class="card-title">{{ task.step.name }}</h5>
+			{% if task.item.quantity != 1 %}<h6 class="card-subtitle mb-2 text-muted">{% blocktranslate with quantity=task.item.quantity %}{{ quantity }} times{% endblocktranslate %}</h6>{% endif %}
+		</div>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item">{{ task.item }}</li>
+		</ul>
+		<div class="card-footer">
+			{% include "iris/task_cards/buttons/goto_task.html" %}
+			{% include "iris/task_cards/buttons/create_commit.html" %}
+			{% include "iris/task_cards/buttons/create_delay.html" %}
+			{% include "iris/task_cards/buttons/create_suspension.html" %}
+		</div>
+	</div>
+</div>

@@ -2,75 +2,79 @@
 
 /'
 
-Each time the workshop receives a new order, each item type to be created is
-stored as a `Work` in the Iris site. When more than one item of the same time
-should be created, a desired quantity can be specified.
+When the workshop receives a new order, each item to be created is stored as a
+`Item` in the Iris site. When more than one item of the same time should be
+created, a desired quantity can be specified.
 
-Works track creation and modification times, can have notes and can be
+Items track creation and modification times, can have notes and can be
 canceled.
 
-Works can also have priority over other works.
+Items can also have priority over other items.
 
 '/
 
-object Work
+object Item
 
-Work : quantity
-Work : created
-Work : modified
-Work : notes
-Work : cancel_time
-Work : cancel_reason
-Work : has_priority
+Item : quantity
+Item : created
+Item : modified
+Item : notes
+Item : cancel_time
+Item : cancel_reason
+Item : has_priority
 
 /'
 
-Each work will be part of a `Category`. Categories will map each work to a set
-of tasks (`Task` objects).
+Each item will be handled following a `Process`. Processes will determine the
+set of steps (`Step` objects) needed to complete the item.
 
-Each task has individual `instructions` and a simple `name`.
+Each step has individual `instructions` and a simple `name`.
 
-When a new work is created, the category is checked and an appropriate set of
-jobs are created (`Job` objects). Each of this jobs, when completed, will span
-extra works according to another model called `TaskSpawn`. Also, some tasks
-will be spawned when a set of tasks for the same line are completed (only when
-they are all completed). This tasks depending on sets of tasks are kept in the
-model `TaskConsolidation`.
+When a new item is created, the process is checked and an appropriate set of
+tasks are created (`Task` objects) according to the process initial steps. Each
+of this tasks, when completed, will span extra tasks according to another model
+called `StepSpawn`. Also, some tasks will be spawned when a set of tasks for
+the same item are completed (only when they are all completed). This steps
+depending on sets of steps are kept in the model `StepConsolidation`.
 
 '/
 
-object Category
+object Process
 
-Work "n" -- "1" Category
+Item "n" -- "1" Process
+
+object Step
+
+Process "n" -- "m" Step
+
+Step : name
+Step : instructions
 
 object Task
 
-Category "n" -- "m" Task
+Task "n" -- "1" Step
+Task "n" -- "1" Item
 
-Task : name
-Task : instructions
+object StepSpawn
+object StepConsolidation
 
-object Job
-
-Job "n" -- "1" Task
-Job "n" -- "1" Work
-
-object TaskSpawn
-object TaskConsolidation
-
-TaskSpawn "n" -- "1" Task
-TaskSpawn "n" -- "m" Task
-TaskConsolidation "n" -- "m" Task
-TaskConsolidation "n" -- "m" Task
+StepSpawn "n" -- "1" Step
+StepSpawn "n" -- "m" Step
+StepConsolidation "n" -- "m" Step
+StepConsolidation "n" -- "m" Step
 
 /'
 
-The items in the models `Task`, `Category`, `TaskSpawn` and `TaskConsolidation`
-represent trees of works needed to consider an order fulfilled.
+The 'steps' in the models `Step`, `Process`, `StepSpawn` and
+`StepConsolidation` represent trees of tasks needed to consider an order
+fulfilled.
 
-The works can be completed by any worker, identified in the model `Worker` and
-connected to an Django `User`. The works are marked as completed creating a new
-item in another model called `Commit`.
+The tasks can be completed by any worker, identified in the model `Worker` and
+connected to an Django `User`. The tasks are marked as completed creating a new
+entry in another model called `Commit`.
+
+Is at this moment when the step tress will be checked to create the new tasks
+if apply.
 
 '/
 
@@ -81,19 +85,19 @@ Worker "1" -- "1" auth.User
 
 object Commit
 
-Commit "1" -[#green]- "1" Job
+Commit "1" -[#green]- "1" Task
 Commit "n" -- "1" Worker
 
 /'
 
-The items in `Work` and `Commit` are timestamped to keep track of the amount of
+The items in `Item` and `Commit` are timestamped to keep track of the amount of
 time needed by each item in an Order and offer proper estimations and reports.
 The commits also have `notes`.
 
 '/
 
-Work : created
-Work : modified
+Item : created
+Item : modified
 Commit : created
 Commit : modified
 Commit : notes
@@ -102,16 +106,16 @@ Commit : notes
 
 The main purpose of the Iris site is to keep a list of station profiles in a
 `Station` model and offer a detail page for each station when the workers in
-the station can see the tasks pending work and the information needed for each
-task. The secondary purpose is to help with the estimation of order completion
-times and the tertiary purpose is to offer insights into work efficiency and
+the station can see the steps pending item and the information needed for each
+step. The secondary purpose is to help with the estimation of order completion
+times and the tertiary purpose is to offer insights into item efficiency and
 performance.
 
 '/
 
 object Station
 
-Task "n" -- "m" Station
+Step "n" -- "m" Station
 
 /'
 
@@ -128,20 +132,21 @@ NoteTemplate : text
 
 /'
 
-Abnormal workflows in works will be handled using extra models:
+When a issue happens while working on an task, other models will be used to
+keep track of them:
 
 '/
 
 /'
 
-- The `Delay` model, with a specific time specified to hide the work in the
+- The `Delay` model, with a specific time specified to hide the item in the
   station during that time and a note.
 
 '/
 
 object Delay
 
-Delay "n" -[#orange]- "1" Job
+Delay "n" -[#orange]- "1" Task
 Delay "n" -- "1" Worker
 
 Delay : created
@@ -151,14 +156,14 @@ Delay : time
 
 /'
 
-- The `Suspension` model, for halts in works without time estimations, also
+- The `Suspension` model, for halts in items without time estimations, also
   with a note.
 
 '/
 
 object Suspension
 
-Suspension "n" -[#red]- "1" Job
+Suspension "n" -[#red]- "1" Task
 Suspension "n" -- "1" Worker
 
 Suspension : created
@@ -167,8 +172,8 @@ Suspension : notes
 
 /'
 
-A system of alerts to handle delays or suspensions is also considerably useful
-to have, but in the meantime, an screen to show them should be enough.
+A system of notifications to handle delays or suspensions is also considerably
+useful to have, but in the meantime, an screen to show them should be enough.
 
 '/
 

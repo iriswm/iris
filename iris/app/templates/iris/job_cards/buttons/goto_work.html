@@ -1,5 +1,0 @@
-{% load i18n %}
-
-{% if perms.iris.change_work %}
-<a class="btn btn-primary" href="{% url 'iris:work_change' job.work.pk %}">{% translate "Work details" %}</a>
-{% endif %}

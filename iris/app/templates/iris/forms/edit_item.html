@@ -1,0 +1,31 @@
+{% extends 'iris/base.html' %}
+
+{% load i18n %}
+
+{% block iris_title %}{% blocktranslate with item_id=object.pk %}Editing item {{ item_id }}{% endblocktranslate %}{% endblock %}
+{% block iris_header %}{% blocktranslate %}Editing {{ object }}{% endblocktranslate %}{% endblock %}
+
+{% block content %}
+<div class="container-sm mt-4 p-4">
+	<form method="post">
+		{% csrf_token %}
+		<input type="hidden" id="next_url" value="{{ next_url }}">
+		{% include "iris/forms/include/form_errors.html" %}
+		<div class="mb-3 row">
+			<div class="col">
+				{% translate "Description" as description_label %}
+				{% include "iris/forms/include/input_text.html" with field=form.description label=description_label %}
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<div class="col">
+				{% translate "Notes" as notes_label %}
+				{% include "iris/forms/include/textarea.html" with field=form.notes label=notes_label %}
+			</div>
+		</div>
+		<div>
+			<button type="submit" class="btn btn-primary w-100">{% translate "Save changes" %}</button>
+		</div>
+	</form>
+</div>
+{% endblock %}

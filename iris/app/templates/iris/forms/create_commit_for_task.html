@@ -1,0 +1,22 @@
+{% extends 'iris/base.html' %}
+
+{% load i18n %}
+
+{% block iris_title %}{% blocktranslate with task_id=task.pk %}Create commit for task {{ task_id }}{% endblocktranslate %}{% endblock %}
+{% block iris_header %}{% blocktranslate with task_name=task %}Create commit for {{ task_name }}{% endblocktranslate %}{% endblock %}
+
+{% block content %}
+<div class="container-sm mt-4 p-4">
+	<form method="post">
+		{% csrf_token %}
+		{% include "iris/forms/include/form_errors.html" %}
+		<div class="mb-3">
+			{% translate "Notes" as notes_label %}
+			{% include "iris/forms/include/textarea.html" with field=form.notes label=notes_label %}
+		</div>
+		<div>
+			<button type="submit" class="btn btn-primary w-100">{% translate "Commit" %}</button>
+		</div>
+	</form>
+</div>
+{% endblock %}

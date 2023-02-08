@@ -17,16 +17,16 @@ from django.views.generic import (
 )
 from django.views.generic.edit import ContextMixin, ModelFormMixin, SingleObjectMixin
 
-from iris.app.forms import CancelWorkForm, CreateWorkModelForm, DelayModelForm
+from iris.app.forms import CancelItemForm, CreateItemModelForm, DelayModelForm
 from iris.app.models import (
-    Category,
     Commit,
     Delay,
-    Job,
+    Item,
     NotCanceledError,
+    Process,
     Station,
     Suspension,
-    Work,
+    Task,
     Worker,
 )
 
@@ -108,49 +108,49 @@ class StationView(LoginRequiredMixin, PageModeMixin, DetailView):
         context = super().get_context_data(**kwargs)
         station = self.get_object()
         if self.current_mode == "pending":
-            context["jobs"] = Job.objects.pending(station=station)
+            context["tasks"] = Task.objects.pending(station=station)
         elif self.current_mode == "delayed":
-            context["jobs"] = Job.objects.delayed(station=station)
+            context["tasks"] = Task.objects.delayed(station=station)
         elif self.current_mode == "suspended":
-            context["jobs"] = Job.objects.suspended(station=station)
+            context["tasks"] = Task.objects.suspended(station=station)
         return context
 
 
-class JobListView(PageModeMixin, ListView):
-    template_name = "iris/screens/jobs.html"
-    model = Job
+class TaskListView(PageModeMixin, ListView):
+    template_name = "iris/screens/tasks.html"
+    model = Task
     page_modes = ["pending", "delayed", "suspended", "completed"]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.current_mode == "pending":
-            context["jobs"] = Job.objects.pending()
+            context["tasks"] = Task.objects.pending()
         elif self.current_mode == "delayed":
-            context["jobs"] = Job.objects.delayed()
+            context["tasks"] = Task.objects.delayed()
         elif self.current_mode == "suspended":
-            context["jobs"] = Job.objects.suspended()
+            context["tasks"] = Task.objects.suspended()
         elif self.current_mode == "completed":
-            context["jobs"] = Job.objects.completed()
+            context["tasks"] = Task.objects.completed()
         return context
 
 
-class WorkListView(LoginRequiredMixin, PageModeMixin, ListView):
-    template_name = "iris/screens/works.html"
-    model = Work
+class ItemListView(LoginRequiredMixin, PageModeMixin, ListView):
+    template_name = "iris/screens/items.html"
+    model = Item
     page_modes = ["pending", "completed", "canceled"]
 
     def get_queryset(self):
         if self.current_mode == "pending":
-            return Work.objects.pending()
+            return Item.objects.pending()
         elif self.current_mode == "completed":
-            return Work.objects.completed()
+            return Item.objects.completed()
         elif self.current_mode == "canceled":
-            return Work.objects.canceled()
+            return Item.objects.canceled()
         return super().get_queryset()
 
 
-class AlertsView(SomePermissionRequiredMixin, PageModeMixin, TemplateView):
-    template_name = "iris/screens/alerts.html"
+class IssuesView(SomePermissionRequiredMixin, PageModeMixin, TemplateView):
+    template_name = "iris/screens/issues.html"
     permission_required = (
         "iris.view_delay",
         "iris.view_suspension",
@@ -170,9 +170,9 @@ class AlertsView(SomePermissionRequiredMixin, PageModeMixin, TemplateView):
         return context
 
 
-class JobDetailView(DetailView):
-    template_name = "iris/detail/job.html"
-    model = Job
+class TaskDetailView(DetailView):
+    template_name = "iris/detail/task.html"
+    model = Task
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -188,32 +188,32 @@ class JobDetailView(DetailView):
         return context
 
 
-class CreateForJobMixin(LoginRequiredMixin, NextUrlFieldMixin, CreateView):
+class CreateForTaskMixin(LoginRequiredMixin, NextUrlFieldMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["job"] = Job.objects.get(pk=self.kwargs["pk"])
+        context["task"] = Task.objects.get(pk=self.kwargs["pk"])
         return context
 
     def form_valid(self, form):
-        form.instance.job = Job.objects.get(pk=self.kwargs["pk"])
+        form.instance.task = Task.objects.get(pk=self.kwargs["pk"])
         form.instance.worker = Worker.objects.get(user=self.request.user)
         return super().form_valid(form)
 
 
-class CreateCommitForJobView(CreateForJobMixin, PermissionRequiredMixin, CreateView):
-    template_name = "iris/forms/create_commit_for_job.html"
+class CreateCommitForTaskView(CreateForTaskMixin, PermissionRequiredMixin, CreateView):
+    template_name = "iris/forms/create_commit_for_task.html"
     model = Commit
     permission_required = "iris.add_commit"
     fields = ["notes"]
 
     def post(self, *args, **kwargs):
         returned = super().post(*args, **kwargs)
-        self.object.spawn_and_consolidate_jobs()
+        self.object.spawn_and_consolidate_tasks()
         return returned
 
 
-class CreateDelayForJobView(CreateForJobMixin, PermissionRequiredMixin, CreateView):
-    template_name = "iris/forms/create_delay_for_job.html"
+class CreateDelayForTaskView(CreateForTaskMixin, PermissionRequiredMixin, CreateView):
+    template_name = "iris/forms/create_delay_for_task.html"
     model = Delay
     form_class = DelayModelForm
     permission_required = "iris.add_delay"
@@ -247,10 +247,10 @@ class DelayEndView(
         return HttpResponseRedirect(self.get_next_url())
 
 
-class CreateSuspensionForJobView(
-    CreateForJobMixin, PermissionRequiredMixin, CreateView
+class CreateSuspensionForTaskView(
+    CreateForTaskMixin, PermissionRequiredMixin, CreateView
 ):
-    template_name = "iris/forms/create_suspension_for_job.html"
+    template_name = "iris/forms/create_suspension_for_task.html"
     model = Suspension
     permission_required = "iris.add_suspension"
     fields = ["notes"]
@@ -277,45 +277,45 @@ class SuspensionLiftView(
         return HttpResponseRedirect(self.get_next_url())
 
 
-class WorkFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
-    template_name = "iris/forms/edit_work.html"
-    model = Work
-    permission_required = "iris.change_work"
+class ItemFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
+    template_name = "iris/forms/edit_item.html"
+    model = Item
+    permission_required = "iris.change_item"
     fields = ["description", "notes"]
 
 
-class CreateWorkView(PermissionRequiredMixin, NextUrlFieldMixin, CreateView):
-    template_name = "iris/forms/create_work.html"
-    model = Work
-    permission_required = "iris.add_work"
-    form_class = CreateWorkModelForm
+class CreateItemView(PermissionRequiredMixin, NextUrlFieldMixin, CreateView):
+    template_name = "iris/forms/create_item.html"
+    model = Item
+    permission_required = "iris.add_item"
+    form_class = CreateItemModelForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.all().values("pk", "name")
+        context["processes"] = Process.objects.all().values("pk", "name")
         return context
 
 
-class CancelWorkView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
-    template_name = "iris/forms/cancel_work.html"
-    model = Work
-    permission_required = "iris.change_work"
-    form_class = CancelWorkForm
+class CancelItemView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
+    template_name = "iris/forms/cancel_item.html"
+    model = Item
+    permission_required = "iris.change_item"
+    form_class = CancelItemForm
 
 
-class RestoreWorkView(PermissionRequiredMixin, NextUrlParamMixin, View):
-    permission_required = "iris.change_work"
+class RestoreItemView(PermissionRequiredMixin, NextUrlParamMixin, View):
+    permission_required = "iris.change_item"
 
     def get(self, request, *args, **kwargs):
         try:
-            work_pk = self.kwargs["pk"]
-            object = Work.objects.get(pk=work_pk)
+            item_pk = self.kwargs["pk"]
+            object = Item.objects.get(pk=item_pk)
             object.restore()
-        except Work.DoesNotExist:
-            messages.error(request, _("The work does not exists."))
+        except Item.DoesNotExist:
+            messages.error(request, _("The item does not exists."))
             return HttpResponseRedirect(self.get_next_url())
         except NotCanceledError:
-            messages.error(request, _("The work is not cancelled."))
+            messages.error(request, _("The item is not cancelled."))
             return HttpResponseRedirect(self.get_next_url())
-        messages.info(request, _("The work was restored."))
+        messages.info(request, _("The item was restored."))
         return HttpResponseRedirect(self.get_next_url())

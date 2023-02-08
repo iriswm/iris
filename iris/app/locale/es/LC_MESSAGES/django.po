@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-04 12:29+0100\n"
-"PO-Revision-Date: 2022-12-04 12:31+0100\n"
+"POT-Creation-Date: 2023-02-08 11:17+0100\n"
+"PO-Revision-Date: 2023-02-08 11:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -33,23 +33,23 @@ msgstr "No completados"
 msgid "Lifted"
 msgstr "Levantado"
 
-msgid "Cancel selected works"
-msgstr "Cancelar los proyectos seleccionados"
+msgid "Cancel selected items"
+msgstr "Cancelar los productos seleccionados"
 
-msgid "Restore selected works"
-msgstr "Restaurar los proyectos seleccionados"
+msgid "Restore selected items"
+msgstr "Restaurar los productos seleccionados"
 
-msgid "The works were restored."
-msgstr "Proyectos restaurados."
+msgid "The items were restored."
+msgstr "Productos restaurados."
 
-msgid "Spawn category jobs"
-msgstr "Crear los trabajos de la categoría"
+msgid "Spawn process tasks"
+msgstr "Crear tareas del proceso"
 
-msgid "Jobs spawned."
-msgstr "Trabajos creados."
+msgid "Tasks spawned."
+msgstr "Tareas creadas."
 
-msgid "Spawn and consolidate jobs"
-msgstr "Crear y consolidar trabajos"
+msgid "Spawn and consolidate tasks"
+msgstr "Crear y consolidar tareas"
 
 msgid "Lift suspensions"
 msgstr "Levantar suspensiones"
@@ -64,14 +64,14 @@ msgid "Date/Time"
 msgstr "Fecha/Hora"
 
 #, python-brace-format
-msgid "The work '{work_name}' is already canceled."
-msgstr "El proyecto '{work_name}' ya está cancelado."
+msgid "The item '{item_name}' is already canceled."
+msgstr "El producto '{item_name}' ya está cancelado."
 
-msgid "Cancel works"
-msgstr "Cancelar proyectos"
+msgid "Cancel items"
+msgstr "Cancelar productos"
 
-msgid "The works were canceled."
-msgstr "Proyectos cancelados."
+msgid "The items were canceled."
+msgstr "Los productos se han cancelado."
 
 msgid "Delays must have a duration."
 msgstr "Los retrasos necesitan una duración."
@@ -102,8 +102,8 @@ msgstr "La razón y el tiempo de la cancelación deben especificarse juntas."
 msgid "notes"
 msgstr "notas"
 
-msgid "category"
-msgstr "categoría"
+msgid "process"
+msgstr "proceso"
 
 msgid "description"
 msgstr "descripción"
@@ -114,38 +114,48 @@ msgstr "cantidad"
 msgid "has priority"
 msgstr "prioritario"
 
-msgid "work"
-msgstr "proyecto"
+msgid "item"
+msgstr "producto"
 
-msgid "works"
-msgstr "proyectos"
-
-#, python-brace-format
-msgid "Work {obj.pk}"
-msgstr "Proyecto {obj.pk}"
+msgid "items"
+msgstr "productos"
 
 #, python-brace-format
-msgid "Work '{work_name}' doesn't have a category assigned."
-msgstr "El proyecto '{work_name}' no tiene una categoría asignada."
+msgid "Item {obj.pk}"
+msgstr "Producto {obj.pk}"
+
+#, python-brace-format
+msgid "Item '{item_name}' doesn't have a process assigned."
+msgstr "El producto '{item_name}' no tiene una categoría asignada."
 
 msgid "name"
 msgstr "nombre"
 
-msgid "spawned tasks"
-msgstr "tareas creadas"
+msgid "spawned steps"
+msgstr "pasos creados"
 
-msgid "categories"
-msgstr "categorías"
+msgid "processes"
+msgstr "procesos"
 
 #, python-brace-format
-msgid "'{obj.name}' category"
-msgstr "Categoría '{obj.name}'"
+msgid "'{obj.name}' process"
+msgstr "Proceso '{obj.name}'"
 
 msgid "instructions"
 msgstr "instrucciones"
 
 msgid "stations"
 msgstr "estaciones"
+
+msgid "step"
+msgstr "paso"
+
+msgid "steps"
+msgstr "pasos"
+
+#, python-brace-format
+msgid "Step '{obj.name}' ({obj.pk})"
+msgstr "Paso '{obj.name}' ({obj.pk})"
 
 msgid "task"
 msgstr "tarea"
@@ -154,44 +164,34 @@ msgid "tasks"
 msgstr "tareas"
 
 #, python-brace-format
-msgid "Task '{obj.name}' ({obj.pk})"
-msgstr "Tarea '{obj.name}' ({obj.pk})"
+msgid "'{obj.step.name}' for item {obj.item.pk}{quantity_suffix}"
+msgstr "'{obj.step.name}' para el proyecto {obj.item.pk}{quantity_suffix}"
 
-msgid "job"
-msgstr "trabajo"
+msgid "closing step"
+msgstr "paso de cierre"
 
-msgid "jobs"
-msgstr "trabajos"
+msgid "step spawn"
+msgstr "expansión de pasos"
 
-#, python-brace-format
-msgid "'{obj.task.name}' for work {obj.work.pk}{quantity_suffix}"
-msgstr "'{obj.task.name}' para el proyecto {obj.work.pk}{quantity_suffix}"
-
-msgid "closing task"
-msgstr "tarea de cierre"
-
-msgid "task spawn"
-msgstr "expansión de tareas"
-
-msgid "task spawns"
-msgstr "expansiones de tareas"
+msgid "step spawns"
+msgstr "expansiones de pasos"
 
 #, python-brace-format
-msgid "Spawns {spawns_names} when task \"{obj.closing_task}\" is closed"
-msgstr "Crea {spawns_names} cuando la tarea \"{obj.closing_task}\" se complete"
+msgid "Spawns {spawns_names} when step \"{obj.closing_step}\" is closed"
+msgstr "Crea {spawns_names} cuando el paso \"{obj.closing_step}\" se complete"
 
-msgid "closing tasks"
-msgstr "tareas de cierre"
+msgid "closing steps"
+msgstr "pasos de cierre"
 
-msgid "task consolidation"
-msgstr "consolidación de tareas"
+msgid "step consolidation"
+msgstr "consolidación de pasos"
 
-msgid "task consolidations"
-msgstr "consolidaciones de tareas"
+msgid "step consolidations"
+msgstr "consolidaciones de pasos"
 
 #, python-brace-format
-msgid "Spawns {spawns_names} when tasks {closing_names} are closed"
-msgstr "Crea {spawns_names} cuando las tareas {closing_names} se completen"
+msgid "Spawns {spawns_names} when steps {closing_names} are closed"
+msgstr "Crea {spawns_names} cuando los pasos {closing_names} se completen"
 
 msgid "user"
 msgstr "usuario"
@@ -209,9 +209,8 @@ msgid "commits"
 msgstr "cierres"
 
 #, python-brace-format
-msgid "Commit for work \"{obj.job}\" by worker {obj.worker} ({obj.modified})"
-msgstr ""
-"Cierre para el proyecto \"{obj.job}\" por {obj.worker} ({obj.modified})"
+msgid "Commit for item \"{obj.task}\" by worker {obj.worker} ({obj.modified})"
+msgstr "Cierre para la tarea \"{obj.task}\" por {obj.worker} ({obj.modified})"
 
 msgid "station"
 msgstr "estación"
@@ -242,8 +241,8 @@ msgid "delays"
 msgstr "retrasos"
 
 #, python-brace-format
-msgid "Delay \"{obj.job}\" for {obj.duration}"
-msgstr "Retraso de \"{obj.job}\" durante {obj.duration}"
+msgid "Delay \"{obj.task}\" for {obj.duration}"
+msgstr "Retraso de \"{obj.task}\" durante {obj.duration}"
 
 msgid "lifted_at"
 msgstr "levantado el"
@@ -259,14 +258,14 @@ msgid "Suspension '{suspension_name}' is already lifted."
 msgstr "La suspensión '{suspension_name}' ya está levantada."
 
 #, python-brace-format
-msgid "Suspension for \"{obj.job}\""
-msgstr "Suspensión de \"{obj.job}\""
+msgid "Suspension for \"{obj.task}\""
+msgstr "Suspensión de \"{obj.task}\""
 
 msgid "Home"
 msgstr "Inicio"
 
-msgid "Canceling works"
-msgstr "Cancelar proyectos"
+msgid "Canceling items"
+msgstr "Cancelar productos"
 
 msgid "Iris workshop management system"
 msgstr "Sistema de control de tareas Iris"
@@ -277,14 +276,14 @@ msgstr "Página sin título"
 msgid "Manage"
 msgstr "Gestionar"
 
-msgid "Works"
-msgstr "Proyectos"
+msgid "Items"
+msgstr "Productos"
 
-msgid "Jobs"
-msgstr "Trabajos"
+msgid "Tasks"
+msgstr "Tareas"
 
-msgid "Alerts"
-msgstr "Avisos"
+msgid "Issues"
+msgstr "Incidencias"
 
 msgid "Admin"
 msgstr "Administración"
@@ -300,31 +299,31 @@ msgid "Log out"
 msgstr "Desconectar"
 
 #, python-format
-msgid "Details for job %(job_id)s"
-msgstr "Detalles del trabajo %(job_id)s"
+msgid "Details for task %(task_id)s"
+msgstr "Detalles de la tarea %(task_id)s"
 
 #, python-format
-msgid "Details for %(job_name)s"
-msgstr "Detalles de %(job_name)s"
+msgid "Details for %(task_name)s"
+msgstr "Detalles de %(task_name)s"
 
 #, python-format
-msgid "Cancel work %(work_id)s"
-msgstr "Cancelar proyecto %(work_id)s"
+msgid "Cancel item %(item_id)s"
+msgstr "Cancelar producto %(item_id)s"
 
 #, python-format
 msgid "Cancelling %(object)s"
 msgstr "Cancelando %(object)s"
 
-msgid "Cancel work"
-msgstr "Cancelar proyecto"
+msgid "Cancel item"
+msgstr "Cancelar producto"
 
 #, python-format
-msgid "Create commit for job %(job_id)s"
-msgstr "Cerrar el trabajo %(job_id)s"
+msgid "Create commit for task %(task_id)s"
+msgstr "Cerrar la tarea %(task_id)s"
 
 #, python-format
-msgid "Create commit for %(job_name)s"
-msgstr "Cerrar %(job_name)s"
+msgid "Create commit for %(task_name)s"
+msgstr "Cerrar %(task_name)s"
 
 msgid "Notes"
 msgstr "Notas"
@@ -333,12 +332,12 @@ msgid "Commit"
 msgstr "Cerrar"
 
 #, python-format
-msgid "Create delay for job %(job_id)s"
-msgstr "Retrasar el trabajo %(job_id)s"
+msgid "Create delay for task %(task_id)s"
+msgstr "Retrasar la tarea %(task_id)s"
 
 #, python-format
-msgid "Create delay for %(job_name)s"
-msgstr "Retrasar %(job_name)s"
+msgid "Create delay for %(task_name)s"
+msgstr "Retrasar %(task_name)s"
 
 msgid "Days"
 msgstr "Días"
@@ -352,25 +351,14 @@ msgstr "Minutos"
 msgid "Delay"
 msgstr "Retrasar"
 
-#, python-format
-msgid "Create suspension for job %(job_id)s"
-msgstr "Suspender el trabajo %(job_id)s"
+msgid "Create a new item"
+msgstr "Crear un nuevo producto"
 
-#, python-format
-msgid "Create suspension for %(job_name)s"
-msgstr "Suspender %(job_name)s"
+msgid "Process"
+msgstr "Proceso"
 
-msgid "Suspend"
-msgstr "Suspender"
-
-msgid "Create a new work"
-msgstr "Crear un nuevo proyecto"
-
-msgid "Category"
-msgstr "Categoría"
-
-msgid "Select a category"
-msgstr "Selecciona una categoría"
+msgid "Select a process"
+msgstr "Selecciona un proceso"
 
 msgid "Quantity"
 msgstr "Cantidad"
@@ -382,6 +370,17 @@ msgid "Save changes"
 msgstr "Guardar los cambios"
 
 #, python-format
+msgid "Create suspension for task %(task_id)s"
+msgstr "Suspender la tarea %(task_id)s"
+
+#, python-format
+msgid "Create suspension for %(task_name)s"
+msgstr "Suspender %(task_name)s"
+
+msgid "Suspend"
+msgstr "Suspender"
+
+#, python-format
 msgid "Editing commit %(object.pk)s"
 msgstr "Editando cierre %(object.pk)s"
 
@@ -390,16 +389,16 @@ msgid "Editing delay %(object.pk)s"
 msgstr "Editando retraso %(object.pk)s"
 
 #, python-format
-msgid "Editing suspension %(object.pk)s"
-msgstr "Editando suspensión %(object.pk)s"
-
-#, python-format
-msgid "Editing work %(work_id)s"
-msgstr "Editando proyecto %(work_id)s"
+msgid "Editing item %(item_id)s"
+msgstr "Editando producto %(item_id)s"
 
 #, python-format
 msgid "Editing %(object)s"
 msgstr "Editando %(object)s"
+
+#, python-format
+msgid "Editing suspension %(object.pk)s"
+msgstr "Editando suspensión %(object.pk)s"
 
 msgid "Index"
 msgstr "Índice"
@@ -410,28 +409,61 @@ msgstr ""
 "¡Bienvenido! Usa el menú de navegación en la parte superior de la página "
 "para navegar por la web."
 
+msgid "Current issues"
+msgstr "Incidencias actuales"
+
+msgid "Both"
+msgstr "Ambos"
+
+msgid "Delays"
+msgstr "Retrasos"
+
+msgid "Suspensions"
+msgstr "Suspensiones"
+
+msgid "All items"
+msgstr "Todos los productos"
+
+msgid "Pending"
+msgstr "Pendientes"
+
+msgid "Create new item"
+msgstr "Crear producto"
+
+msgid "This item has been completed."
+msgstr "El producto ha sido completado."
+
+msgid "This item has been canceled."
+msgstr "El producto ha sido cancelado."
+
 #, python-format
 msgid "%(quantity)s times"
 msgstr "%(quantity)s veces"
 
-msgid "This job is delayed."
-msgstr "El trabajo está retrasado."
+msgid "Edit item details"
+msgstr "Editar detalles del producto"
 
-msgid "This job is suspended."
-msgstr "El trabajo está suspendido."
+msgid "Restore item"
+msgstr "Restaurar producto"
+
+msgid "Item notes"
+msgstr "Notas del producto"
+
+msgid "Task list"
+msgstr "Lista de tareas"
 
 #, python-format
-msgid "Ends at %(ends_at)s"
-msgstr "Termina el %(ends_at)s"
+msgid "Items for station %(station_name)s"
+msgstr "Productos para la estación %(station_name)s"
 
-msgid "Work notes"
-msgstr "Notas del trabajo"
+msgid "Delayed"
+msgstr "Retrasados"
 
-msgid "Delay notes"
-msgstr "Notas del retraso"
+msgid "Suspended"
+msgstr "Suspendidos"
 
-msgid "Suspension notes"
-msgstr "Notas de la suspensión"
+msgid "All tasks"
+msgstr "Todas las tareas"
 
 msgid "Edit commit notes"
 msgstr "Editar notas del cierre"
@@ -445,11 +477,11 @@ msgstr "Editar notas de la suspensión"
 msgid "End delay"
 msgstr "Terminar retraso"
 
+msgid "Item details"
+msgstr "Detalles del producto"
+
 msgid "Details"
 msgstr "Detalles"
-
-msgid "Work details"
-msgstr "Detalles del proyecto"
 
 msgid "Lift suspension"
 msgstr "Levantar suspensión"
@@ -457,72 +489,39 @@ msgstr "Levantar suspensión"
 msgid "No instructions."
 msgstr "No hay instrucciones."
 
-msgid "This job has been completed."
-msgstr "El trabajo ha sido completado."
+msgid "This task has been completed."
+msgstr "Esta tarea ha sido completada."
 
-msgid "This job has been canceled."
-msgstr "El trabajo ha sido cancelado."
+msgid "This task is delayed."
+msgstr "Esta tarea está retrasada."
+
+msgid "This task is suspended."
+msgstr "Esta tarea está suspendida."
+
+msgid "This task has been canceled."
+msgstr "Esta tarea ha sido cancelada."
 
 msgid "Commit notes"
 msgstr "Notas del cierre"
 
-msgid "Current alerts"
-msgstr "Avisos actuales"
-
-msgid "Both"
-msgstr "Ambos"
-
-msgid "Delays"
-msgstr "Retrasos"
-
-msgid "Suspensions"
-msgstr "Suspensiones"
-
-msgid "All jobs"
-msgstr "Todos los trabajos"
-
-msgid "Pending"
-msgstr "Pendientes"
-
-msgid "Delayed"
-msgstr "Retrasados"
-
-msgid "Suspended"
-msgstr "Suspendidos"
-
 #, python-format
-msgid "Works for station %(station_name)s"
-msgstr "Trabajos para la estación %(station_name)s"
+msgid "Ends at %(ends_at)s"
+msgstr "Termina el %(ends_at)s"
 
-msgid "All works"
-msgstr "Todos los proyectos"
+msgid "Delay notes"
+msgstr "Notas del retraso"
 
-msgid "Create new work"
-msgstr "Crear proyecto"
-
-msgid "This work has been completed."
-msgstr "El proyecto ha sido completado."
-
-msgid "This work has been canceled."
-msgstr "El proyecto ha sido cancelado."
-
-msgid "Edit work details"
-msgstr "Editar detalles del proyecto"
-
-msgid "Restore work"
-msgstr "Restaurar proyecto"
-
-msgid "Job list"
-msgstr "Lista de trabajos"
+msgid "Suspension notes"
+msgstr "Notas de la suspensión"
 
 msgid "Log in"
 msgstr "Conectar"
 
-msgid "The work does not exists."
-msgstr "El proyecto no existe."
+msgid "The item does not exists."
+msgstr "El producto no existe."
 
-msgid "The work is not cancelled."
-msgstr "El proyecto ha sido cancelado."
+msgid "The item is not cancelled."
+msgstr "El producto no ha sido cancelado."
 
-msgid "The work was restored."
-msgstr "El proyecto ha sido restaurado."
+msgid "The item was restored."
+msgstr "El producto ha sido restaurado."

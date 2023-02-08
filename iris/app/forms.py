@@ -5,7 +5,7 @@ from django.core.validators import ValidationError
 from django.utils.timezone import now
 from django.utils.translation import gettext as _
 
-from iris.app.models import Delay, Work
+from iris.app.models import Delay, Item
 
 
 class DelayModelForm(forms.ModelForm):
@@ -59,23 +59,23 @@ class DelayModelForm(forms.ModelForm):
         return super().save()
 
 
-class CreateWorkModelForm(forms.ModelForm):
+class CreateItemModelForm(forms.ModelForm):
     class Meta:
-        model = Work
-        fields = ["category", "description", "notes", "quantity"]
+        model = Item
+        fields = ["process", "description", "notes", "quantity"]
 
     def save(self):
         instance = super().save()
-        instance.spawn_jobs()
+        instance.spawn_tasks()
         return instance
 
 
-class CancelWorkForm(forms.ModelForm):
+class CancelItemForm(forms.ModelForm):
     reason = forms.CharField(required=True)
     time = forms.DateTimeField(required=True, initial=now)
 
     class Meta:
-        model = Work
+        model = Item
         fields = []
 
     def save(self):

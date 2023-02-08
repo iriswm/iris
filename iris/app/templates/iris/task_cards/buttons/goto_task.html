@@ -1,0 +1,5 @@
+{% load i18n %}
+
+{% if perms.iris.view_task %}
+<a class="btn btn-primary" href="{% url 'iris:task_detail' task.pk %}">{% translate "Details" %}</a>
+{% endif %}

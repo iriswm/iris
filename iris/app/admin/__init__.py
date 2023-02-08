@@ -4,29 +4,29 @@ from django.urls import path
 from django.utils.translation import gettext_lazy as _
 
 from iris.app.admin.actions import (
-    cancel_works,
+    cancel_items,
     lift_suspensions,
-    restore_works,
-    spawn_and_consolidate_jobs,
-    spawn_jobs,
+    restore_items,
+    spawn_and_consolidate_tasks,
+    spawn_tasks,
 )
-from iris.app.admin.views import CancelWorksView
+from iris.app.admin.views import CancelItemsView
 from iris.app.models import (
-    Category,
-    CategorySpawnedTasks,
     Commit,
     Delay,
-    Job,
+    Item,
     NoteTemplate,
+    Process,
+    ProcessSpawnedSteps,
     Station,
+    Step,
+    StepConsolidation,
+    StepConsolidationClosingSteps,
+    StepConsolidationSpawnedSteps,
+    StepSpawn,
+    StepSpawnSpawnedSteps,
     Suspension,
     Task,
-    TaskConsolidation,
-    TaskConsolidationClosingTasks,
-    TaskConsolidationSpawnedTasks,
-    TaskSpawn,
-    TaskSpawnSpawnedTasks,
-    Work,
     Worker,
 )
 
@@ -43,7 +43,7 @@ class CancelableAdminMixin:
         return obj.canceled
 
 
-class WorkCompletionListFilter(admin.SimpleListFilter):
+class ItemCompletionListFilter(admin.SimpleListFilter):
     title = _("completion status")
     parameter_name = "completion"
 
@@ -58,47 +58,47 @@ class WorkCompletionListFilter(admin.SimpleListFilter):
             return queryset
 
         queryset = queryset.annotate(
-            total_jobs=Count("jobs"),
-            completed_jobs=Count("jobs", filter=Q(jobs__commit__isnull=False)),
+            total_tasks=Count("tasks"),
+            completed_tasks=Count("tasks", filter=Q(tasks__commit__isnull=False)),
         )
         if self.value() == "completed":
-            return queryset.filter(total_jobs=F("completed_jobs"))
+            return queryset.filter(total_tasks=F("completed_tasks"))
         else:
-            return queryset.exclude(total_jobs=F("completed_jobs"))
+            return queryset.exclude(total_tasks=F("completed_tasks"))
 
 
-@admin.register(Work)
-class WorkAdmin(CompletableAdminMixin, CancelableAdminMixin, admin.ModelAdmin):
-    actions = [cancel_works, restore_works, spawn_jobs]
+@admin.register(Item)
+class ItemAdmin(CompletableAdminMixin, CancelableAdminMixin, admin.ModelAdmin):
+    actions = [cancel_items, restore_items, spawn_tasks]
     list_display = ["__str__", "completed", "canceled"]
-    list_filter = (WorkCompletionListFilter,)
+    list_filter = (ItemCompletionListFilter,)
 
     def get_urls(self):
         return [
             path(
-                "cancel_works",
-                self.admin_site.admin_view(CancelWorksView.as_view()),
-                name="cancel_works",
+                "cancel_items",
+                self.admin_site.admin_view(CancelItemsView.as_view()),
+                name="cancel_items",
             ),
             *super().get_urls(),
         ]
 
 
-class CategorySpawnedTasksInline(admin.TabularInline):
-    model = CategorySpawnedTasks
+class ProcessSpawnedStepsInline(admin.TabularInline):
+    model = ProcessSpawnedSteps
 
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    inlines = [CategorySpawnedTasksInline]
+@admin.register(Process)
+class ProcessAdmin(admin.ModelAdmin):
+    inlines = [ProcessSpawnedStepsInline]
 
 
-@admin.register(Task)
-class TaskAdmin(admin.ModelAdmin):
+@admin.register(Step)
+class StepAdmin(admin.ModelAdmin):
     pass
 
 
-class JobCompletionListFilter(admin.SimpleListFilter):
+class TaskCompletionListFilter(admin.SimpleListFilter):
     title = _("completion status")
     parameter_name = "completion"
 
@@ -118,32 +118,32 @@ class JobCompletionListFilter(admin.SimpleListFilter):
             return queryset.filter(commit__isnull=True)
 
 
-@admin.register(Job)
-class JobAdmin(CompletableAdminMixin, admin.ModelAdmin):
+@admin.register(Task)
+class TaskAdmin(CompletableAdminMixin, admin.ModelAdmin):
     list_display = ["__str__", "completed"]
-    list_filter = (JobCompletionListFilter,)
+    list_filter = (TaskCompletionListFilter,)
 
 
-class TaskSpawnSpawnedTasksInline(admin.TabularInline):
-    model = TaskSpawnSpawnedTasks
+class StepSpawnSpawnedStepsInline(admin.TabularInline):
+    model = StepSpawnSpawnedSteps
 
 
-@admin.register(TaskSpawn)
-class TaskSpawnAdmin(admin.ModelAdmin):
-    inlines = [TaskSpawnSpawnedTasksInline]
+@admin.register(StepSpawn)
+class StepSpawnAdmin(admin.ModelAdmin):
+    inlines = [StepSpawnSpawnedStepsInline]
 
 
-class TaskConsolidationClosingTasksInline(admin.TabularInline):
-    model = TaskConsolidationClosingTasks
+class StepConsolidationClosingStepsInline(admin.TabularInline):
+    model = StepConsolidationClosingSteps
 
 
-class TaskConsolidationSpawnedTasksInline(admin.TabularInline):
-    model = TaskConsolidationSpawnedTasks
+class StepConsolidationSpawnedStepsInline(admin.TabularInline):
+    model = StepConsolidationSpawnedSteps
 
 
-@admin.register(TaskConsolidation)
-class TaskConsolidationAdmin(admin.ModelAdmin):
-    inlines = [TaskConsolidationClosingTasksInline, TaskConsolidationSpawnedTasksInline]
+@admin.register(StepConsolidation)
+class StepConsolidationAdmin(admin.ModelAdmin):
+    inlines = [StepConsolidationClosingStepsInline, StepConsolidationSpawnedStepsInline]
 
 
 @admin.register(Worker)
@@ -153,7 +153,7 @@ class WorkerAdmin(admin.ModelAdmin):
 
 @admin.register(Commit)
 class CommitAdmin(admin.ModelAdmin):
-    actions = [spawn_and_consolidate_jobs]
+    actions = [spawn_and_consolidate_tasks]
 
 
 @admin.register(Station)
