@@ -1,1 +1,1437 @@
-[{"model": "auth.permission", "pk": 1, "fields": {"name": "Can add log entry", "content_type": 1, "codename": "add_logentry"}}, {"model": "auth.permission", "pk": 2, "fields": {"name": "Can change log entry", "content_type": 1, "codename": "change_logentry"}}, {"model": "auth.permission", "pk": 3, "fields": {"name": "Can delete log entry", "content_type": 1, "codename": "delete_logentry"}}, {"model": "auth.permission", "pk": 4, "fields": {"name": "Can view log entry", "content_type": 1, "codename": "view_logentry"}}, {"model": "auth.permission", "pk": 5, "fields": {"name": "Can add permission", "content_type": 2, "codename": "add_permission"}}, {"model": "auth.permission", "pk": 6, "fields": {"name": "Can change permission", "content_type": 2, "codename": "change_permission"}}, {"model": "auth.permission", "pk": 7, "fields": {"name": "Can delete permission", "content_type": 2, "codename": "delete_permission"}}, {"model": "auth.permission", "pk": 8, "fields": {"name": "Can view permission", "content_type": 2, "codename": "view_permission"}}, {"model": "auth.permission", "pk": 9, "fields": {"name": "Can add group", "content_type": 3, "codename": "add_group"}}, {"model": "auth.permission", "pk": 10, "fields": {"name": "Can change group", "content_type": 3, "codename": "change_group"}}, {"model": "auth.permission", "pk": 11, "fields": {"name": "Can delete group", "content_type": 3, "codename": "delete_group"}}, {"model": "auth.permission", "pk": 12, "fields": {"name": "Can view group", "content_type": 3, "codename": "view_group"}}, {"model": "auth.permission", "pk": 13, "fields": {"name": "Can add user", "content_type": 4, "codename": "add_user"}}, {"model": "auth.permission", "pk": 14, "fields": {"name": "Can change user", "content_type": 4, "codename": "change_user"}}, {"model": "auth.permission", "pk": 15, "fields": {"name": "Can delete user", "content_type": 4, "codename": "delete_user"}}, {"model": "auth.permission", "pk": 16, "fields": {"name": "Can view user", "content_type": 4, "codename": "view_user"}}, {"model": "auth.permission", "pk": 17, "fields": {"name": "Can add content type", "content_type": 5, "codename": "add_contenttype"}}, {"model": "auth.permission", "pk": 18, "fields": {"name": "Can change content type", "content_type": 5, "codename": "change_contenttype"}}, {"model": "auth.permission", "pk": 19, "fields": {"name": "Can delete content type", "content_type": 5, "codename": "delete_contenttype"}}, {"model": "auth.permission", "pk": 20, "fields": {"name": "Can view content type", "content_type": 5, "codename": "view_contenttype"}}, {"model": "auth.permission", "pk": 21, "fields": {"name": "Can add session", "content_type": 6, "codename": "add_session"}}, {"model": "auth.permission", "pk": 22, "fields": {"name": "Can change session", "content_type": 6, "codename": "change_session"}}, {"model": "auth.permission", "pk": 23, "fields": {"name": "Can delete session", "content_type": 6, "codename": "delete_session"}}, {"model": "auth.permission", "pk": 24, "fields": {"name": "Can view session", "content_type": 6, "codename": "view_session"}}, {"model": "auth.permission", "pk": 25, "fields": {"name": "Can add category", "content_type": 7, "codename": "add_category"}}, {"model": "auth.permission", "pk": 26, "fields": {"name": "Can change category", "content_type": 7, "codename": "change_category"}}, {"model": "auth.permission", "pk": 27, "fields": {"name": "Can delete category", "content_type": 7, "codename": "delete_category"}}, {"model": "auth.permission", "pk": 28, "fields": {"name": "Can view category", "content_type": 7, "codename": "view_category"}}, {"model": "auth.permission", "pk": 29, "fields": {"name": "Can add job", "content_type": 8, "codename": "add_job"}}, {"model": "auth.permission", "pk": 30, "fields": {"name": "Can change job", "content_type": 8, "codename": "change_job"}}, {"model": "auth.permission", "pk": 31, "fields": {"name": "Can delete job", "content_type": 8, "codename": "delete_job"}}, {"model": "auth.permission", "pk": 32, "fields": {"name": "Can view job", "content_type": 8, "codename": "view_job"}}, {"model": "auth.permission", "pk": 33, "fields": {"name": "Can add note template", "content_type": 9, "codename": "add_notetemplate"}}, {"model": "auth.permission", "pk": 34, "fields": {"name": "Can change note template", "content_type": 9, "codename": "change_notetemplate"}}, {"model": "auth.permission", "pk": 35, "fields": {"name": "Can delete note template", "content_type": 9, "codename": "delete_notetemplate"}}, {"model": "auth.permission", "pk": 36, "fields": {"name": "Can view note template", "content_type": 9, "codename": "view_notetemplate"}}, {"model": "auth.permission", "pk": 37, "fields": {"name": "Can add station", "content_type": 10, "codename": "add_station"}}, {"model": "auth.permission", "pk": 38, "fields": {"name": "Can change station", "content_type": 10, "codename": "change_station"}}, {"model": "auth.permission", "pk": 39, "fields": {"name": "Can delete station", "content_type": 10, "codename": "delete_station"}}, {"model": "auth.permission", "pk": 40, "fields": {"name": "Can view station", "content_type": 10, "codename": "view_station"}}, {"model": "auth.permission", "pk": 41, "fields": {"name": "Can add task", "content_type": 11, "codename": "add_task"}}, {"model": "auth.permission", "pk": 42, "fields": {"name": "Can change task", "content_type": 11, "codename": "change_task"}}, {"model": "auth.permission", "pk": 43, "fields": {"name": "Can delete task", "content_type": 11, "codename": "delete_task"}}, {"model": "auth.permission", "pk": 44, "fields": {"name": "Can view task", "content_type": 11, "codename": "view_task"}}, {"model": "auth.permission", "pk": 45, "fields": {"name": "Can add task consolidation", "content_type": 12, "codename": "add_taskconsolidation"}}, {"model": "auth.permission", "pk": 46, "fields": {"name": "Can change task consolidation", "content_type": 12, "codename": "change_taskconsolidation"}}, {"model": "auth.permission", "pk": 47, "fields": {"name": "Can delete task consolidation", "content_type": 12, "codename": "delete_taskconsolidation"}}, {"model": "auth.permission", "pk": 48, "fields": {"name": "Can view task consolidation", "content_type": 12, "codename": "view_taskconsolidation"}}, {"model": "auth.permission", "pk": 49, "fields": {"name": "Can add task spawn", "content_type": 13, "codename": "add_taskspawn"}}, {"model": "auth.permission", "pk": 50, "fields": {"name": "Can change task spawn", "content_type": 13, "codename": "change_taskspawn"}}, {"model": "auth.permission", "pk": 51, "fields": {"name": "Can delete task spawn", "content_type": 13, "codename": "delete_taskspawn"}}, {"model": "auth.permission", "pk": 52, "fields": {"name": "Can view task spawn", "content_type": 13, "codename": "view_taskspawn"}}, {"model": "auth.permission", "pk": 53, "fields": {"name": "Can add worker", "content_type": 14, "codename": "add_worker"}}, {"model": "auth.permission", "pk": 54, "fields": {"name": "Can change worker", "content_type": 14, "codename": "change_worker"}}, {"model": "auth.permission", "pk": 55, "fields": {"name": "Can delete worker", "content_type": 14, "codename": "delete_worker"}}, {"model": "auth.permission", "pk": 56, "fields": {"name": "Can view worker", "content_type": 14, "codename": "view_worker"}}, {"model": "auth.permission", "pk": 57, "fields": {"name": "Can add work", "content_type": 15, "codename": "add_work"}}, {"model": "auth.permission", "pk": 58, "fields": {"name": "Can change work", "content_type": 15, "codename": "change_work"}}, {"model": "auth.permission", "pk": 59, "fields": {"name": "Can delete work", "content_type": 15, "codename": "delete_work"}}, {"model": "auth.permission", "pk": 60, "fields": {"name": "Can view work", "content_type": 15, "codename": "view_work"}}, {"model": "auth.permission", "pk": 61, "fields": {"name": "Can add task spawn spawned tasks", "content_type": 16, "codename": "add_taskspawnspawnedtasks"}}, {"model": "auth.permission", "pk": 62, "fields": {"name": "Can change task spawn spawned tasks", "content_type": 16, "codename": "change_taskspawnspawnedtasks"}}, {"model": "auth.permission", "pk": 63, "fields": {"name": "Can delete task spawn spawned tasks", "content_type": 16, "codename": "delete_taskspawnspawnedtasks"}}, {"model": "auth.permission", "pk": 64, "fields": {"name": "Can view task spawn spawned tasks", "content_type": 16, "codename": "view_taskspawnspawnedtasks"}}, {"model": "auth.permission", "pk": 65, "fields": {"name": "Can add task consolidation spawned tasks", "content_type": 17, "codename": "add_taskconsolidationspawnedtasks"}}, {"model": "auth.permission", "pk": 66, "fields": {"name": "Can change task consolidation spawned tasks", "content_type": 17, "codename": "change_taskconsolidationspawnedtasks"}}, {"model": "auth.permission", "pk": 67, "fields": {"name": "Can delete task consolidation spawned tasks", "content_type": 17, "codename": "delete_taskconsolidationspawnedtasks"}}, {"model": "auth.permission", "pk": 68, "fields": {"name": "Can view task consolidation spawned tasks", "content_type": 17, "codename": "view_taskconsolidationspawnedtasks"}}, {"model": "auth.permission", "pk": 69, "fields": {"name": "Can add task consolidation closing tasks", "content_type": 18, "codename": "add_taskconsolidationclosingtasks"}}, {"model": "auth.permission", "pk": 70, "fields": {"name": "Can change task consolidation closing tasks", "content_type": 18, "codename": "change_taskconsolidationclosingtasks"}}, {"model": "auth.permission", "pk": 71, "fields": {"name": "Can delete task consolidation closing tasks", "content_type": 18, "codename": "delete_taskconsolidationclosingtasks"}}, {"model": "auth.permission", "pk": 72, "fields": {"name": "Can view task consolidation closing tasks", "content_type": 18, "codename": "view_taskconsolidationclosingtasks"}}, {"model": "auth.permission", "pk": 73, "fields": {"name": "Can add suspension", "content_type": 19, "codename": "add_suspension"}}, {"model": "auth.permission", "pk": 74, "fields": {"name": "Can change suspension", "content_type": 19, "codename": "change_suspension"}}, {"model": "auth.permission", "pk": 75, "fields": {"name": "Can delete suspension", "content_type": 19, "codename": "delete_suspension"}}, {"model": "auth.permission", "pk": 76, "fields": {"name": "Can view suspension", "content_type": 19, "codename": "view_suspension"}}, {"model": "auth.permission", "pk": 77, "fields": {"name": "Can add delay", "content_type": 20, "codename": "add_delay"}}, {"model": "auth.permission", "pk": 78, "fields": {"name": "Can change delay", "content_type": 20, "codename": "change_delay"}}, {"model": "auth.permission", "pk": 79, "fields": {"name": "Can delete delay", "content_type": 20, "codename": "delete_delay"}}, {"model": "auth.permission", "pk": 80, "fields": {"name": "Can view delay", "content_type": 20, "codename": "view_delay"}}, {"model": "auth.permission", "pk": 81, "fields": {"name": "Can add commit", "content_type": 21, "codename": "add_commit"}}, {"model": "auth.permission", "pk": 82, "fields": {"name": "Can change commit", "content_type": 21, "codename": "change_commit"}}, {"model": "auth.permission", "pk": 83, "fields": {"name": "Can delete commit", "content_type": 21, "codename": "delete_commit"}}, {"model": "auth.permission", "pk": 84, "fields": {"name": "Can view commit", "content_type": 21, "codename": "view_commit"}}, {"model": "auth.permission", "pk": 85, "fields": {"name": "Can add category spawned tasks", "content_type": 22, "codename": "add_categoryspawnedtasks"}}, {"model": "auth.permission", "pk": 86, "fields": {"name": "Can change category spawned tasks", "content_type": 22, "codename": "change_categoryspawnedtasks"}}, {"model": "auth.permission", "pk": 87, "fields": {"name": "Can delete category spawned tasks", "content_type": 22, "codename": "delete_categoryspawnedtasks"}}, {"model": "auth.permission", "pk": 88, "fields": {"name": "Can view category spawned tasks", "content_type": 22, "codename": "view_categoryspawnedtasks"}}, {"model": "auth.permission", "pk": 89, "fields": {"name": "Can add order", "content_type": 23, "codename": "add_order"}}, {"model": "auth.permission", "pk": 90, "fields": {"name": "Can change order", "content_type": 23, "codename": "change_order"}}, {"model": "auth.permission", "pk": 91, "fields": {"name": "Can delete order", "content_type": 23, "codename": "delete_order"}}, {"model": "auth.permission", "pk": 92, "fields": {"name": "Can view order", "content_type": 23, "codename": "view_order"}}, {"model": "auth.permission", "pk": 93, "fields": {"name": "Can add product map", "content_type": 24, "codename": "add_productmap"}}, {"model": "auth.permission", "pk": 94, "fields": {"name": "Can change product map", "content_type": 24, "codename": "change_productmap"}}, {"model": "auth.permission", "pk": 95, "fields": {"name": "Can delete product map", "content_type": 24, "codename": "delete_productmap"}}, {"model": "auth.permission", "pk": 96, "fields": {"name": "Can view product map", "content_type": 24, "codename": "view_productmap"}}, {"model": "auth.permission", "pk": 97, "fields": {"name": "Can add line", "content_type": 25, "codename": "add_line"}}, {"model": "auth.permission", "pk": 98, "fields": {"name": "Can change line", "content_type": 25, "codename": "change_line"}}, {"model": "auth.permission", "pk": 99, "fields": {"name": "Can delete line", "content_type": 25, "codename": "delete_line"}}, {"model": "auth.permission", "pk": 100, "fields": {"name": "Can view line", "content_type": 25, "codename": "view_line"}}, {"model": "auth.permission", "pk": 101, "fields": {"name": "Can add category map", "content_type": 26, "codename": "add_categorymap"}}, {"model": "auth.permission", "pk": 102, "fields": {"name": "Can change category map", "content_type": 26, "codename": "change_categorymap"}}, {"model": "auth.permission", "pk": 103, "fields": {"name": "Can delete category map", "content_type": 26, "codename": "delete_categorymap"}}, {"model": "auth.permission", "pk": 104, "fields": {"name": "Can view category map", "content_type": 26, "codename": "view_categorymap"}}, {"model": "auth.permission", "pk": 105, "fields": {"name": "Can add step", "content_type": 27, "codename": "add_step"}}, {"model": "auth.permission", "pk": 106, "fields": {"name": "Can change step", "content_type": 27, "codename": "change_step"}}, {"model": "auth.permission", "pk": 107, "fields": {"name": "Can delete step", "content_type": 27, "codename": "delete_step"}}, {"model": "auth.permission", "pk": 108, "fields": {"name": "Can view step", "content_type": 27, "codename": "view_step"}}, {"model": "auth.permission", "pk": 109, "fields": {"name": "Can add step consolidation", "content_type": 28, "codename": "add_stepconsolidation"}}, {"model": "auth.permission", "pk": 110, "fields": {"name": "Can change step consolidation", "content_type": 28, "codename": "change_stepconsolidation"}}, {"model": "auth.permission", "pk": 111, "fields": {"name": "Can delete step consolidation", "content_type": 28, "codename": "delete_stepconsolidation"}}, {"model": "auth.permission", "pk": 112, "fields": {"name": "Can view step consolidation", "content_type": 28, "codename": "view_stepconsolidation"}}, {"model": "auth.permission", "pk": 113, "fields": {"name": "Can add step consolidation spawned steps", "content_type": 29, "codename": "add_stepconsolidationspawnedsteps"}}, {"model": "auth.permission", "pk": 114, "fields": {"name": "Can change step consolidation spawned steps", "content_type": 29, "codename": "change_stepconsolidationspawnedsteps"}}, {"model": "auth.permission", "pk": 115, "fields": {"name": "Can delete step consolidation spawned steps", "content_type": 29, "codename": "delete_stepconsolidationspawnedsteps"}}, {"model": "auth.permission", "pk": 116, "fields": {"name": "Can view step consolidation spawned steps", "content_type": 29, "codename": "view_stepconsolidationspawnedsteps"}}, {"model": "auth.permission", "pk": 117, "fields": {"name": "Can add itemer", "content_type": 30, "codename": "add_itemer"}}, {"model": "auth.permission", "pk": 118, "fields": {"name": "Can change itemer", "content_type": 30, "codename": "change_itemer"}}, {"model": "auth.permission", "pk": 119, "fields": {"name": "Can delete itemer", "content_type": 30, "codename": "delete_itemer"}}, {"model": "auth.permission", "pk": 120, "fields": {"name": "Can view itemer", "content_type": 30, "codename": "view_itemer"}}, {"model": "auth.permission", "pk": 121, "fields": {"name": "Can add step spawn spawned steps", "content_type": 31, "codename": "add_stepspawnspawnedsteps"}}, {"model": "auth.permission", "pk": 122, "fields": {"name": "Can change step spawn spawned steps", "content_type": 31, "codename": "change_stepspawnspawnedsteps"}}, {"model": "auth.permission", "pk": 123, "fields": {"name": "Can delete step spawn spawned steps", "content_type": 31, "codename": "delete_stepspawnspawnedsteps"}}, {"model": "auth.permission", "pk": 124, "fields": {"name": "Can view step spawn spawned steps", "content_type": 31, "codename": "view_stepspawnspawnedsteps"}}, {"model": "auth.permission", "pk": 125, "fields": {"name": "Can add step spawn", "content_type": 32, "codename": "add_stepspawn"}}, {"model": "auth.permission", "pk": 126, "fields": {"name": "Can change step spawn", "content_type": 32, "codename": "change_stepspawn"}}, {"model": "auth.permission", "pk": 127, "fields": {"name": "Can delete step spawn", "content_type": 32, "codename": "delete_stepspawn"}}, {"model": "auth.permission", "pk": 128, "fields": {"name": "Can view step spawn", "content_type": 32, "codename": "view_stepspawn"}}, {"model": "auth.permission", "pk": 129, "fields": {"name": "Can add process spawned steps", "content_type": 33, "codename": "add_processspawnedsteps"}}, {"model": "auth.permission", "pk": 130, "fields": {"name": "Can change process spawned steps", "content_type": 33, "codename": "change_processspawnedsteps"}}, {"model": "auth.permission", "pk": 131, "fields": {"name": "Can delete process spawned steps", "content_type": 33, "codename": "delete_processspawnedsteps"}}, {"model": "auth.permission", "pk": 132, "fields": {"name": "Can view process spawned steps", "content_type": 33, "codename": "view_processspawnedsteps"}}, {"model": "auth.permission", "pk": 133, "fields": {"name": "Can add process", "content_type": 34, "codename": "add_process"}}, {"model": "auth.permission", "pk": 134, "fields": {"name": "Can change process", "content_type": 34, "codename": "change_process"}}, {"model": "auth.permission", "pk": 135, "fields": {"name": "Can delete process", "content_type": 34, "codename": "delete_process"}}, {"model": "auth.permission", "pk": 136, "fields": {"name": "Can view process", "content_type": 34, "codename": "view_process"}}, {"model": "auth.permission", "pk": 137, "fields": {"name": "Can add item", "content_type": 35, "codename": "add_item"}}, {"model": "auth.permission", "pk": 138, "fields": {"name": "Can change item", "content_type": 35, "codename": "change_item"}}, {"model": "auth.permission", "pk": 139, "fields": {"name": "Can delete item", "content_type": 35, "codename": "delete_item"}}, {"model": "auth.permission", "pk": 140, "fields": {"name": "Can view item", "content_type": 35, "codename": "view_item"}}, {"model": "auth.permission", "pk": 141, "fields": {"name": "Can add step consolidation closing steps", "content_type": 36, "codename": "add_stepconsolidationclosingsteps"}}, {"model": "auth.permission", "pk": 142, "fields": {"name": "Can change step consolidation closing steps", "content_type": 36, "codename": "change_stepconsolidationclosingsteps"}}, {"model": "auth.permission", "pk": 143, "fields": {"name": "Can delete step consolidation closing steps", "content_type": 36, "codename": "delete_stepconsolidationclosingsteps"}}, {"model": "auth.permission", "pk": 144, "fields": {"name": "Can view step consolidation closing steps", "content_type": 36, "codename": "view_stepconsolidationclosingsteps"}}, {"model": "auth.group", "pk": 1, "fields": {"name": "managers", "permissions": [4, 12, 8, 16, 25, 26, 27, 28, 85, 86, 87, 88, 81, 82, 83, 84, 77, 78, 79, 80, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 73, 74, 75, 76, 41, 42, 43, 44, 45, 46, 47, 48, 69, 70, 71, 72, 65, 66, 67, 68, 49, 50, 51, 52, 61, 62, 63, 64, 57, 58, 59, 60, 53, 54, 55, 56, 24]}}, {"model": "auth.group", "pk": 2, "fields": {"name": "workers", "permissions": [81, 84, 77, 78, 80, 32, 36, 40, 73, 74, 76, 60]}}, {"model": "auth.user", "pk": 1, "fields": {"password": "pbkdf2_sha256$390000$AqwBVrq3NZxtvmpwhTx8TN$gve4YHbfGvZNgREAgVYbJXd5XYhHP5vipt55b9QOWzc=", "last_login": "2023-02-08T14:35:25.988Z", "is_superuser": true, "username": "admin", "first_name": "", "last_name": "", "email": "", "is_staff": true, "is_active": true, "date_joined": "2022-11-28T16:05:21.368Z", "groups": [], "user_permissions": []}}, {"model": "auth.user", "pk": 7, "fields": {"password": "pbkdf2_sha256$390000$Gh101Gjhnw1FSrTx61JuVo$Y56B/ueoUQAO7IetDXDBEZhdjcddrUpJhboRSIIzatI=", "last_login": "2023-02-09T11:23:13.515Z", "is_superuser": false, "username": "worker", "first_name": "", "last_name": "", "email": "", "is_staff": false, "is_active": true, "date_joined": "2023-02-08T14:36:07Z", "groups": [2], "user_permissions": []}}, {"model": "auth.user", "pk": 8, "fields": {"password": "pbkdf2_sha256$390000$8s0Ohag5u3UAHafbuNQ16b$55xT65ReJMGJwHR+1ZEKo1zFyo6ft1IC7TL38peO0e8=", "last_login": "2023-02-09T11:23:07.816Z", "is_superuser": false, "username": "manager", "first_name": "", "last_name": "", "email": "", "is_staff": false, "is_active": true, "date_joined": "2023-02-08T14:36:27Z", "groups": [1], "user_permissions": []}}, {"model": "auth.user", "pk": 9, "fields": {"password": "pbkdf2_sha256$390000$NGCbTsVfz6v9VkocT9BkqZ$VYuIoE8ONuhXyH6AU7f4yXUtTzTeV+B4JRY8RRCJw1c=", "last_login": null, "is_superuser": false, "username": "worker_alt", "first_name": "", "last_name": "", "email": "", "is_staff": false, "is_active": true, "date_joined": "2023-02-09T11:54:51.043Z", "groups": [], "user_permissions": []}}, {"model": "iris.item", "pk": 1, "fields": {"created": "2023-02-09T11:34:01.964Z", "modified": "2023-02-09T11:34:01.964Z", "cancel_time": null, "cancel_reason": "", "notes": "alpha", "process": 1, "description": "alpha desc", "quantity": 1, "has_priority": false}}, {"model": "iris.item", "pk": 2, "fields": {"created": "2023-02-09T11:34:15.281Z", "modified": "2023-02-09T11:34:15.281Z", "cancel_time": null, "cancel_reason": "", "notes": "beta", "process": 1, "description": "beta desc", "quantity": 2, "has_priority": false}}, {"model": "iris.item", "pk": 3, "fields": {"created": "2023-02-09T11:38:25.448Z", "modified": "2023-02-09T11:38:25.448Z", "cancel_time": null, "cancel_reason": "", "notes": "zeta", "process": 2, "description": "zeta desc", "quantity": 1, "has_priority": false}}, {"model": "iris.item", "pk": 4, "fields": {"created": "2023-02-09T11:38:39.901Z", "modified": "2023-02-09T11:38:39.901Z", "cancel_time": null, "cancel_reason": "", "notes": "omega", "process": 2, "description": "omega desc", "quantity": 1, "has_priority": false}}, {"model": "iris.item", "pk": 5, "fields": {"created": "2023-02-09T11:41:50.592Z", "modified": "2023-02-09T11:41:50.592Z", "cancel_time": null, "cancel_reason": "", "notes": "gamma", "process": 1, "description": "gamma desc", "quantity": 1, "has_priority": false}}, {"model": "iris.item", "pk": 6, "fields": {"created": "2023-02-09T11:42:49.915Z", "modified": "2023-02-09T11:43:14.508Z", "cancel_time": null, "cancel_reason": "", "notes": "lamda", "process": 2, "description": "", "quantity": 3, "has_priority": false}}, {"model": "iris.process", "pk": 1, "fields": {"name": "A"}}, {"model": "iris.process", "pk": 2, "fields": {"name": "B"}}, {"model": "iris.processspawnedsteps", "pk": 1, "fields": {"process": 1, "step": 1}}, {"model": "iris.processspawnedsteps", "pk": 2, "fields": {"process": 1, "step": 4}}, {"model": "iris.processspawnedsteps", "pk": 3, "fields": {"process": 2, "step": 6}}, {"model": "iris.processspawnedsteps", "pk": 4, "fields": {"process": 2, "step": 4}}, {"model": "iris.step", "pk": 1, "fields": {"name": "1", "instructions": "step 1", "stations": [1]}}, {"model": "iris.step", "pk": 2, "fields": {"name": "2", "instructions": "step 2", "stations": [1]}}, {"model": "iris.step", "pk": 3, "fields": {"name": "3", "instructions": "step 3", "stations": [1]}}, {"model": "iris.step", "pk": 4, "fields": {"name": "4", "instructions": "step 4", "stations": [2]}}, {"model": "iris.step", "pk": 5, "fields": {"name": "5", "instructions": "step 5", "stations": [1]}}, {"model": "iris.step", "pk": 6, "fields": {"name": "6", "instructions": "step 6", "stations": [1]}}, {"model": "iris.step", "pk": 7, "fields": {"name": "7", "instructions": "step 7", "stations": [3]}}, {"model": "iris.step", "pk": 8, "fields": {"name": "8", "instructions": "step 8", "stations": [4]}}, {"model": "iris.step", "pk": 9, "fields": {"name": "9", "instructions": "step 9", "stations": [1]}}, {"model": "iris.task", "pk": 1, "fields": {"created": "2023-02-09T11:34:32.139Z", "modified": "2023-02-09T11:34:32.139Z", "step": 1, "item": 2}}, {"model": "iris.task", "pk": 2, "fields": {"created": "2023-02-09T11:34:32.139Z", "modified": "2023-02-09T11:34:32.139Z", "step": 4, "item": 2}}, {"model": "iris.task", "pk": 3, "fields": {"created": "2023-02-09T11:34:32.140Z", "modified": "2023-02-09T11:34:32.140Z", "step": 1, "item": 1}}, {"model": "iris.task", "pk": 4, "fields": {"created": "2023-02-09T11:34:32.141Z", "modified": "2023-02-09T11:34:32.141Z", "step": 4, "item": 1}}, {"model": "iris.task", "pk": 5, "fields": {"created": "2023-02-09T11:35:15.222Z", "modified": "2023-02-09T11:35:15.222Z", "step": 2, "item": 1}}, {"model": "iris.task", "pk": 6, "fields": {"created": "2023-02-09T11:35:26.704Z", "modified": "2023-02-09T11:35:26.704Z", "step": 3, "item": 1}}, {"model": "iris.task", "pk": 7, "fields": {"created": "2023-02-09T11:36:58.796Z", "modified": "2023-02-09T11:36:58.796Z", "step": 2, "item": 2}}, {"model": "iris.task", "pk": 8, "fields": {"created": "2023-02-09T11:37:03.004Z", "modified": "2023-02-09T11:37:03.004Z", "step": 3, "item": 2}}, {"model": "iris.task", "pk": 9, "fields": {"created": "2023-02-09T11:37:48.436Z", "modified": "2023-02-09T11:37:48.436Z", "step": 5, "item": 2}}, {"model": "iris.task", "pk": 10, "fields": {"created": "2023-02-09T11:38:50.917Z", "modified": "2023-02-09T11:38:50.917Z", "step": 4, "item": 4}}, {"model": "iris.task", "pk": 11, "fields": {"created": "2023-02-09T11:38:50.918Z", "modified": "2023-02-09T11:38:50.918Z", "step": 6, "item": 4}}, {"model": "iris.task", "pk": 12, "fields": {"created": "2023-02-09T11:38:50.919Z", "modified": "2023-02-09T11:38:50.919Z", "step": 4, "item": 3}}, {"model": "iris.task", "pk": 13, "fields": {"created": "2023-02-09T11:38:50.919Z", "modified": "2023-02-09T11:38:50.919Z", "step": 6, "item": 3}}, {"model": "iris.task", "pk": 14, "fields": {"created": "2023-02-09T11:39:13.518Z", "modified": "2023-02-09T11:39:13.518Z", "step": 7, "item": 4}}, {"model": "iris.task", "pk": 15, "fields": {"created": "2023-02-09T11:39:13.524Z", "modified": "2023-02-09T11:39:13.524Z", "step": 8, "item": 4}}, {"model": "iris.task", "pk": 16, "fields": {"created": "2023-02-09T11:39:18.459Z", "modified": "2023-02-09T11:39:18.459Z", "step": 7, "item": 3}}, {"model": "iris.task", "pk": 17, "fields": {"created": "2023-02-09T11:39:18.465Z", "modified": "2023-02-09T11:39:18.465Z", "step": 8, "item": 3}}, {"model": "iris.task", "pk": 18, "fields": {"created": "2023-02-09T11:41:57.416Z", "modified": "2023-02-09T11:41:57.416Z", "step": 1, "item": 5}}, {"model": "iris.task", "pk": 19, "fields": {"created": "2023-02-09T11:41:57.417Z", "modified": "2023-02-09T11:41:57.417Z", "step": 4, "item": 5}}, {"model": "iris.task", "pk": 20, "fields": {"created": "2023-02-09T11:42:12.420Z", "modified": "2023-02-09T11:42:12.420Z", "step": 2, "item": 5}}, {"model": "iris.task", "pk": 21, "fields": {"created": "2023-02-09T11:42:14.637Z", "modified": "2023-02-09T11:42:14.637Z", "step": 3, "item": 5}}, {"model": "iris.task", "pk": 22, "fields": {"created": "2023-02-09T11:42:16.597Z", "modified": "2023-02-09T11:42:16.597Z", "step": 5, "item": 5}}, {"model": "iris.task", "pk": 23, "fields": {"created": "2023-02-09T11:43:19.316Z", "modified": "2023-02-09T11:43:19.316Z", "step": 4, "item": 6}}, {"model": "iris.task", "pk": 24, "fields": {"created": "2023-02-09T11:43:19.317Z", "modified": "2023-02-09T11:43:19.317Z", "step": 6, "item": 6}}, {"model": "iris.task", "pk": 25, "fields": {"created": "2023-02-09T11:43:56.428Z", "modified": "2023-02-09T11:43:56.428Z", "step": 7, "item": 6}}, {"model": "iris.task", "pk": 26, "fields": {"created": "2023-02-09T11:43:56.434Z", "modified": "2023-02-09T11:43:56.434Z", "step": 8, "item": 6}}, {"model": "iris.task", "pk": 27, "fields": {"created": "2023-02-09T11:44:11.022Z", "modified": "2023-02-09T11:44:11.022Z", "step": 9, "item": 6}}, {"model": "iris.stepspawn", "pk": 1, "fields": {"closing_step": 1}}, {"model": "iris.stepspawn", "pk": 2, "fields": {"closing_step": 2}}, {"model": "iris.stepspawn", "pk": 3, "fields": {"closing_step": 6}}, {"model": "iris.stepspawnspawnedsteps", "pk": 1, "fields": {"step_spawn": 1, "step": 2}}, {"model": "iris.stepspawnspawnedsteps", "pk": 2, "fields": {"step_spawn": 2, "step": 3}}, {"model": "iris.stepspawnspawnedsteps", "pk": 3, "fields": {"step_spawn": 3, "step": 7}}, {"model": "iris.stepspawnspawnedsteps", "pk": 4, "fields": {"step_spawn": 3, "step": 8}}, {"model": "iris.stepconsolidation", "pk": 1, "fields": {}}, {"model": "iris.stepconsolidation", "pk": 2, "fields": {}}, {"model": "iris.stepconsolidationclosingsteps", "pk": 1, "fields": {"step_consolidation": 1, "step": 3}}, {"model": "iris.stepconsolidationclosingsteps", "pk": 2, "fields": {"step_consolidation": 1, "step": 4}}, {"model": "iris.stepconsolidationclosingsteps", "pk": 3, "fields": {"step_consolidation": 2, "step": 7}}, {"model": "iris.stepconsolidationclosingsteps", "pk": 4, "fields": {"step_consolidation": 2, "step": 8}}, {"model": "iris.stepconsolidationclosingsteps", "pk": 5, "fields": {"step_consolidation": 2, "step": 4}}, {"model": "iris.stepconsolidationspawnedsteps", "pk": 1, "fields": {"step_consolidation": 1, "step": 5}}, {"model": "iris.stepconsolidationspawnedsteps", "pk": 2, "fields": {"step_consolidation": 2, "step": 9}}, {"model": "iris.worker", "pk": 1, "fields": {"user": 7}}, {"model": "iris.worker", "pk": 2, "fields": {"user": 9}}, {"model": "iris.commit", "pk": 1, "fields": {"created": "2023-02-09T11:35:15.216Z", "modified": "2023-02-09T11:35:15.216Z", "notes": "", "task": 3, "worker": 1}}, {"model": "iris.commit", "pk": 2, "fields": {"created": "2023-02-09T11:35:26.682Z", "modified": "2023-02-09T11:35:26.682Z", "notes": "", "task": 5, "worker": 1}}, {"model": "iris.commit", "pk": 3, "fields": {"created": "2023-02-09T11:36:58.785Z", "modified": "2023-02-09T11:36:58.785Z", "notes": "", "task": 1, "worker": 1}}, {"model": "iris.commit", "pk": 4, "fields": {"created": "2023-02-09T11:37:02.982Z", "modified": "2023-02-09T11:37:02.982Z", "notes": "", "task": 7, "worker": 1}}, {"model": "iris.commit", "pk": 5, "fields": {"created": "2023-02-09T11:37:22.647Z", "modified": "2023-02-09T11:37:22.647Z", "notes": "beta 3 commit note", "task": 8, "worker": 1}}, {"model": "iris.commit", "pk": 6, "fields": {"created": "2023-02-09T11:37:48.400Z", "modified": "2023-02-09T11:37:48.400Z", "notes": "", "task": 2, "worker": 1}}, {"model": "iris.commit", "pk": 7, "fields": {"created": "2023-02-09T11:39:13.501Z", "modified": "2023-02-09T11:39:13.501Z", "notes": "", "task": 11, "worker": 1}}, {"model": "iris.commit", "pk": 8, "fields": {"created": "2023-02-09T11:39:18.437Z", "modified": "2023-02-09T11:39:18.437Z", "notes": "", "task": 13, "worker": 1}}, {"model": "iris.commit", "pk": 9, "fields": {"created": "2023-02-09T11:39:50.673Z", "modified": "2023-02-09T11:39:50.673Z", "notes": "", "task": 10, "worker": 1}}, {"model": "iris.commit", "pk": 10, "fields": {"created": "2023-02-09T11:40:01.398Z", "modified": "2023-02-09T11:40:01.398Z", "notes": "zeta commit note", "task": 12, "worker": 1}}, {"model": "iris.commit", "pk": 11, "fields": {"created": "2023-02-09T11:42:06.153Z", "modified": "2023-02-09T11:42:06.153Z", "notes": "", "task": 19, "worker": 1}}, {"model": "iris.commit", "pk": 12, "fields": {"created": "2023-02-09T11:42:12.402Z", "modified": "2023-02-09T11:42:12.402Z", "notes": "", "task": 18, "worker": 1}}, {"model": "iris.commit", "pk": 13, "fields": {"created": "2023-02-09T11:42:14.628Z", "modified": "2023-02-09T11:42:14.628Z", "notes": "", "task": 20, "worker": 1}}, {"model": "iris.commit", "pk": 14, "fields": {"created": "2023-02-09T11:42:16.573Z", "modified": "2023-02-09T11:42:16.573Z", "notes": "", "task": 21, "worker": 1}}, {"model": "iris.commit", "pk": 15, "fields": {"created": "2023-02-09T11:42:20.045Z", "modified": "2023-02-09T11:42:20.045Z", "notes": "", "task": 22, "worker": 1}}, {"model": "iris.commit", "pk": 16, "fields": {"created": "2023-02-09T11:43:40.764Z", "modified": "2023-02-09T11:43:40.764Z", "notes": "lamda commit note", "task": 23, "worker": 1}}, {"model": "iris.commit", "pk": 17, "fields": {"created": "2023-02-09T11:43:56.417Z", "modified": "2023-02-09T11:43:56.417Z", "notes": "lamda commit note", "task": 24, "worker": 1}}, {"model": "iris.commit", "pk": 18, "fields": {"created": "2023-02-09T11:44:07.068Z", "modified": "2023-02-09T11:44:07.068Z", "notes": "lamda commit note", "task": 25, "worker": 1}}, {"model": "iris.commit", "pk": 19, "fields": {"created": "2023-02-09T11:44:11.007Z", "modified": "2023-02-09T11:44:11.007Z", "notes": "lamda commit note", "task": 26, "worker": 1}}, {"model": "iris.commit", "pk": 20, "fields": {"created": "2023-02-09T11:44:24.581Z", "modified": "2023-02-09T11:44:24.581Z", "notes": "lamda final commit note", "task": 27, "worker": 1}}, {"model": "iris.station", "pk": 1, "fields": {"name": "a"}}, {"model": "iris.station", "pk": 2, "fields": {"name": "b"}}, {"model": "iris.station", "pk": 3, "fields": {"name": "c"}}, {"model": "iris.station", "pk": 4, "fields": {"name": "d"}}, {"model": "iris.delay", "pk": 1, "fields": {"created": "2023-02-09T11:36:15.517Z", "modified": "2023-02-09T11:36:15.517Z", "notes": "", "task": 4, "worker": 1, "duration": "1000 00:00:00"}}, {"model": "iris.delay", "pk": 2, "fields": {"created": "2023-02-09T11:41:08.558Z", "modified": "2023-02-09T11:41:08.558Z", "notes": "zeta delay note", "task": 17, "worker": 1, "duration": "1000 00:00:00"}}, {"model": "iris.suspension", "pk": 1, "fields": {"created": "2023-02-09T11:37:58.519Z", "modified": "2023-02-09T11:37:58.519Z", "notes": "", "task": 9, "worker": 1, "lifted_at": null}}, {"model": "iris.suspension", "pk": 2, "fields": {"created": "2023-02-09T11:40:35.170Z", "modified": "2023-02-09T11:40:35.170Z", "notes": "zeta suspension note", "task": 16, "worker": 1, "lifted_at": null}}]
+[
+{
+  "model": "auth.group",
+  "fields": {
+    "name": "managers",
+    "permissions": [
+      [
+        "view_logentry",
+        "admin",
+        "logentry"
+      ],
+      [
+        "view_group",
+        "auth",
+        "group"
+      ],
+      [
+        "view_permission",
+        "auth",
+        "permission"
+      ],
+      [
+        "view_user",
+        "auth",
+        "user"
+      ],
+      [
+        "add_process",
+        "iris",
+        "process"
+      ],
+      [
+        "change_process",
+        "iris",
+        "process"
+      ],
+      [
+        "delete_process",
+        "iris",
+        "process"
+      ],
+      [
+        "view_process",
+        "iris",
+        "process"
+      ],
+      [
+        "add_processspawnedsteps",
+        "iris",
+        "processspawnedsteps"
+      ],
+      [
+        "change_processspawnedsteps",
+        "iris",
+        "processspawnedsteps"
+      ],
+      [
+        "delete_processspawnedsteps",
+        "iris",
+        "processspawnedsteps"
+      ],
+      [
+        "view_processspawnedsteps",
+        "iris",
+        "processspawnedsteps"
+      ],
+      [
+        "add_commit",
+        "iris",
+        "commit"
+      ],
+      [
+        "change_commit",
+        "iris",
+        "commit"
+      ],
+      [
+        "delete_commit",
+        "iris",
+        "commit"
+      ],
+      [
+        "view_commit",
+        "iris",
+        "commit"
+      ],
+      [
+        "add_delay",
+        "iris",
+        "delay"
+      ],
+      [
+        "change_delay",
+        "iris",
+        "delay"
+      ],
+      [
+        "delete_delay",
+        "iris",
+        "delay"
+      ],
+      [
+        "view_delay",
+        "iris",
+        "delay"
+      ],
+      [
+        "add_task",
+        "iris",
+        "task"
+      ],
+      [
+        "change_task",
+        "iris",
+        "task"
+      ],
+      [
+        "delete_task",
+        "iris",
+        "task"
+      ],
+      [
+        "view_task",
+        "iris",
+        "task"
+      ],
+      [
+        "add_notetemplate",
+        "iris",
+        "notetemplate"
+      ],
+      [
+        "change_notetemplate",
+        "iris",
+        "notetemplate"
+      ],
+      [
+        "delete_notetemplate",
+        "iris",
+        "notetemplate"
+      ],
+      [
+        "view_notetemplate",
+        "iris",
+        "notetemplate"
+      ],
+      [
+        "add_station",
+        "iris",
+        "station"
+      ],
+      [
+        "change_station",
+        "iris",
+        "station"
+      ],
+      [
+        "delete_station",
+        "iris",
+        "station"
+      ],
+      [
+        "view_station",
+        "iris",
+        "station"
+      ],
+      [
+        "add_suspension",
+        "iris",
+        "suspension"
+      ],
+      [
+        "change_suspension",
+        "iris",
+        "suspension"
+      ],
+      [
+        "delete_suspension",
+        "iris",
+        "suspension"
+      ],
+      [
+        "view_suspension",
+        "iris",
+        "suspension"
+      ],
+      [
+        "add_step",
+        "iris",
+        "step"
+      ],
+      [
+        "change_step",
+        "iris",
+        "step"
+      ],
+      [
+        "delete_step",
+        "iris",
+        "step"
+      ],
+      [
+        "view_step",
+        "iris",
+        "step"
+      ],
+      [
+        "add_stepconsolidation",
+        "iris",
+        "stepconsolidation"
+      ],
+      [
+        "change_stepconsolidation",
+        "iris",
+        "stepconsolidation"
+      ],
+      [
+        "delete_stepconsolidation",
+        "iris",
+        "stepconsolidation"
+      ],
+      [
+        "view_stepconsolidation",
+        "iris",
+        "stepconsolidation"
+      ],
+      [
+        "add_stepconsolidationclosingsteps",
+        "iris",
+        "stepconsolidationclosingsteps"
+      ],
+      [
+        "change_stepconsolidationclosingsteps",
+        "iris",
+        "stepconsolidationclosingsteps"
+      ],
+      [
+        "delete_stepconsolidationclosingsteps",
+        "iris",
+        "stepconsolidationclosingsteps"
+      ],
+      [
+        "view_stepconsolidationclosingsteps",
+        "iris",
+        "stepconsolidationclosingsteps"
+      ],
+      [
+        "add_stepconsolidationspawnedsteps",
+        "iris",
+        "stepconsolidationspawnedsteps"
+      ],
+      [
+        "change_stepconsolidationspawnedsteps",
+        "iris",
+        "stepconsolidationspawnedsteps"
+      ],
+      [
+        "delete_stepconsolidationspawnedsteps",
+        "iris",
+        "stepconsolidationspawnedsteps"
+      ],
+      [
+        "view_stepconsolidationspawnedsteps",
+        "iris",
+        "stepconsolidationspawnedsteps"
+      ],
+      [
+        "add_stepspawn",
+        "iris",
+        "stepspawn"
+      ],
+      [
+        "change_stepspawn",
+        "iris",
+        "stepspawn"
+      ],
+      [
+        "delete_stepspawn",
+        "iris",
+        "stepspawn"
+      ],
+      [
+        "view_stepspawn",
+        "iris",
+        "stepspawn"
+      ],
+      [
+        "add_stepspawnspawnedsteps",
+        "iris",
+        "stepspawnspawnedsteps"
+      ],
+      [
+        "change_stepspawnspawnedsteps",
+        "iris",
+        "stepspawnspawnedsteps"
+      ],
+      [
+        "delete_stepspawnspawnedsteps",
+        "iris",
+        "stepspawnspawnedsteps"
+      ],
+      [
+        "view_stepspawnspawnedsteps",
+        "iris",
+        "stepspawnspawnedsteps"
+      ],
+      [
+        "add_item",
+        "iris",
+        "item"
+      ],
+      [
+        "change_item",
+        "iris",
+        "item"
+      ],
+      [
+        "delete_item",
+        "iris",
+        "item"
+      ],
+      [
+        "view_item",
+        "iris",
+        "item"
+      ],
+      [
+        "add_worker",
+        "iris",
+        "worker"
+      ],
+      [
+        "change_worker",
+        "iris",
+        "worker"
+      ],
+      [
+        "delete_worker",
+        "iris",
+        "worker"
+      ],
+      [
+        "view_worker",
+        "iris",
+        "worker"
+      ],
+      [
+        "view_session",
+        "sessions",
+        "session"
+      ]
+    ]
+  }
+},
+{
+  "model": "auth.group",
+  "fields": {
+    "name": "workers",
+    "permissions": [
+      [
+        "add_commit",
+        "iris",
+        "commit"
+      ],
+      [
+        "view_commit",
+        "iris",
+        "commit"
+      ],
+      [
+        "add_delay",
+        "iris",
+        "delay"
+      ],
+      [
+        "change_delay",
+        "iris",
+        "delay"
+      ],
+      [
+        "view_delay",
+        "iris",
+        "delay"
+      ],
+      [
+        "view_task",
+        "iris",
+        "task"
+      ],
+      [
+        "view_notetemplate",
+        "iris",
+        "notetemplate"
+      ],
+      [
+        "view_station",
+        "iris",
+        "station"
+      ],
+      [
+        "add_suspension",
+        "iris",
+        "suspension"
+      ],
+      [
+        "change_suspension",
+        "iris",
+        "suspension"
+      ],
+      [
+        "view_suspension",
+        "iris",
+        "suspension"
+      ],
+      [
+        "view_item",
+        "iris",
+        "item"
+      ]
+    ]
+  }
+},
+{
+  "model": "iris.item",
+  "pk": 1,
+  "fields": {
+    "created": "2023-02-09T11:34:01.964Z",
+    "modified": "2023-02-09T11:34:01.964Z",
+    "cancel_time": null,
+    "cancel_reason": "",
+    "notes": "alpha",
+    "process": 1,
+    "description": "alpha desc",
+    "quantity": 1,
+    "has_priority": false
+  }
+},
+{
+  "model": "iris.item",
+  "pk": 2,
+  "fields": {
+    "created": "2023-02-09T11:34:15.281Z",
+    "modified": "2023-02-09T11:34:15.281Z",
+    "cancel_time": null,
+    "cancel_reason": "",
+    "notes": "beta",
+    "process": 1,
+    "description": "beta desc",
+    "quantity": 2,
+    "has_priority": false
+  }
+},
+{
+  "model": "iris.item",
+  "pk": 3,
+  "fields": {
+    "created": "2023-02-09T11:38:25.448Z",
+    "modified": "2023-02-09T11:38:25.448Z",
+    "cancel_time": null,
+    "cancel_reason": "",
+    "notes": "zeta",
+    "process": 2,
+    "description": "zeta desc",
+    "quantity": 1,
+    "has_priority": false
+  }
+},
+{
+  "model": "iris.item",
+  "pk": 4,
+  "fields": {
+    "created": "2023-02-09T11:38:39.901Z",
+    "modified": "2023-02-09T11:38:39.901Z",
+    "cancel_time": null,
+    "cancel_reason": "",
+    "notes": "omega",
+    "process": 2,
+    "description": "omega desc",
+    "quantity": 1,
+    "has_priority": false
+  }
+},
+{
+  "model": "iris.item",
+  "pk": 5,
+  "fields": {
+    "created": "2023-02-09T11:41:50.592Z",
+    "modified": "2023-02-09T11:41:50.592Z",
+    "cancel_time": null,
+    "cancel_reason": "",
+    "notes": "gamma",
+    "process": 1,
+    "description": "gamma desc",
+    "quantity": 1,
+    "has_priority": false
+  }
+},
+{
+  "model": "iris.item",
+  "pk": 6,
+  "fields": {
+    "created": "2023-02-09T11:42:49.915Z",
+    "modified": "2023-02-09T11:43:14.508Z",
+    "cancel_time": null,
+    "cancel_reason": "",
+    "notes": "lamda",
+    "process": 2,
+    "description": "",
+    "quantity": 3,
+    "has_priority": false
+  }
+},
+{
+  "model": "iris.process",
+  "pk": 1,
+  "fields": {
+    "name": "A"
+  }
+},
+{
+  "model": "iris.process",
+  "pk": 2,
+  "fields": {
+    "name": "B"
+  }
+},
+{
+  "model": "iris.processspawnedsteps",
+  "pk": 1,
+  "fields": {
+    "process": 1,
+    "step": 1
+  }
+},
+{
+  "model": "iris.processspawnedsteps",
+  "pk": 2,
+  "fields": {
+    "process": 1,
+    "step": 4
+  }
+},
+{
+  "model": "iris.processspawnedsteps",
+  "pk": 3,
+  "fields": {
+    "process": 2,
+    "step": 6
+  }
+},
+{
+  "model": "iris.processspawnedsteps",
+  "pk": 4,
+  "fields": {
+    "process": 2,
+    "step": 4
+  }
+},
+{
+  "model": "iris.step",
+  "pk": 1,
+  "fields": {
+    "name": "1",
+    "instructions": "step 1",
+    "stations": [
+      1
+    ]
+  }
+},
+{
+  "model": "iris.step",
+  "pk": 2,
+  "fields": {
+    "name": "2",
+    "instructions": "step 2",
+    "stations": [
+      1
+    ]
+  }
+},
+{
+  "model": "iris.step",
+  "pk": 3,
+  "fields": {
+    "name": "3",
+    "instructions": "step 3",
+    "stations": [
+      1
+    ]
+  }
+},
+{
+  "model": "iris.step",
+  "pk": 4,
+  "fields": {
+    "name": "4",
+    "instructions": "step 4",
+    "stations": [
+      2
+    ]
+  }
+},
+{
+  "model": "iris.step",
+  "pk": 5,
+  "fields": {
+    "name": "5",
+    "instructions": "step 5",
+    "stations": [
+      1
+    ]
+  }
+},
+{
+  "model": "iris.step",
+  "pk": 6,
+  "fields": {
+    "name": "6",
+    "instructions": "step 6",
+    "stations": [
+      1
+    ]
+  }
+},
+{
+  "model": "iris.step",
+  "pk": 7,
+  "fields": {
+    "name": "7",
+    "instructions": "step 7",
+    "stations": [
+      3
+    ]
+  }
+},
+{
+  "model": "iris.step",
+  "pk": 8,
+  "fields": {
+    "name": "8",
+    "instructions": "step 8",
+    "stations": [
+      4
+    ]
+  }
+},
+{
+  "model": "iris.step",
+  "pk": 9,
+  "fields": {
+    "name": "9",
+    "instructions": "step 9",
+    "stations": [
+      1
+    ]
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 1,
+  "fields": {
+    "created": "2023-02-09T11:34:32.139Z",
+    "modified": "2023-02-09T11:34:32.139Z",
+    "step": 1,
+    "item": 2
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 2,
+  "fields": {
+    "created": "2023-02-09T11:34:32.139Z",
+    "modified": "2023-02-09T11:34:32.139Z",
+    "step": 4,
+    "item": 2
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 3,
+  "fields": {
+    "created": "2023-02-09T11:34:32.140Z",
+    "modified": "2023-02-09T11:34:32.140Z",
+    "step": 1,
+    "item": 1
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 4,
+  "fields": {
+    "created": "2023-02-09T11:34:32.141Z",
+    "modified": "2023-02-09T11:34:32.141Z",
+    "step": 4,
+    "item": 1
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 5,
+  "fields": {
+    "created": "2023-02-09T11:35:15.222Z",
+    "modified": "2023-02-09T11:35:15.222Z",
+    "step": 2,
+    "item": 1
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 6,
+  "fields": {
+    "created": "2023-02-09T11:35:26.704Z",
+    "modified": "2023-02-09T11:35:26.704Z",
+    "step": 3,
+    "item": 1
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 7,
+  "fields": {
+    "created": "2023-02-09T11:36:58.796Z",
+    "modified": "2023-02-09T11:36:58.796Z",
+    "step": 2,
+    "item": 2
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 8,
+  "fields": {
+    "created": "2023-02-09T11:37:03.004Z",
+    "modified": "2023-02-09T11:37:03.004Z",
+    "step": 3,
+    "item": 2
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 9,
+  "fields": {
+    "created": "2023-02-09T11:37:48.436Z",
+    "modified": "2023-02-09T11:37:48.436Z",
+    "step": 5,
+    "item": 2
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 10,
+  "fields": {
+    "created": "2023-02-09T11:38:50.917Z",
+    "modified": "2023-02-09T11:38:50.917Z",
+    "step": 4,
+    "item": 4
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 11,
+  "fields": {
+    "created": "2023-02-09T11:38:50.918Z",
+    "modified": "2023-02-09T11:38:50.918Z",
+    "step": 6,
+    "item": 4
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 12,
+  "fields": {
+    "created": "2023-02-09T11:38:50.919Z",
+    "modified": "2023-02-09T11:38:50.919Z",
+    "step": 4,
+    "item": 3
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 13,
+  "fields": {
+    "created": "2023-02-09T11:38:50.919Z",
+    "modified": "2023-02-09T11:38:50.919Z",
+    "step": 6,
+    "item": 3
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 14,
+  "fields": {
+    "created": "2023-02-09T11:39:13.518Z",
+    "modified": "2023-02-09T11:39:13.518Z",
+    "step": 7,
+    "item": 4
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 15,
+  "fields": {
+    "created": "2023-02-09T11:39:13.524Z",
+    "modified": "2023-02-09T11:39:13.524Z",
+    "step": 8,
+    "item": 4
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 16,
+  "fields": {
+    "created": "2023-02-09T11:39:18.459Z",
+    "modified": "2023-02-09T11:39:18.459Z",
+    "step": 7,
+    "item": 3
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 17,
+  "fields": {
+    "created": "2023-02-09T11:39:18.465Z",
+    "modified": "2023-02-09T11:39:18.465Z",
+    "step": 8,
+    "item": 3
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 18,
+  "fields": {
+    "created": "2023-02-09T11:41:57.416Z",
+    "modified": "2023-02-09T11:41:57.416Z",
+    "step": 1,
+    "item": 5
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 19,
+  "fields": {
+    "created": "2023-02-09T11:41:57.417Z",
+    "modified": "2023-02-09T11:41:57.417Z",
+    "step": 4,
+    "item": 5
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 20,
+  "fields": {
+    "created": "2023-02-09T11:42:12.420Z",
+    "modified": "2023-02-09T11:42:12.420Z",
+    "step": 2,
+    "item": 5
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 21,
+  "fields": {
+    "created": "2023-02-09T11:42:14.637Z",
+    "modified": "2023-02-09T11:42:14.637Z",
+    "step": 3,
+    "item": 5
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 22,
+  "fields": {
+    "created": "2023-02-09T11:42:16.597Z",
+    "modified": "2023-02-09T11:42:16.597Z",
+    "step": 5,
+    "item": 5
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 23,
+  "fields": {
+    "created": "2023-02-09T11:43:19.316Z",
+    "modified": "2023-02-09T11:43:19.316Z",
+    "step": 4,
+    "item": 6
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 24,
+  "fields": {
+    "created": "2023-02-09T11:43:19.317Z",
+    "modified": "2023-02-09T11:43:19.317Z",
+    "step": 6,
+    "item": 6
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 25,
+  "fields": {
+    "created": "2023-02-09T11:43:56.428Z",
+    "modified": "2023-02-09T11:43:56.428Z",
+    "step": 7,
+    "item": 6
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 26,
+  "fields": {
+    "created": "2023-02-09T11:43:56.434Z",
+    "modified": "2023-02-09T11:43:56.434Z",
+    "step": 8,
+    "item": 6
+  }
+},
+{
+  "model": "iris.task",
+  "pk": 27,
+  "fields": {
+    "created": "2023-02-09T11:44:11.022Z",
+    "modified": "2023-02-09T11:44:11.022Z",
+    "step": 9,
+    "item": 6
+  }
+},
+{
+  "model": "iris.stepspawn",
+  "pk": 1,
+  "fields": {
+    "closing_step": 1
+  }
+},
+{
+  "model": "iris.stepspawn",
+  "pk": 2,
+  "fields": {
+    "closing_step": 2
+  }
+},
+{
+  "model": "iris.stepspawn",
+  "pk": 3,
+  "fields": {
+    "closing_step": 6
+  }
+},
+{
+  "model": "iris.stepspawnspawnedsteps",
+  "pk": 1,
+  "fields": {
+    "step_spawn": 1,
+    "step": 2
+  }
+},
+{
+  "model": "iris.stepspawnspawnedsteps",
+  "pk": 2,
+  "fields": {
+    "step_spawn": 2,
+    "step": 3
+  }
+},
+{
+  "model": "iris.stepspawnspawnedsteps",
+  "pk": 3,
+  "fields": {
+    "step_spawn": 3,
+    "step": 7
+  }
+},
+{
+  "model": "iris.stepspawnspawnedsteps",
+  "pk": 4,
+  "fields": {
+    "step_spawn": 3,
+    "step": 8
+  }
+},
+{
+  "model": "iris.stepconsolidation",
+  "pk": 1,
+  "fields": {}
+},
+{
+  "model": "iris.stepconsolidation",
+  "pk": 2,
+  "fields": {}
+},
+{
+  "model": "iris.stepconsolidationclosingsteps",
+  "pk": 1,
+  "fields": {
+    "step_consolidation": 1,
+    "step": 3
+  }
+},
+{
+  "model": "iris.stepconsolidationclosingsteps",
+  "pk": 2,
+  "fields": {
+    "step_consolidation": 1,
+    "step": 4
+  }
+},
+{
+  "model": "iris.stepconsolidationclosingsteps",
+  "pk": 3,
+  "fields": {
+    "step_consolidation": 2,
+    "step": 7
+  }
+},
+{
+  "model": "iris.stepconsolidationclosingsteps",
+  "pk": 4,
+  "fields": {
+    "step_consolidation": 2,
+    "step": 8
+  }
+},
+{
+  "model": "iris.stepconsolidationclosingsteps",
+  "pk": 5,
+  "fields": {
+    "step_consolidation": 2,
+    "step": 4
+  }
+},
+{
+  "model": "iris.stepconsolidationspawnedsteps",
+  "pk": 1,
+  "fields": {
+    "step_consolidation": 1,
+    "step": 5
+  }
+},
+{
+  "model": "iris.stepconsolidationspawnedsteps",
+  "pk": 2,
+  "fields": {
+    "step_consolidation": 2,
+    "step": 9
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 1,
+  "fields": {
+    "created": "2023-02-09T11:35:15.216Z",
+    "modified": "2023-02-09T11:35:15.216Z",
+    "notes": "",
+    "task": 3,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 2,
+  "fields": {
+    "created": "2023-02-09T11:35:26.682Z",
+    "modified": "2023-02-09T11:35:26.682Z",
+    "notes": "",
+    "task": 5,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 3,
+  "fields": {
+    "created": "2023-02-09T11:36:58.785Z",
+    "modified": "2023-02-09T11:36:58.785Z",
+    "notes": "",
+    "task": 1,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 4,
+  "fields": {
+    "created": "2023-02-09T11:37:02.982Z",
+    "modified": "2023-02-09T11:37:02.982Z",
+    "notes": "",
+    "task": 7,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 5,
+  "fields": {
+    "created": "2023-02-09T11:37:22.647Z",
+    "modified": "2023-02-09T11:37:22.647Z",
+    "notes": "beta 3 commit note",
+    "task": 8,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 6,
+  "fields": {
+    "created": "2023-02-09T11:37:48.400Z",
+    "modified": "2023-02-09T11:37:48.400Z",
+    "notes": "",
+    "task": 2,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 7,
+  "fields": {
+    "created": "2023-02-09T11:39:13.501Z",
+    "modified": "2023-02-09T11:39:13.501Z",
+    "notes": "",
+    "task": 11,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 8,
+  "fields": {
+    "created": "2023-02-09T11:39:18.437Z",
+    "modified": "2023-02-09T11:39:18.437Z",
+    "notes": "",
+    "task": 13,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 9,
+  "fields": {
+    "created": "2023-02-09T11:39:50.673Z",
+    "modified": "2023-02-09T11:39:50.673Z",
+    "notes": "",
+    "task": 10,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 10,
+  "fields": {
+    "created": "2023-02-09T11:40:01.398Z",
+    "modified": "2023-02-09T11:40:01.398Z",
+    "notes": "zeta commit note",
+    "task": 12,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 11,
+  "fields": {
+    "created": "2023-02-09T11:42:06.153Z",
+    "modified": "2023-02-09T11:42:06.153Z",
+    "notes": "",
+    "task": 19,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 12,
+  "fields": {
+    "created": "2023-02-09T11:42:12.402Z",
+    "modified": "2023-02-09T11:42:12.402Z",
+    "notes": "",
+    "task": 18,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 13,
+  "fields": {
+    "created": "2023-02-09T11:42:14.628Z",
+    "modified": "2023-02-09T11:42:14.628Z",
+    "notes": "",
+    "task": 20,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 14,
+  "fields": {
+    "created": "2023-02-09T11:42:16.573Z",
+    "modified": "2023-02-09T11:42:16.573Z",
+    "notes": "",
+    "task": 21,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 15,
+  "fields": {
+    "created": "2023-02-09T11:42:20.045Z",
+    "modified": "2023-02-09T11:42:20.045Z",
+    "notes": "",
+    "task": 22,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 16,
+  "fields": {
+    "created": "2023-02-09T11:43:40.764Z",
+    "modified": "2023-02-09T11:43:40.764Z",
+    "notes": "lamda commit note",
+    "task": 23,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 17,
+  "fields": {
+    "created": "2023-02-09T11:43:56.417Z",
+    "modified": "2023-02-09T11:43:56.417Z",
+    "notes": "lamda commit note",
+    "task": 24,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 18,
+  "fields": {
+    "created": "2023-02-09T11:44:07.068Z",
+    "modified": "2023-02-09T11:44:07.068Z",
+    "notes": "lamda commit note",
+    "task": 25,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 19,
+  "fields": {
+    "created": "2023-02-09T11:44:11.007Z",
+    "modified": "2023-02-09T11:44:11.007Z",
+    "notes": "lamda commit note",
+    "task": 26,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.commit",
+  "pk": 20,
+  "fields": {
+    "created": "2023-02-09T11:44:24.581Z",
+    "modified": "2023-02-09T11:44:24.581Z",
+    "notes": "lamda final commit note",
+    "task": 27,
+    "worker": 1
+  }
+},
+{
+  "model": "iris.station",
+  "pk": 1,
+  "fields": {
+    "name": "a"
+  }
+},
+{
+  "model": "iris.station",
+  "pk": 2,
+  "fields": {
+    "name": "b"
+  }
+},
+{
+  "model": "iris.station",
+  "pk": 3,
+  "fields": {
+    "name": "c"
+  }
+},
+{
+  "model": "iris.station",
+  "pk": 4,
+  "fields": {
+    "name": "d"
+  }
+},
+{
+  "model": "iris.delay",
+  "pk": 1,
+  "fields": {
+    "created": "2023-02-09T11:36:15.517Z",
+    "modified": "2023-02-09T11:36:15.517Z",
+    "notes": "",
+    "task": 4,
+    "worker": 1,
+    "duration": "1000 00:00:00"
+  }
+},
+{
+  "model": "iris.delay",
+  "pk": 2,
+  "fields": {
+    "created": "2023-02-09T11:41:08.558Z",
+    "modified": "2023-02-09T11:41:08.558Z",
+    "notes": "zeta delay note",
+    "task": 17,
+    "worker": 1,
+    "duration": "1000 00:00:00"
+  }
+},
+{
+  "model": "iris.suspension",
+  "pk": 1,
+  "fields": {
+    "created": "2023-02-09T11:37:58.519Z",
+    "modified": "2023-02-09T11:37:58.519Z",
+    "notes": "",
+    "task": 9,
+    "worker": 1,
+    "lifted_at": null
+  }
+},
+{
+  "model": "iris.suspension",
+  "pk": 2,
+  "fields": {
+    "created": "2023-02-09T11:40:35.170Z",
+    "modified": "2023-02-09T11:40:35.170Z",
+    "notes": "zeta suspension note",
+    "task": 16,
+    "worker": 1,
+    "lifted_at": null
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$390000$AqwBVrq3NZxtvmpwhTx8TN$gve4YHbfGvZNgREAgVYbJXd5XYhHP5vipt55b9QOWzc=",
+    "last_login": "2023-02-08T14:35:25.988Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2022-11-28T16:05:21.368Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$390000$Gh101Gjhnw1FSrTx61JuVo$Y56B/ueoUQAO7IetDXDBEZhdjcddrUpJhboRSIIzatI=",
+    "last_login": "2023-02-09T11:23:13.515Z",
+    "is_superuser": false,
+    "username": "worker",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2023-02-08T14:36:07Z",
+    "groups": [
+      [
+        "workers"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$390000$8s0Ohag5u3UAHafbuNQ16b$55xT65ReJMGJwHR+1ZEKo1zFyo6ft1IC7TL38peO0e8=",
+    "last_login": "2023-02-09T11:23:07.816Z",
+    "is_superuser": false,
+    "username": "manager",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2023-02-08T14:36:27Z",
+    "groups": [
+      [
+        "managers"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$390000$NGCbTsVfz6v9VkocT9BkqZ$VYuIoE8ONuhXyH6AU7f4yXUtTzTeV+B4JRY8RRCJw1c=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "worker_alt",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2023-02-09T11:54:51.043Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "iris.worker",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "worker"
+    ]
+  }
+},
+{
+  "model": "iris.worker",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "worker_alt"
+    ]
+  }
+}
+]
