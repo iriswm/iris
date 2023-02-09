@@ -8,4 +8,4 @@ RUN pip3 install -r requirements.txt
 COPY deps /app/deps
 COPY manage.py /app/manage.py
 COPY iris /app/iris
-CMD [ "/bin/sh", "-c", "./manage.py migrate; ./manage.py compilemessages -l es; ./manage.py loaddata iris_auth_groups; ./manage.py runserver 0.0.0.0:8000" ]
+CMD [ "/bin/sh", "-c", "./manage.py migrate; ./manage.py compilemessages -l es; ./manage.py loaddata iris_init_auth_group_perm; ./manage.py runserver 0.0.0.0:8000" ]
