@@ -10,6 +10,9 @@ class Migration(migrations.Migration):
     dependencies = [
         ("iris", "0001_initial"),
     ]
+    run_before = [
+        ("iris", "0010_auto_20230207_2005"),
+    ]
 
     operations = [
         migrations.CreateModel(
