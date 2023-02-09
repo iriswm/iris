@@ -7,7 +7,7 @@ class BrowserDateInput(forms.DateTimeInput):
     input_type = "datetime-local"
 
 
-class CancelWorksViewForm(forms.Form):
+class CancelItemsViewForm(forms.Form):
     reason = forms.CharField(label=_("Reason"))
     datetime = forms.DateTimeField(
         label=_("Date/Time"), widget=BrowserDateInput(), initial=now

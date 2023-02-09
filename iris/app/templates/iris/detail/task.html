@@ -1,0 +1,14 @@
+{% extends 'iris/base.html' %}
+
+{% load i18n %}
+
+{% block iris_title %}{% blocktranslate with task_id=task.pk %}Details for task {{ task_id }}{% endblocktranslate %}{% endblock %}
+{% block iris_header %}{% blocktranslate with task_name=task %}Details for {{ task_name }}{% endblocktranslate %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+	<ul>
+		{% with task=object %}{% include "iris/task_cards/detail.html" %}{% endwith %}
+	</ul>
+</div>
+{% endblock %}

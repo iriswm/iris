@@ -1,0 +1,31 @@
+{% extends 'iris/base.html' %}
+
+{% load i18n %}
+
+{% block iris_title %}{% block iris_header %}{% translate 'Current issues' %}{% endblock %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+	<div class="btn-group">
+		<a href="{% url "iris:issues" %}" class="btn btn-primary{% if current_mode == "both" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Both" %}</a>
+		<a href="{% url "iris:issues" %}?mode=delays" class="btn btn-primary{% if current_mode == "delays" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Delays" %}</a>
+		<a href="{% url "iris:issues" %}?mode=suspensions" class="btn btn-primary{% if current_mode == "suspensions" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Suspensions" %}</a>
+	</div>
+	<ul>
+		{% if perms.iris.view_delay %}
+		{% for delay in delays %}
+		{% with delay.task as task %}
+		{% include "iris/task_cards/issues.html" %}
+		{% endwith %}
+		{% endfor %}
+		{% endif %}
+		{% if perms.iris.view_suspension %}
+		{% for suspension in suspensions %}
+		{% with suspension.task as task %}
+		{% include "iris/task_cards/issues.html" %}
+		{% endwith %}
+		{% endfor %}
+		{% endif %}
+	</ul>
+</div>
+{% endblock %}

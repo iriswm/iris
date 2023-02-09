@@ -1,0 +1,55 @@
+{% load i18n %}
+
+<div class="container mt-4">
+	{% if task.delayed and current_mode != "delays" %}
+	<div class="card border-warning">
+	{% elif task.suspended and current_mode != "suspensions" %}
+	<div class="card border-danger">
+	{% else %}
+	<div class="card">
+	{% endif %}
+		{% if task.delayed and current_mode != "delays" %}
+		<div class="card-header text-dark text-warning">{% translate "This task is delayed." %}</div>
+		{% elif task.suspended and current_mode != "suspensions" %}
+		<div class="card-header text-danger">{% translate "This task is suspended." %}</div>
+		{% endif %}
+		<div class="card-header">
+			<h5 class="card-title">{{ task.step.name }}</h5>
+			<p class="card-text">{{ task.item }}</p>
+		</div>
+		<ul class="list-group list-group-flush">
+			{% if task.delayed %}
+			<li class="list-group-item">
+				<p class="card-text">{% blocktranslate with ends_at=task.delayed_by.ends %}Ends at {{ ends_at }}{% endblocktranslate %}</p>
+			</li>
+			{% endif %}
+			{% if task.item.notes %}
+			<li class="list-group-item">
+				<p>{% translate "Item notes" %}</p>
+				<p>{{ task.item.notes|linebreaks }}</p>
+			</li>
+			{% endif %}
+			{% if task.delayed and task.delayed_by.notes %}
+			<li class="list-group-item">
+				<p>{% translate "Delay notes" %}</p>
+				<p>{{ task.delayed_by.notes|linebreaks }}</p>
+			</li>
+			{% elif task.suspended and task.suspended_by.notes %}
+			<li class="list-group-item">
+				<p>{% translate "Suspension notes" %}</p>
+				<p>{{ task.suspended_by.notes|linebreaks }}</p>
+			</li>
+			{% endif %}
+		</ul>
+		<div class="card-footer">
+			{% include "iris/task_cards/buttons/goto_task.html" %}
+			{% if task.delayed %}
+			{% include "iris/task_cards/buttons/edit_delay.html" %}
+			{% include "iris/task_cards/buttons/end_delay.html" %}
+			{% elif task.suspended %}
+			{% include "iris/task_cards/buttons/edit_suspension.html" %}
+			{% include "iris/task_cards/buttons/lift_suspension.html" %}
+			{% endif %}
+		</div>
+	</div>
+</div>

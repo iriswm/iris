@@ -1,5 +1,0 @@
-{% load i18n %}
-
-{% if perms.iris.change_delay %}
-<a class="btn btn-danger" href="{% url 'iris:delay_end' job.delayed_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "End delay" %}</a>
-{% endif %}

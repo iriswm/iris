@@ -1,0 +1,5 @@
+{% load i18n %}
+
+{% if perms.iris.change_suspension %}
+<a class="btn btn-primary" href="{% url 'iris:suspension_change' task.suspended_by.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Edit suspension notes" %}</a>
+{% endif %}

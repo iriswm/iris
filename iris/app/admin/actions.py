@@ -4,49 +4,49 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from iris.app.models import NoCategoryError, NotCanceledError, NotSuspendedError
+from iris.app.models import NoProcessError, NotCanceledError, NotSuspendedError
 
 
-@admin.action(description=str(_("Cancel selected works")))
-def cancel_works(self, request, queryset):
+@admin.action(description=str(_("Cancel selected items")))
+def cancel_items(self, request, queryset):
     selected = queryset.values_list("pk", flat=True)
     selected_joined = ",".join(str(pk) for pk in selected)
     return HttpResponseRedirect(
-        reverse("admin:cancel_works") + f"?ids={selected_joined}"
+        reverse("admin:cancel_items") + f"?ids={selected_joined}"
     )
 
 
-@admin.action(description=str(_("Restore selected works")))
-def restore_works(self, request, queryset):
+@admin.action(description=str(_("Restore selected items")))
+def restore_items(self, request, queryset):
     try:
         with transaction.atomic():
-            for work in queryset.all():
-                work.restore()
+            for item in queryset.all():
+                item.restore()
     except NotCanceledError as e:
         messages.error(request, str(e))
     else:
-        messages.info(request, _("The works were restored."))
-    return HttpResponseRedirect(reverse("admin:iris_work_changelist"))
+        messages.info(request, _("The items were restored."))
+    return HttpResponseRedirect(reverse("admin:iris_item_changelist"))
 
 
-@admin.action(description=str(_("Spawn category jobs")))
-def spawn_jobs(self, request, queryset):
+@admin.action(description=str(_("Spawn process tasks")))
+def spawn_tasks(self, request, queryset):
     try:
         with transaction.atomic():
-            for work in queryset.all():
-                work.spawn_jobs()
-    except NoCategoryError as e:
+            for item in queryset.all():
+                item.spawn_tasks()
+    except NoProcessError as e:
         messages.error(request, str(e))
     else:
-        messages.info(request, _("Jobs spawned."))
-    return HttpResponseRedirect(reverse("admin:iris_work_changelist"))
+        messages.info(request, _("Tasks spawned."))
+    return HttpResponseRedirect(reverse("admin:iris_item_changelist"))
 
 
-@admin.action(description=str(_("Spawn and consolidate jobs")))
-def spawn_and_consolidate_jobs(self, request, queryset):
+@admin.action(description=str(_("Spawn and consolidate tasks")))
+def spawn_and_consolidate_tasks(self, request, queryset):
     for commit in queryset.all():
-        commit.spawn_and_consolidate_jobs()
-    messages.info(request, _("Jobs spawned."))
+        commit.spawn_and_consolidate_tasks()
+    messages.info(request, _("Tasks spawned."))
     return HttpResponseRedirect(reverse("admin:iris_commit_changelist"))
 
 

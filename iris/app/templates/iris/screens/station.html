@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% block iris_title %}{% block iris_header %}{% blocktranslate with station_name=object.name %}Works for station {{ station_name }}{% endblocktranslate %}{% endblock %}{% endblock %}
+{% block iris_title %}{% block iris_header %}{% blocktranslate with station_name=object.name %}Items for station {{ station_name }}{% endblocktranslate %}{% endblock %}{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
@@ -13,11 +13,11 @@
 	</div>
 	<ul>
 		{% if current_mode == "pending" %}
-		{% for job in jobs %}{% include "iris/job_cards/station_pending.html" %}{% endfor %}
+		{% for task in tasks %}{% include "iris/task_cards/station_pending.html" %}{% endfor %}
 		{% elif current_mode == "delayed" %}
-		{% for job in jobs %}{% include "iris/job_cards/station_delayed.html" %}{% endfor %}
+		{% for task in tasks %}{% include "iris/task_cards/station_delayed.html" %}{% endfor %}
 		{% elif current_mode == "suspended" %}
-		{% for job in jobs %}{% include "iris/job_cards/station_suspended.html" %}{% endfor %}
+		{% for task in tasks %}{% include "iris/task_cards/station_suspended.html" %}{% endfor %}
 		{% endif %}
 	</ul>
 </div>

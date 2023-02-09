@@ -46,26 +46,27 @@ Line : cancel_reason
 
 /'
 
-Two models will keep maps between WooCommerce IDs and Iris categories. One for
+Two models will keep maps between WooCommerce IDs and Iris processes. One for
 individual WooCommerce products and another for the WooCommerce categories.
 
 When a new order is notified to Iris, each line will be inspected to find the
-Iris internal category with the set of associated tasks. First, the product ID
-maps will be checked, and then the category maps. Proper works will be created
-in Iris to represent them using this maps.
+Iris internal process with the set of associated steps. First, the product ID
+maps will be checked, and then the category maps. Proper items will be created
+in Iris to represent them using this maps and the line will also store the
+located process reference.
 
 '/
 
 object ProductMap
 object CategoryMap
-object Category
+object Process
 
-Line "n" -- "1" Category
+Line "n" -- "1" Process
 
 ProductMap : wc_product_id
-ProductMap "n" -- "1" Category
+ProductMap "n" -- "1" Process
 
 CategoryMap : wc_category_id
-CategoryMap "n" -- "1" Category
+CategoryMap "n" -- "1" Process
 
 @enduml

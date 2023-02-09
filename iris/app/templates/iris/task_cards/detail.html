@@ -1,0 +1,49 @@
+{% load i18n %}
+
+<div class="container mt-4">
+	{% if task.completed %}
+	<div class="card border-success">
+	{% elif task.delayed %}
+	<div class="card border-warning">
+	{% elif task.suspended %}
+	<div class="card border-danger">
+	{% elif task.canceled %}
+	<div class="card border-danger">
+	{% else %}
+	<div class="card">
+	{% endif %}
+		<div class="card-header">
+			<h5 class="card-title">{{ task.step.name }}</h5>
+			{% if task.item.quantity != 1 %}<h6 class="card-subtitle mb-2 text-muted">{% blocktranslate with quantity=task.item.quantity %}{{ quantity }} times{% endblocktranslate %}</h6>{% endif %}
+		</div>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item">{{ task.item }}</li>
+			{% if task.item.notes %}
+			<li class="list-group-item">
+				<p>{% translate "Item notes" %}</p>
+				<p>{{ task.item.notes|linebreaks }}</p>
+			</li>
+			{% endif %}
+			{% if task.step.instructions %}
+			<li class="list-group-item">{{ task.step.instructions }}</li>
+			{% else %}
+			<li class="list-group-item">{% translate "No instructions." %}</li>
+			{% endif %}
+		</ul>
+		{% if task.completed %}
+		<div class="card-footer text-success">{% translate "This task has been completed." %}</div>
+		{% elif task.delayed %}
+		<div class="card-footer text-dark text-warning">{% translate "This task is delayed." %}</div>
+		{% elif task.suspended %}
+		<div class="card-footer text-danger">{% translate "This task is suspended." %}</div>
+		{% elif task.canceled %}
+		<div class="card-footer text-danger">{% translate "This task has been canceled." %}</div>
+		{% else %}
+		<div class="card-footer">
+			{% include "iris/task_cards/buttons/create_commit.html" %}
+			{% include "iris/task_cards/buttons/create_delay.html" %}
+			{% include "iris/task_cards/buttons/create_suspension.html" %}
+		</div>
+		{% endif %}
+	</div>
+</div>
