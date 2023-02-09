@@ -25,44 +25,44 @@
         "user"
       ],
       [
-        "add_category",
+        "add_process",
         "iris",
-        "category"
+        "process"
       ],
       [
-        "change_category",
+        "change_process",
         "iris",
-        "category"
+        "process"
       ],
       [
-        "delete_category",
+        "delete_process",
         "iris",
-        "category"
+        "process"
       ],
       [
-        "view_category",
+        "view_process",
         "iris",
-        "category"
+        "process"
       ],
       [
-        "add_categoryspawnedtasks",
+        "add_processspawnedsteps",
         "iris",
-        "categoryspawnedtasks"
+        "processspawnedsteps"
       ],
       [
-        "change_categoryspawnedtasks",
+        "change_processspawnedsteps",
         "iris",
-        "categoryspawnedtasks"
+        "processspawnedsteps"
       ],
       [
-        "delete_categoryspawnedtasks",
+        "delete_processspawnedsteps",
         "iris",
-        "categoryspawnedtasks"
+        "processspawnedsteps"
       ],
       [
-        "view_categoryspawnedtasks",
+        "view_processspawnedsteps",
         "iris",
-        "categoryspawnedtasks"
+        "processspawnedsteps"
       ],
       [
         "add_commit",
@@ -105,24 +105,24 @@
         "delay"
       ],
       [
-        "add_job",
+        "add_task",
         "iris",
-        "job"
+        "task"
       ],
       [
-        "change_job",
+        "change_task",
         "iris",
-        "job"
+        "task"
       ],
       [
-        "delete_job",
+        "delete_task",
         "iris",
-        "job"
+        "task"
       ],
       [
-        "view_job",
+        "view_task",
         "iris",
-        "job"
+        "task"
       ],
       [
         "add_notetemplate",
@@ -185,144 +185,144 @@
         "suspension"
       ],
       [
-        "add_task",
+        "add_step",
         "iris",
-        "task"
+        "step"
       ],
       [
-        "change_task",
+        "change_step",
         "iris",
-        "task"
+        "step"
       ],
       [
-        "delete_task",
+        "delete_step",
         "iris",
-        "task"
+        "step"
       ],
       [
-        "view_task",
+        "view_step",
         "iris",
-        "task"
+        "step"
       ],
       [
-        "add_taskconsolidation",
+        "add_stepconsolidation",
         "iris",
-        "taskconsolidation"
+        "stepconsolidation"
       ],
       [
-        "change_taskconsolidation",
+        "change_stepconsolidation",
         "iris",
-        "taskconsolidation"
+        "stepconsolidation"
       ],
       [
-        "delete_taskconsolidation",
+        "delete_stepconsolidation",
         "iris",
-        "taskconsolidation"
+        "stepconsolidation"
       ],
       [
-        "view_taskconsolidation",
+        "view_stepconsolidation",
         "iris",
-        "taskconsolidation"
+        "stepconsolidation"
       ],
       [
-        "add_taskconsolidationclosingtasks",
+        "add_stepconsolidationclosingsteps",
         "iris",
-        "taskconsolidationclosingtasks"
+        "stepconsolidationclosingsteps"
       ],
       [
-        "change_taskconsolidationclosingtasks",
+        "change_stepconsolidationclosingsteps",
         "iris",
-        "taskconsolidationclosingtasks"
+        "stepconsolidationclosingsteps"
       ],
       [
-        "delete_taskconsolidationclosingtasks",
+        "delete_stepconsolidationclosingsteps",
         "iris",
-        "taskconsolidationclosingtasks"
+        "stepconsolidationclosingsteps"
       ],
       [
-        "view_taskconsolidationclosingtasks",
+        "view_stepconsolidationclosingsteps",
         "iris",
-        "taskconsolidationclosingtasks"
+        "stepconsolidationclosingsteps"
       ],
       [
-        "add_taskconsolidationspawnedtasks",
+        "add_stepconsolidationspawnedsteps",
         "iris",
-        "taskconsolidationspawnedtasks"
+        "stepconsolidationspawnedsteps"
       ],
       [
-        "change_taskconsolidationspawnedtasks",
+        "change_stepconsolidationspawnedsteps",
         "iris",
-        "taskconsolidationspawnedtasks"
+        "stepconsolidationspawnedsteps"
       ],
       [
-        "delete_taskconsolidationspawnedtasks",
+        "delete_stepconsolidationspawnedsteps",
         "iris",
-        "taskconsolidationspawnedtasks"
+        "stepconsolidationspawnedsteps"
       ],
       [
-        "view_taskconsolidationspawnedtasks",
+        "view_stepconsolidationspawnedsteps",
         "iris",
-        "taskconsolidationspawnedtasks"
+        "stepconsolidationspawnedsteps"
       ],
       [
-        "add_taskspawn",
+        "add_stepspawn",
         "iris",
-        "taskspawn"
+        "stepspawn"
       ],
       [
-        "change_taskspawn",
+        "change_stepspawn",
         "iris",
-        "taskspawn"
+        "stepspawn"
       ],
       [
-        "delete_taskspawn",
+        "delete_stepspawn",
         "iris",
-        "taskspawn"
+        "stepspawn"
       ],
       [
-        "view_taskspawn",
+        "view_stepspawn",
         "iris",
-        "taskspawn"
+        "stepspawn"
       ],
       [
-        "add_taskspawnspawnedtasks",
+        "add_stepspawnspawnedsteps",
         "iris",
-        "taskspawnspawnedtasks"
+        "stepspawnspawnedsteps"
       ],
       [
-        "change_taskspawnspawnedtasks",
+        "change_stepspawnspawnedsteps",
         "iris",
-        "taskspawnspawnedtasks"
+        "stepspawnspawnedsteps"
       ],
       [
-        "delete_taskspawnspawnedtasks",
+        "delete_stepspawnspawnedsteps",
         "iris",
-        "taskspawnspawnedtasks"
+        "stepspawnspawnedsteps"
       ],
       [
-        "view_taskspawnspawnedtasks",
+        "view_stepspawnspawnedsteps",
         "iris",
-        "taskspawnspawnedtasks"
+        "stepspawnspawnedsteps"
       ],
       [
-        "add_work",
+        "add_item",
         "iris",
-        "work"
+        "item"
       ],
       [
-        "change_work",
+        "change_item",
         "iris",
-        "work"
+        "item"
       ],
       [
-        "delete_work",
+        "delete_item",
         "iris",
-        "work"
+        "item"
       ],
       [
-        "view_work",
+        "view_item",
         "iris",
-        "work"
+        "item"
       ],
       [
         "add_worker",
@@ -383,9 +383,9 @@
         "delay"
       ],
       [
-        "view_job",
+        "view_task",
         "iris",
-        "job"
+        "task"
       ],
       [
         "view_notetemplate",
@@ -413,9 +413,9 @@
         "suspension"
       ],
       [
-        "view_work",
+        "view_item",
         "iris",
-        "work"
+        "item"
       ]
     ]
   }
