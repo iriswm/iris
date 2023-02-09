@@ -1,5 +1,5 @@
 {% load i18n %}
 
-{% if perms.iris.add_delay %}
+{% if perms.iris.add_delay and user.worker %}
 <a class="btn btn-warning" href="{% url 'iris:task_add_delay' task.pk %}?next={{ request.get_full_path|urlencode }}">{% translate "Delay" %}</a>
 {% endif %}

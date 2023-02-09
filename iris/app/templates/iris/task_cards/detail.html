@@ -38,7 +38,7 @@
 		<div class="card-footer text-danger">{% translate "This task is suspended." %}</div>
 		{% elif task.canceled %}
 		<div class="card-footer text-danger">{% translate "This task has been canceled." %}</div>
-		{% else %}
+		{% elif user.worker %}
 		<div class="card-footer">
 			{% include "iris/task_cards/buttons/create_commit.html" %}
 			{% include "iris/task_cards/buttons/create_delay.html" %}
