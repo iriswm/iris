@@ -1,9 +1,4 @@
 __pycache__/
 /docs/*.png
-.project
-.pydevproject
-/.dbeaver/
 *.mo
 /.env
-/.exrc*
-/Dockerfile.emmet-ls
