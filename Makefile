@@ -1,22 +1,40 @@
+COMPOSE_CMD := podman-compose
+
+.PHONY: build
+build:
+	@$(exec) $(COMPOSE_CMD) build
+.PHONY: up
+up:
+	@$(exec) $(COMPOSE_CMD) up -d
+.PHONY: down
+down:
+	@$(exec) $(COMPOSE_CMD) down
+
+COMPOSE_EXEC_CMD := $(COMPOSE_CMD) exec webapp
+
+.PHONY: cmd
+cmd:
+	@$(exec) echo $(COMPOSE_EXEC_CMD)
+
+.PHONY: migrate
+migrate:
+	@$(exec) $(COMPOSE_EXEC_CMD) ./manage.py migrate
+.PHONY: makemigrations
+makemigrations:
+	@$(exec) $(COMPOSE_EXEC_CMD) ./manage.py makemigrations
 .PHONY: makemessages
 makemessages:
-	@$(exec) django-admin makemessages -l es --no-obsolete --no-location
+	@$(exec) $(COMPOSE_EXEC_CMD) django-admin makemessages -l es --no-obsolete --no-location
 .PHONY: compilemessages
 compilemessages:
-	@$(exec) django-admin compilemessages -l es
+	@$(exec) $(COMPOSE_EXEC_CMD) django-admin compilemessages -l es
+
 .PHONY: style
 style:
-	@$(exec) isort manage.py iris deps/iris_wc
-	@$(exec) black manage.py iris deps/iris_wc
-.PHONY: db-up
-db-up:
-	@$(exec) mkdir -p ./state/pg_data
-	@$(exec) podman run --rm -d --name iris_db -p 15432:5432 \
-		-v ./state/pg_data:/var/lib/postgresql/data \
-		-e POSTGRES_DB=iris \
-		-e POSTGRES_USER=iris \
-		-e POSTGRES_PASSWORD=iris \
-		docker.io/library/postgres:15.1-alpine3.16
-.PHONY: db-down
-db-down:
-	@$(exec) podman stop iris_db
+	@$(exec) $(COMPOSE_EXEC_CMD) isort manage.py iris deps/iris_wc
+	@$(exec) $(COMPOSE_EXEC_CMD) black manage.py iris deps/iris_wc
+
+.PHONY: style-check
+style-check:
+	@$(exec) $(COMPOSE_EXEC_CMD) isort --check manage.py iris deps/iris_wc
+	@$(exec) $(COMPOSE_EXEC_CMD) black --check manage.py iris deps/iris_wc

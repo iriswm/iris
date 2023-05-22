@@ -29,8 +29,7 @@ DATABASES = {
     "default": (
         {
             "ENGINE": "django.db.backends.postgresql",
-            "HOST": "localhost",
-            "PORT": 15432,
+            "HOST": "db",
             "NAME": "iris",
             "USER": "iris",
             "PASSWORD": "iris",
