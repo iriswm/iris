@@ -9,16 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.9
+    - name: Set up Python 3.11
       uses: actions/setup-python@v1
       with:
-        python-version: 3.9
+        python-version: 3.11
     - name: Install pip dependencies
       run: |
-        python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        if [ -f requirements.dev.txt ]; then pip install -r requirements.dev.txt; fi
+        pip3 install black~=23.3
+        pip3 install isort~=5.12
     - name: Check styles with Black
       run: black --check manage.py iris deps/iris_wc
     - name: Check imports with isort
-      run: isort -c manage.py iris deps/iris_wc
+      run: isort --check manage.py iris deps/iris_wc
