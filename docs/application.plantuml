@@ -11,6 +11,9 @@ canceled.
 
 Items can also have priority over other items.
 
+A description field is also present in the items to add miscellaneous
+information if needed.
+
 '/
 
 object Item
@@ -22,11 +25,14 @@ Item : notes
 Item : cancel_time
 Item : cancel_reason
 Item : has_priority
+Item : description
 
 /'
 
 Each item will be handled following a `Process`. Processes will determine the
 set of steps (`Step` objects) needed to complete the item.
+
+Processes have a `name`.
 
 Each step has individual `instructions` and a simple `name`.
 
@@ -42,6 +48,8 @@ depending on sets of steps are kept in the model `StepConsolidation`.
 object Process
 
 Item "n" -- "1" Process
+
+Process : name
 
 object Step
 
@@ -76,6 +84,10 @@ entry in another model called `Commit`.
 Is at this moment when the step tress will be checked to create the new tasks
 if apply.
 
+The commits are timestamped to keep track of the amount of time needed by each
+item in an Order and offer proper estimations and reports. The commits also
+have `notes`.
+
 '/
 
 object Worker
@@ -88,16 +100,6 @@ object Commit
 Commit "1" -[#green]- "1" Task
 Commit "n" -- "1" Worker
 
-/'
-
-The items in `Item` and `Commit` are timestamped to keep track of the amount of
-time needed by each item in an Order and offer proper estimations and reports.
-The commits also have `notes`.
-
-'/
-
-Item : created
-Item : modified
 Commit : created
 Commit : modified
 Commit : notes
@@ -111,11 +113,15 @@ step. The secondary purpose is to help with the estimation of order completion
 times and the tertiary purpose is to offer insights into item efficiency and
 performance.
 
+The stations have a name.
+
 '/
 
 object Station
 
 Step "n" -- "m" Station
+
+Station : name
 
 /'
 
@@ -139,8 +145,8 @@ keep track of them:
 
 /'
 
-- The `Delay` model, with a specific time specified to hide the item in the
-  station during that time and a note.
+- The `Delay` model, with a specified time to hide the item in the station,
+  notes and a timestamp.
 
 '/
 
@@ -157,7 +163,7 @@ Delay : time
 /'
 
 - The `Suspension` model, for halts in items without time estimations, also
-  with a note.
+  with notes and a timestamp.
 
 '/
 
