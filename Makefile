@@ -29,6 +29,13 @@ makemessages:
 compilemessages:
 	@$(exec) $(COMPOSE_EXEC_CMD) django-admin compilemessages -l es
 
+.PHONY: init-db	
+init-db:
+	@$(exec) $(COMPOSE_EXEC_CMD) ./manage.py loaddata iris_init_auth_groups
+.PHONY: init-db-dev
+init-db-dev: init-db
+	@$(exec) $(COMPOSE_EXEC_CMD) ./manage.py loaddata iris_init_dev_auth_iris
+
 .PHONY: style
 style:
 	@$(exec) $(COMPOSE_EXEC_CMD) isort manage.py iris deps/iris_wc

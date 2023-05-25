@@ -13,13 +13,13 @@ class ItemManager(Manager):
             .exclude(number_of_tasks=F("number_of_commits"))
         )
 
-    def completed(self, station=None):
+    def completed(self):
         queryset = self.get_queryset()
         return queryset.annotate(
             number_of_tasks=Count("tasks"), number_of_commits=Count("tasks__commit")
         ).filter(number_of_tasks=F("number_of_commits"))
 
-    def canceled(self, station=None):
+    def canceled(self):
         return self.get_queryset().filter(cancel_time__isnull=False)
 
 
@@ -27,7 +27,7 @@ class TaskManager(Manager):
     def pending(self, station=None):
         queryset = self.get_queryset()
         if station is not None:
-            queryset = queryset.filter(step__stations=station)
+            queryset = queryset.filter(step_transition__creates__stations=station)
         return (
             queryset.filter(commit__isnull=True, item__cancel_time__isnull=True)
             .annotate(
@@ -42,13 +42,13 @@ class TaskManager(Manager):
     def completed(self, station=None):
         queryset = self.get_queryset()
         if station is not None:
-            queryset = queryset.filter(step__stations=station)
+            queryset = queryset.filter(step_transition__creates__stations=station)
         return queryset.filter(commit__isnull=False)
 
     def delayed(self, station=None):
         queryset = self.get_queryset()
         if station is not None:
-            queryset = queryset.filter(step__stations=station)
+            queryset = queryset.filter(step_transition__creates__stations=station)
         return queryset.annotate(
             max_delay=Max(F("delays__created") + F("delays__duration")),
         ).filter(Q(max_delay__isnull=False) & (Q(max_delay__gt=now())))
@@ -56,7 +56,7 @@ class TaskManager(Manager):
     def suspended(self, station=None):
         queryset = self.get_queryset()
         if station is not None:
-            queryset = queryset.filter(step__stations=station)
+            queryset = queryset.filter(step_transition__creates__stations=station)
         return queryset.filter(
             Q(suspensions__isnull=False) & Q(suspensions__lifted_at__isnull=True)
         )

@@ -36,13 +36,6 @@ Processes have a `name`.
 
 Each step has individual `instructions` and a simple `name`.
 
-When a new item is created, the process is checked and an appropriate set of
-tasks are created (`Task` objects) according to the process initial steps. Each
-of this tasks, when completed, will span extra tasks according to another model
-called `StepSpawn`. Also, some tasks will be spawned when a set of tasks for
-the same item are completed (only when they are all completed). This steps
-depending on sets of steps are kept in the model `StepConsolidation`.
-
 '/
 
 object Process
@@ -53,29 +46,69 @@ Process : name
 
 object Step
 
-Process "n" -- "m" Step
-
 Step : name
 Step : instructions
 
-object Task
+/'
 
-Task "n" -- "1" Step
-Task "n" -- "1" Item
+Objects `StepTransition` will be used to represent what steps are needed to
+complete a process and the relation between those steps.
 
-object StepSpawn
-object StepConsolidation
+Step transitions have three fields. A `process` field pointing to the
+associated process. An optional `required_steps` field, pointing to one or more
+steps in the same process required for the transition to occur. A single
+`creates` field with the `Step` object created for that particular transition.
 
-StepSpawn "n" -- "1" Step
-StepSpawn "n" -- "m" Step
-StepConsolidation "n" -- "m" Step
-StepConsolidation "n" -- "m" Step
+To describe how the application stores the different kind of steps and
+transitions, lets have this diagram into account:
+
+--> 1 ----> 2 --> 3 --> 4 ----> 6 ------> 8
+        \                  /         /
+         -------- 5 -------         /
+------------------------------> 7 --
+
+The diagram represents the set of steps needed to complete a process. Each
+number is a single step.
+
+The steps 1 and 7 are created when a new item is added to the system and
+assigned to a process. This is represented by two step transitions to the steps
+1 and 7 with no requirements.
+
+The steps 2, 3 and 4 are created by three transitions with steps 1, 2 and 3 as
+their respective requirements. Step 5 is created by a transition requiring the
+step 1. Similar to the transition to the step 2.
+
+Steps 6 and 8 are created by transitions specifying the pairs 4-5 and 6-7 as
+their requirements.
+
+'/
+
+object StepTransition
+
+StepTransition "n" -- "1" Process
+StepTransition "n" -- "m" StepTransition : required by
+StepTransition "n" -- "1" Step
 
 /'
 
-The 'steps' in the models `Step`, `Process`, `StepSpawn` and
-`StepConsolidation` represent trees of tasks needed to consider an order
-fulfilled.
+When a new item is assigned to a process, the process field is frozen and the
+transitions are checked to create an appropriate set of tasks (`Task` objects).
+Each of this tasks, when completed, will span extra tasks until all tasks have
+been spawned and completed.
+
+Tasks track creation and modification times.
+
+'/
+
+object Task
+
+Task "n" -- "1" StepTransition
+Task "n" -- "1" Item
+
+Task : created
+Task : modified
+
+/'
 
 The tasks can be completed by any worker, identified in the model `Worker` and
 connected to an Django `User`. The tasks are marked as completed creating a new

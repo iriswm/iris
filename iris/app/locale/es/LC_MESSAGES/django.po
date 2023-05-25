@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-08 11:17+0100\n"
-"PO-Revision-Date: 2023-02-08 11:33+0100\n"
+"POT-Creation-Date: 2023-05-26 20:51+0000\n"
+"PO-Revision-Date: 2023-05-26 22:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -131,9 +131,6 @@ msgstr "El producto '{item_name}' no tiene una categoría asignada."
 msgid "name"
 msgstr "nombre"
 
-msgid "spawned steps"
-msgstr "pasos creados"
-
 msgid "processes"
 msgstr "procesos"
 
@@ -157,6 +154,9 @@ msgstr "pasos"
 msgid "Step '{obj.name}' ({obj.pk})"
 msgstr "Paso '{obj.name}' ({obj.pk})"
 
+msgid "step transition"
+msgstr "transición de paso"
+
 msgid "task"
 msgstr "tarea"
 
@@ -164,34 +164,29 @@ msgid "tasks"
 msgstr "tareas"
 
 #, python-brace-format
-msgid "'{obj.step.name}' for item {obj.item.pk}{quantity_suffix}"
-msgstr "'{obj.step.name}' para el proyecto {obj.item.pk}{quantity_suffix}"
+msgid ""
+"'{obj.step_transition.creates.name}' for item {obj.item.pk}{quantity_suffix}"
+msgstr ""
+"'{obj.step_transition.creates.name}' para el proyecto {obj.item.pk}"
+"{quantity_suffix}"
 
-msgid "closing step"
-msgstr "paso de cierre"
+msgid "required steps"
+msgstr "pasos requeridos"
 
-msgid "step spawn"
-msgstr "expansión de pasos"
+msgid "creates"
+msgstr "crea"
 
-msgid "step spawns"
-msgstr "expansiones de pasos"
-
-#, python-brace-format
-msgid "Spawns {spawns_names} when step \"{obj.closing_step}\" is closed"
-msgstr "Crea {spawns_names} cuando el paso \"{obj.closing_step}\" se complete"
-
-msgid "closing steps"
-msgstr "pasos de cierre"
-
-msgid "step consolidation"
-msgstr "consolidación de pasos"
-
-msgid "step consolidations"
-msgstr "consolidaciones de pasos"
+msgid "step transitions"
+msgstr "transiciones de pasos"
 
 #, python-brace-format
-msgid "Spawns {spawns_names} when steps {closing_names} are closed"
-msgstr "Crea {spawns_names} cuando los pasos {closing_names} se completen"
+msgid "Spawns \"{obj.creates}\" when the process \"{obj.process}\" starts"
+msgstr "Crea \"{obj.creates}\" cuando el proceso \"{obj.process}\" se inicia"
+
+#, python-brace-format
+msgid "Spawns \"{obj.creates}\" when steps \"{required_names}\" are closed"
+msgstr ""
+"Crea \"{obj.creates}\" cuando los pasos \"{required_names}\" se cierren"
 
 msgid "user"
 msgstr "usuario"

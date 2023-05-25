@@ -1,6 +1,7 @@
 # Test data
 A simple set of test data is provided:
 
+* 5 users with usernames/passwords/roles: `admin`, `manager` and `worker1-3`.
 * Capital letters `A` and `B` are process names.
 * Letters from `a` to `d` are stations.
 * Numbers from `1` to `9` are steps.

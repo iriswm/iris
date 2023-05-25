@@ -145,9 +145,10 @@ class Item(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
                     item_name=str(self),
                 ),
             )
-        for step in self.process.spawned_steps.all():
-            new_task = Task(item=self, step=step)
-            new_task.save()
+        for transition in self.process.step_transitions.all():
+            if transition.required_steps.count() == 0:
+                new_task = Task(item=self, step_transition=transition)
+                new_task.save()
 
 
 add_note_type("Item", "iris.app.Item")
@@ -155,12 +156,6 @@ add_note_type("Item", "iris.app.Item")
 
 class Process(models.Model):
     name = models.CharField(_("name"), max_length=64)
-    spawned_steps = models.ManyToManyField(
-        "Step",
-        verbose_name=_("spawned steps"),
-        related_name="spawned_by_processes",
-        through="ProcessSpawnedSteps",
-    )
 
     class Meta:
         verbose_name = _("process")
@@ -168,11 +163,6 @@ class Process(models.Model):
 
     def __str__(self):
         return _("'{obj.name}' process").format(obj=self)
-
-
-class ProcessSpawnedSteps(models.Model):
-    process = models.ForeignKey("Process", on_delete=models.CASCADE)
-    step = models.ForeignKey("Step", on_delete=models.RESTRICT)
 
 
 class Step(models.Model):
@@ -191,8 +181,11 @@ class Step(models.Model):
 
 
 class Task(TimestampMixin, models.Model):
-    step = models.ForeignKey(
-        "Step", verbose_name=_("step"), on_delete=models.RESTRICT, related_name="tasks"
+    step_transition = models.ForeignKey(
+        "StepTransition",
+        verbose_name=_("step transition"),
+        on_delete=models.RESTRICT,
+        related_name="tasks",
     )
     item = models.ForeignKey(
         "Item", verbose_name=_("item"), on_delete=models.RESTRICT, related_name="tasks"
@@ -206,7 +199,7 @@ class Task(TimestampMixin, models.Model):
 
     def __str__(self):
         quantity_suffix = "" if self.item.quantity == 1 else f" x{self.item.quantity}"
-        return _("'{obj.step.name}' for item {obj.item.pk}{quantity_suffix}").format(
+        return _("'{obj.step_transition.creates.name}' for item {obj.item.pk}{quantity_suffix}").format(
             obj=self,
             quantity_suffix=quantity_suffix,
         )
@@ -242,86 +235,60 @@ class Task(TimestampMixin, models.Model):
                 return suspension
 
 
-class StepSpawn(models.Model):
-    closing_step = models.ForeignKey(
-        "Step",
-        verbose_name=_("closing step"),
+class StepTransition(models.Model):
+    process = models.ForeignKey(
+        "Process",
+        verbose_name=_("process"),
         on_delete=models.CASCADE,
-        related_name="spawns",
+        related_name="step_transitions",
     )
-    spawned_steps = models.ManyToManyField(
+    required_steps = models.ManyToManyField(
+        "self",
+        verbose_name=_("required steps"),
+        through="StepTransitionRequiredSteps",
+        symmetrical=False,
+        related_name="required_by",
+    )
+    creates = models.ForeignKey(
         "Step",
-        verbose_name=_("spawned steps"),
-        related_name="spawned_by_steps",
-        through="StepSpawnSpawnedSteps",
+        verbose_name=_("creates"),
+        on_delete=models.RESTRICT,
+        related_name="created_by",
     )
 
     class Meta:
-        verbose_name = _("step spawn")
-        verbose_name_plural = _("step spawns")
+        verbose_name = _("step transition")
+        verbose_name_plural = _("step transitions")
 
     def __str__(self):
-        # (step, step, step)
-        spawns_names = (
-            "(" + ", ".join([f'"{step}"' for step in self.spawned_steps.all()]) + ")"
-        )
-        return _(
-            'Spawns {spawns_names} when step "{obj.closing_step}" is closed'
-        ).format(
-            obj=self,
-            spawns_names=spawns_names,
-        )
+        if self.required_steps.count() == 0:
+            return _(
+                'Spawns "{obj.creates}" when the process "{obj.process}" starts'
+            ).format(
+                obj=self,
+            )
+        else:
+            # (step, step, step)
+            required_names = (
+                "("
+                + ", ".join([f'"{step}"' for step in self.required_steps.all()])
+                + ")"
+            )
+            return _(
+                'Spawns "{obj.creates}" when steps "{required_names}" are closed'
+            ).format(
+                obj=self,
+                required_names=required_names,
+            )
 
 
-class StepSpawnSpawnedSteps(models.Model):
-    step_spawn = models.ForeignKey("StepSpawn", on_delete=models.CASCADE)
-    step = models.ForeignKey("Step", on_delete=models.RESTRICT)
-
-
-class StepConsolidation(models.Model):
-    closing_steps = models.ManyToManyField(
-        "Step",
-        verbose_name=_("closing steps"),
-        related_name="consolidations",
-        through="StepConsolidationClosingSteps",
+class StepTransitionRequiredSteps(models.Model):
+    step_transition = models.ForeignKey(
+        "StepTransition", on_delete=models.CASCADE, related_name="step_transition"
     )
-    spawned_steps = models.ManyToManyField(
-        "Step",
-        verbose_name=_("spawned steps"),
-        related_name="spawned_by_consolidation",
-        through="StepConsolidationSpawnedSteps",
+    requirement = models.ForeignKey(
+        "StepTransition", on_delete=models.CASCADE, related_name="requirement"
     )
-
-    class Meta:
-        verbose_name = _("step consolidation")
-        verbose_name_plural = _("step consolidations")
-
-    def __str__(self):
-        # (step, step, step)
-        spawns_names = (
-            "(" + ", ".join([f'"{step}"' for step in self.spawned_steps.all()]) + ")"
-        )
-        closing_names = (
-            "(" + ", ".join([f'"{step}"' for step in self.closing_steps.all()]) + ")"
-        )
-        return _("Spawns {spawns_names} when steps {closing_names} are closed").format(
-            spawns_names=spawns_names,
-            closing_names=closing_names,
-        )
-
-
-class StepConsolidationClosingSteps(models.Model):
-    step_consolidation = models.ForeignKey(
-        "StepConsolidation", on_delete=models.CASCADE
-    )
-    step = models.ForeignKey("Step", on_delete=models.RESTRICT)
-
-
-class StepConsolidationSpawnedSteps(models.Model):
-    step_consolidation = models.ForeignKey(
-        "StepConsolidation", on_delete=models.CASCADE
-    )
-    step = models.ForeignKey("Step", on_delete=models.RESTRICT)
 
 
 class Worker(models.Model):
@@ -364,21 +331,16 @@ class Commit(TimestampMixin, NotesMixin, models.Model):
         )
 
     def spawn_and_consolidate_tasks(self):
-        for spawn in self.task.step.spawns.all():
-            for step in spawn.spawned_steps.all():
-                new_task = Task(item=self.task.item, step=step)
-                new_task.save()
-        for consolidation in self.task.step.consolidations.all():
-            closing_steps = consolidation.closing_steps.all()
-            closing_tasks = Task.objects.filter(
-                item=self.task.item, step__in=closing_steps
+        for required_by in self.task.step_transition.required_by.all():
+            required_steps = required_by.required_steps.all()
+            required_tasks = Task.objects.filter(
+                item=self.task.item, step_transition__in=required_steps
             )
-            if len(closing_steps) == len(closing_tasks) and all(
-                [task.completed for task in closing_tasks]
+            if len(required_steps) == len(required_tasks) and all(
+                [task.completed for task in required_tasks]
             ):
-                for step in consolidation.spawned_steps.all():
-                    new_task = Task(item=self.task.item, step=step)
-                    new_task.save()
+                new_task = Task(item=self.task.item, step_transition=required_by)
+                new_task.save()
 
 
 add_note_type("Commit", "iris.app.Commit")

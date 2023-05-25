@@ -45,26 +45,6 @@
         "process"
       ],
       [
-        "add_processspawnedsteps",
-        "iris",
-        "processspawnedsteps"
-      ],
-      [
-        "change_processspawnedsteps",
-        "iris",
-        "processspawnedsteps"
-      ],
-      [
-        "delete_processspawnedsteps",
-        "iris",
-        "processspawnedsteps"
-      ],
-      [
-        "view_processspawnedsteps",
-        "iris",
-        "processspawnedsteps"
-      ],
-      [
         "add_commit",
         "iris",
         "commit"
@@ -205,104 +185,44 @@
         "step"
       ],
       [
-        "add_stepconsolidation",
+        "add_steptransition",
         "iris",
-        "stepconsolidation"
+        "steptransition"
       ],
       [
-        "change_stepconsolidation",
+        "change_steptransition",
         "iris",
-        "stepconsolidation"
+        "steptransition"
       ],
       [
-        "delete_stepconsolidation",
+        "delete_steptransition",
         "iris",
-        "stepconsolidation"
+        "steptransition"
       ],
       [
-        "view_stepconsolidation",
+        "view_steptransition",
         "iris",
-        "stepconsolidation"
+        "steptransition"
       ],
       [
-        "add_stepconsolidationclosingsteps",
+        "add_steptransitionrequiredsteps",
         "iris",
-        "stepconsolidationclosingsteps"
+        "steptransitionrequiredsteps"
       ],
       [
-        "change_stepconsolidationclosingsteps",
+        "change_steptransitionrequiredsteps",
         "iris",
-        "stepconsolidationclosingsteps"
+        "steptransitionrequiredsteps"
       ],
       [
-        "delete_stepconsolidationclosingsteps",
+        "delete_steptransitionrequiredsteps",
         "iris",
-        "stepconsolidationclosingsteps"
+        "steptransitionrequiredsteps"
       ],
       [
-        "view_stepconsolidationclosingsteps",
+        "view_steptransitionrequiredsteps",
         "iris",
-        "stepconsolidationclosingsteps"
-      ],
-      [
-        "add_stepconsolidationspawnedsteps",
-        "iris",
-        "stepconsolidationspawnedsteps"
-      ],
-      [
-        "change_stepconsolidationspawnedsteps",
-        "iris",
-        "stepconsolidationspawnedsteps"
-      ],
-      [
-        "delete_stepconsolidationspawnedsteps",
-        "iris",
-        "stepconsolidationspawnedsteps"
-      ],
-      [
-        "view_stepconsolidationspawnedsteps",
-        "iris",
-        "stepconsolidationspawnedsteps"
-      ],
-      [
-        "add_stepspawn",
-        "iris",
-        "stepspawn"
-      ],
-      [
-        "change_stepspawn",
-        "iris",
-        "stepspawn"
-      ],
-      [
-        "delete_stepspawn",
-        "iris",
-        "stepspawn"
-      ],
-      [
-        "view_stepspawn",
-        "iris",
-        "stepspawn"
-      ],
-      [
-        "add_stepspawnspawnedsteps",
-        "iris",
-        "stepspawnspawnedsteps"
-      ],
-      [
-        "change_stepspawnspawnedsteps",
-        "iris",
-        "stepspawnspawnedsteps"
-      ],
-      [
-        "delete_stepspawnspawnedsteps",
-        "iris",
-        "stepspawnspawnedsteps"
-      ],
-      [
-        "view_stepspawnspawnedsteps",
-        "iris",
-        "stepspawnspawnedsteps"
+        "steptransitionrequiredsteps"
       ],
       [
         "add_item",

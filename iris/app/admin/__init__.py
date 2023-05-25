@@ -17,14 +17,10 @@ from iris.app.models import (
     Item,
     NoteTemplate,
     Process,
-    ProcessSpawnedSteps,
     Station,
     Step,
-    StepConsolidation,
-    StepConsolidationClosingSteps,
-    StepConsolidationSpawnedSteps,
-    StepSpawn,
-    StepSpawnSpawnedSteps,
+    StepTransition,
+    StepTransitionRequiredSteps,
     Suspension,
     Task,
     Worker,
@@ -84,13 +80,9 @@ class ItemAdmin(CompletableAdminMixin, CancelableAdminMixin, admin.ModelAdmin):
         ]
 
 
-class ProcessSpawnedStepsInline(admin.TabularInline):
-    model = ProcessSpawnedSteps
-
-
 @admin.register(Process)
 class ProcessAdmin(admin.ModelAdmin):
-    inlines = [ProcessSpawnedStepsInline]
+    pass
 
 
 @admin.register(Step)
@@ -124,26 +116,14 @@ class TaskAdmin(CompletableAdminMixin, admin.ModelAdmin):
     list_filter = (TaskCompletionListFilter,)
 
 
-class StepSpawnSpawnedStepsInline(admin.TabularInline):
-    model = StepSpawnSpawnedSteps
+class StepTransitionRequiredStepsInline(admin.TabularInline):
+    model = StepTransitionRequiredSteps
+    fk_name = "step_transition"
 
 
-@admin.register(StepSpawn)
-class StepSpawnAdmin(admin.ModelAdmin):
-    inlines = [StepSpawnSpawnedStepsInline]
-
-
-class StepConsolidationClosingStepsInline(admin.TabularInline):
-    model = StepConsolidationClosingSteps
-
-
-class StepConsolidationSpawnedStepsInline(admin.TabularInline):
-    model = StepConsolidationSpawnedSteps
-
-
-@admin.register(StepConsolidation)
-class StepConsolidationAdmin(admin.ModelAdmin):
-    inlines = [StepConsolidationClosingStepsInline, StepConsolidationSpawnedStepsInline]
+@admin.register(StepTransition)
+class StepTransitionAdmin(admin.ModelAdmin):
+    inlines = [StepTransitionRequiredStepsInline]
 
 
 @admin.register(Worker)
