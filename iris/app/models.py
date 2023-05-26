@@ -199,7 +199,9 @@ class Task(TimestampMixin, models.Model):
 
     def __str__(self):
         quantity_suffix = "" if self.item.quantity == 1 else f" x{self.item.quantity}"
-        return _("'{obj.step_transition.creates.name}' for item {obj.item.pk}{quantity_suffix}").format(
+        return _(
+            "'{obj.step_transition.creates.name}' for item {obj.item.pk}{quantity_suffix}"
+        ).format(
             obj=self,
             quantity_suffix=quantity_suffix,
         )
