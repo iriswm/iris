@@ -19,7 +19,8 @@ Run the next commands:
 make up
 make migrate
 make init-db
-make init-db-dev
+make init-db-dev  # To install the test data
 make compilemessages
 podman-compose restart webapp
 ```
+Check the `init-db-dev` test data structure in [docs/testdata.md](docs/testdata.md).
