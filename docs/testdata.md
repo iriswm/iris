@@ -19,8 +19,9 @@ In the diagrams below:
 * delays as `delay`
 * In any of the previous options, a `+ note` shows the status has a note.
 
-Delays are 1000 days long and the base date is 2020-01-01. States are at least
-one second appart, ordered first by station and then by position.
+The data was created by hand. The dates start on 27 May 2023. Delays are 1000
+days long. States are at least one second apart, ordered usually first by
+station and then by position.
 
 ### alpha
 ```
