@@ -8,6 +8,9 @@ A simple set of test data is provided:
 * Names `alpha`, `beta`, `gamma`, `omega`, `zeta` and `lamda` are items in
   different states of completion.
 
+The secret key used for the dev data is:
+`django-insecure-gs=xloqs7ztt*v)e_w=!moh+_vvfu25#_$c^yhdspv_wosx&om`.
+
 ## Completion status diagrams
 In the diagrams below:
 
