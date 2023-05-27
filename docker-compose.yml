@@ -1,7 +1,9 @@
 version: "3"
 services:
   webapp:
-    build: .
+    build:
+      context: .
+      target: dev
     env_file: .env
     ports:
       - "8000:8000"
@@ -9,6 +11,7 @@ services:
       - "db"
     volumes:
       - .:/app
+    command: ./manage.py runserver 0.0.0.0:8000
   db:
     image: docker.io/library/postgres:15.3-alpine
     env_file: .env
