@@ -1,24 +1,44 @@
 {% extends 'admin/admin_base_iris.html' %}
 
-{% load i18n %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static "admin/css/forms.css" %}">{% endblock %}
 
 {% block iris_breadcrumbs_tail %}
+&rsaquo; <a href="{% url 'admin:iris_item_changelist' %}">Items</a>
 &rsaquo; {% translate 'Cancel items' %}
 {% endblock %}
 
 {% block content %}
 
-<span>{% translate 'Canceling items' %}</span>
+<h2>{% translate 'Canceling items' %}:</h2>
 <ul>
 {% for item in items %}
 <li>{{ item }}</li>
 {% endfor %}
 </ul>
 
-<form action="?ids={{ ids }}" method="post">
-	{% csrf_token %}
-	{{ form }}
-	<input type="submit" value="Submit">
-</form>
+<div class="content-main">
+	<form action="?ids={{ ids }}" method="post">
+		{% csrf_token %}
+		<div>
+			<fieldset class="module aligned">
+				{% for field in form %}
+					<div class="form-row">
+						<div>
+							<div class="flex-container">
+								{{ field.label_tag }}
+								{{ field }}
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</fieldset>
+			<div class="submit-row">
+				<input type="submit" style="background:var(--delete-button-bg)" value="{% translate 'Cancel items' %}">
+			</div>
+		</div>
+	</form>
+</div>
 
 {% endblock %}
