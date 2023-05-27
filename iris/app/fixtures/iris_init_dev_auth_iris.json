@@ -649,7 +649,7 @@
   "model": "iris.steptransition",
   "pk": 11,
   "fields": {
-    "process": 1,
+    "process": 2,
     "creates": 9
   }
 },
