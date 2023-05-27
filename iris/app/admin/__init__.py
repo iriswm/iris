@@ -70,7 +70,7 @@ class ItemCompletionListFilter(admin.SimpleListFilter):
 @admin.register(Item)
 class ItemAdmin(CompletableAdminMixin, CancelableAdminMixin, admin.ModelAdmin):
     actions = [items_cancel, items_restore, items_spawn_tasks]
-    list_display = ["__str__", "completed", "canceled"]
+    list_display = ["__str__", "process", "completed", "canceled"]
     list_filter = (ItemCompletionListFilter,)
 
     def get_urls(self):
@@ -87,6 +87,12 @@ class ItemAdmin(CompletableAdminMixin, CancelableAdminMixin, admin.ModelAdmin):
             ),
             *super().get_urls(),
         ]
+
+    def get_exclude(self, request, obj=None):
+        item_exists_and_has_tasks = (
+            obj is not None and Task.objects.filter(item=obj).count() > 0
+        )
+        return ["process"] if item_exists_and_has_tasks else []
 
 
 @admin.register(Process)
