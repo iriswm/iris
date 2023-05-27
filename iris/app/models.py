@@ -18,10 +18,6 @@ class AlreadyCanceledError(Exception):
     pass
 
 
-class NoProcessError(Exception):
-    pass
-
-
 class NotSuspendedError(Exception):
     pass
 
@@ -110,10 +106,8 @@ class Item(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
     process = models.ForeignKey(
         "Process",
         verbose_name=_("process"),
-        on_delete=models.SET_NULL,
+        on_delete=models.RESTRICT,
         related_name="items",
-        null=True,
-        blank=True,
     )
     description = models.CharField(_("description"), max_length=128, blank=True)
     quantity = models.IntegerField(
@@ -139,12 +133,6 @@ class Item(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
         return all([task.completed for task in all_tasks])
 
     def spawn_tasks(self):
-        if self.process is None:
-            raise NoProcessError(
-                _("Item '{item_name}' doesn't have a process assigned.").format(
-                    item_name=str(self),
-                ),
-            )
         for transition in self.process.step_transitions.all():
             if transition.required_steps.count() == 0:
                 new_task = Task(item=self, step_transition=transition)

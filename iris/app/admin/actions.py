@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from iris.app.models import NoProcessError, NotCanceledError, NotSuspendedError
+from iris.app.models import NotCanceledError, NotSuspendedError
 
 
 @admin.action(description=str(_("Cancel selected items")))

@@ -131,14 +131,10 @@ class ItemSpawnTasksView(ConfirmationViewMixin):
 
     def apply(self, request):
         _ids, items = self.get_ids_and_items(request)
-        try:
-            with transaction.atomic():
-                for item in items:
-                    item.spawn_tasks()
-        except NoProcessError as e:
-            messages.error(request, str(e))
-        else:
-            messages.info(request, _("Tasks spawned."))
+        with transaction.atomic():
+            for item in items:
+                item.spawn_tasks()
+        messages.info(request, _("Tasks spawned."))
         return HttpResponseRedirect(reverse("admin:iris_item_changelist"))
 
 
