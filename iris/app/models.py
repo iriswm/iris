@@ -253,7 +253,7 @@ class StepTransition(models.Model):
     def __str__(self):
         if self.required_steps.count() == 0:
             return _(
-                'Spawns "{obj.creates}" when the process "{obj.process}" starts'
+                'Spawns "{obj.creates.name}" when the process "{obj.process.name}" starts'
             ).format(
                 obj=self,
             )
@@ -261,11 +261,16 @@ class StepTransition(models.Model):
             # (step, step, step)
             required_names = (
                 "("
-                + ", ".join([f'"{step}"' for step in self.required_steps.all()])
+                + ", ".join(
+                    [
+                        f'"{transition.creates.name}"'
+                        for transition in self.required_steps.all()
+                    ]
+                )
                 + ")"
             )
             return _(
-                'Spawns "{obj.creates}" when steps "{required_names}" are closed'
+                'Spawns "{obj.creates.name}" when steps {required_names} are closed'
             ).format(
                 obj=self,
                 required_names=required_names,
