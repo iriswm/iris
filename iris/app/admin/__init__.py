@@ -4,13 +4,17 @@ from django.urls import path
 from django.utils.translation import gettext_lazy as _
 
 from iris.app.admin.actions import (
-    cancel_items,
-    lift_suspensions,
-    restore_items,
-    spawn_and_consolidate_tasks,
-    spawn_tasks,
+    commits_spawn_tasks,
+    items_cancel,
+    items_restore,
+    items_spawn_tasks,
+    suspensions_lift,
 )
-from iris.app.admin.views import CancelItemsView
+from iris.app.admin.views import (
+    CommitSpawnAndConsolidateTasksView,
+    ItemCancelView,
+    ItemSpawnTasksView,
+)
 from iris.app.models import (
     Commit,
     Delay,
@@ -65,16 +69,21 @@ class ItemCompletionListFilter(admin.SimpleListFilter):
 
 @admin.register(Item)
 class ItemAdmin(CompletableAdminMixin, CancelableAdminMixin, admin.ModelAdmin):
-    actions = [cancel_items, restore_items, spawn_tasks]
+    actions = [items_cancel, items_restore, items_spawn_tasks]
     list_display = ["__str__", "completed", "canceled"]
     list_filter = (ItemCompletionListFilter,)
 
     def get_urls(self):
         return [
             path(
-                "cancel_items",
-                self.admin_site.admin_view(CancelItemsView.as_view()),
-                name="cancel_items",
+                "iris_item_cancel",
+                self.admin_site.admin_view(ItemCancelView.as_view()),
+                name="iris_item_cancel",
+            ),
+            path(
+                "iris_item_spawn_tasks",
+                self.admin_site.admin_view(ItemSpawnTasksView.as_view()),
+                name="iris_item_spawn_tasks",
             ),
             *super().get_urls(),
         ]
@@ -133,7 +142,19 @@ class WorkerAdmin(admin.ModelAdmin):
 
 @admin.register(Commit)
 class CommitAdmin(admin.ModelAdmin):
-    actions = [spawn_and_consolidate_tasks]
+    actions = [commits_spawn_tasks]
+
+    def get_urls(self):
+        return [
+            path(
+                "iris_commit_spawn_tasks",
+                self.admin_site.admin_view(
+                    CommitSpawnAndConsolidateTasksView.as_view()
+                ),
+                name="iris_commit_spawn_tasks",
+            ),
+            *super().get_urls(),
+        ]
 
 
 @admin.register(Station)
@@ -153,7 +174,7 @@ class DelayAdmin(admin.ModelAdmin):
 
 @admin.register(Suspension)
 class SuspensionAdmin(admin.ModelAdmin):
-    actions = [lift_suspensions]
+    actions = [suspensions_lift]
     list_display = ["__str__", "lifted"]
 
     @admin.display(description=_("Lifted"), boolean=True)

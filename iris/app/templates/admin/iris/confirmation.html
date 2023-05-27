@@ -1,0 +1,44 @@
+{% extends 'admin/admin_base_iris.html' %}
+
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static "admin/css/forms.css" %}">{% endblock %}
+
+{% block iris_breadcrumbs_tail %}
+&rsaquo; <a href="{{ model_url }}">{{ model_name }}</a>
+&rsaquo; {{ title }}
+{% endblock %}
+
+{% block content %}
+
+<p>{{ confirmation_text }}</p>
+
+<h2>{% translate 'Affected objects' %}:</h2>
+<ul>
+{% for item in objects %}
+<li>{{ item }}</li>
+{% endfor %}
+</ul>
+
+<div class="content-main">
+	<form action="?ids={{ ids }}" method="post">
+		{% csrf_token %}
+		<div>
+			<fieldset class="module aligned">
+					<div class="form-row">
+						<div>
+							<div class="flex-container checkbox-row">
+								<input type="checkbox" name="confirm" id="id_confirm">
+								<label class="vCheckboxLabel" for="id_confirm">{% translate 'I understand and I want to proceed' %}</label>
+							</div>
+						</div>
+					</div>
+			</fieldset>
+			<div class="submit-row">
+				<input type="submit" style="background:var(--delete-button-bg)" value="{% translate 'Confirm' %}">
+			</div>
+		</div>
+	</form>
+</div>
+
+{% endblock %}

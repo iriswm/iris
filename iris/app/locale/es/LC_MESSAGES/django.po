@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-26 20:51+0000\n"
-"PO-Revision-Date: 2023-05-26 22:51+0200\n"
+"POT-Creation-Date: 2023-05-27 13:22+0000\n"
+"PO-Revision-Date: 2023-05-27 15:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -45,9 +45,6 @@ msgstr "Productos restaurados."
 msgid "Spawn process tasks"
 msgstr "Crear tareas del proceso"
 
-msgid "Tasks spawned."
-msgstr "Tareas creadas."
-
 msgid "Spawn and consolidate tasks"
 msgstr "Crear y consolidar tareas"
 
@@ -72,6 +69,12 @@ msgstr "Cancelar productos"
 
 msgid "The items were canceled."
 msgstr "Los productos se han cancelado."
+
+msgid "You have to check the confirmation box to continue."
+msgstr "Tienes que marcar la casilla de confirmación para continuar."
+
+msgid "Tasks spawned."
+msgstr "Tareas creadas."
 
 msgid "Delays must have a duration."
 msgstr "Los retrasos necesitan una duración."
@@ -258,6 +261,15 @@ msgstr "Suspensión de \"{obj.task}\""
 
 msgid "Home"
 msgstr "Inicio"
+
+msgid "Affected objects"
+msgstr "Objetos afectados"
+
+msgid "I understand and I want to proceed"
+msgstr "Lo entiendo y quiero continuar"
+
+msgid "Confirm"
+msgstr "Confirmar"
 
 msgid "Canceling items"
 msgstr "Cancelar productos"
