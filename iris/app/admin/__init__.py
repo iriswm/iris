@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db.models import Count, F, Q
-from django.urls import path
+from django.urls import path, resolve
 from django.utils.translation import gettext_lazy as _
 
 from iris.app.admin.actions import (
@@ -134,6 +134,17 @@ class TaskAdmin(CompletableAdminMixin, admin.ModelAdmin):
 class StepTransitionRequiredStepsInline(admin.TabularInline):
     model = StepTransitionRequiredSteps
     fk_name = "step_transition"
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "requirement":
+            path_kwargs = resolve(request.path).kwargs
+            if "object_id" in path_kwargs:
+                parent_id = int(path_kwargs["object_id"])
+                parent_process = self.parent_model.objects.get(pk=parent_id).process
+                kwargs["queryset"] = StepTransition.objects.filter(
+                    process=parent_process
+                )
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 @admin.register(StepTransition)
