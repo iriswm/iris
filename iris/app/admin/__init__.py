@@ -250,7 +250,6 @@ class StepModelChoiceField(ModelChoiceField):
 class StepTransitionAdmin(admin.ModelAdmin):
     list_display = ["id", "transition_description", "process_name"]
     list_display_links = ["id", "transition_description"]
-    inlines = [StepTransitionRequiredStepsInline]
 
     @admin.display(description=_("Description"))
     def transition_description(self, obj):
@@ -259,6 +258,9 @@ class StepTransitionAdmin(admin.ModelAdmin):
     @admin.display(description=_("Process"))
     def process_name(self, obj):
         return obj.process.name
+
+    def get_inlines(self, request, obj):
+        return [] if obj is None else [StepTransitionRequiredStepsInline]
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "process":
