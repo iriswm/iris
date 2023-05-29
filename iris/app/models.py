@@ -7,7 +7,6 @@ from django.utils.translation import gettext_lazy as _
 from iris.app.managers import DelayManager, ItemManager, SuspensionManager, TaskManager
 
 NOTES_PATH_LIMIT = 64
-NOTES_MAX_DISPLAY_LENGTH = 32
 
 
 class NotCanceledError(Exception):
@@ -19,6 +18,10 @@ class AlreadyCanceledError(Exception):
 
 
 class NotSuspendedError(Exception):
+    pass
+
+
+class AlreadyEndedError(Exception):
     pass
 
 
@@ -121,12 +124,6 @@ class Item(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
         verbose_name = _("item")
         verbose_name_plural = _("items")
 
-    def __str__(self):
-        str_ = _("Item {obj.pk}").format(obj=self)
-        if self.description != "":
-            str_ = f"{str_}: {self.description}"
-        return str_
-
     @property
     def completed(self):
         all_tasks = Task.objects.filter(item=self)
@@ -149,9 +146,6 @@ class Process(models.Model):
         verbose_name = _("process")
         verbose_name_plural = _("processes")
 
-    def __str__(self):
-        return _("'{obj.name}' process").format(obj=self)
-
 
 class Step(models.Model):
     name = models.CharField(_("name"), max_length=64)
@@ -163,9 +157,6 @@ class Step(models.Model):
     class Meta:
         verbose_name = _("step")
         verbose_name_plural = _("steps")
-
-    def __str__(self):
-        return _("Step '{obj.name}' ({obj.pk})").format(obj=self)
 
 
 class Task(TimestampMixin, models.Model):
@@ -184,15 +175,6 @@ class Task(TimestampMixin, models.Model):
     class Meta:
         verbose_name = _("task")
         verbose_name_plural = _("tasks")
-
-    def __str__(self):
-        quantity_suffix = "" if self.item.quantity == 1 else f" x{self.item.quantity}"
-        return _(
-            "'{obj.step_transition.creates.name}' for item {obj.item.pk}{quantity_suffix}"
-        ).format(
-            obj=self,
-            quantity_suffix=quantity_suffix,
-        )
 
     @property
     def canceled(self):
@@ -250,32 +232,6 @@ class StepTransition(models.Model):
         verbose_name = _("step transition")
         verbose_name_plural = _("step transitions")
 
-    def __str__(self):
-        if self.required_steps.count() == 0:
-            return _(
-                'Spawns "{obj.creates.name}" when the process "{obj.process.name}" starts'
-            ).format(
-                obj=self,
-            )
-        else:
-            # (step, step, step)
-            required_names = (
-                "("
-                + ", ".join(
-                    [
-                        f'"{transition.creates.name}"'
-                        for transition in self.required_steps.all()
-                    ]
-                )
-                + ")"
-            )
-            return _(
-                'Spawns "{obj.creates.name}" when steps {required_names} are closed'
-            ).format(
-                obj=self,
-                required_names=required_names,
-            )
-
 
 class StepTransitionRequiredSteps(models.Model):
     step_transition = models.ForeignKey(
@@ -299,9 +255,6 @@ class Worker(models.Model):
         verbose_name = _("worker")
         verbose_name_plural = _("workers")
 
-    def __str__(self):
-        return str(self.user)
-
 
 class Commit(TimestampMixin, NotesMixin, models.Model):
     task = models.OneToOneField(
@@ -317,13 +270,6 @@ class Commit(TimestampMixin, NotesMixin, models.Model):
     class Meta:
         verbose_name = _("commit")
         verbose_name_plural = _("commits")
-
-    def __str__(self):
-        return _(
-            'Commit for item "{obj.task}" by worker {obj.worker} ({obj.modified})'
-        ).format(
-            obj=self,
-        )
 
     def spawn_and_consolidate_tasks(self):
         for required_by in self.task.step_transition.required_by.all():
@@ -348,9 +294,6 @@ class Station(models.Model):
         verbose_name = _("station")
         verbose_name_plural = _("stations")
 
-    def __str__(self):
-        return self.name
-
 
 class NoteTemplate(models.Model):
     path = models.CharField(_("path"), max_length=NOTES_PATH_LIMIT)
@@ -359,18 +302,6 @@ class NoteTemplate(models.Model):
     class Meta:
         verbose_name = _("note template")
         verbose_name_plural = _("note templates")
-
-    def __str__(self):
-        # "Long string with many things" -> "Long stri..."
-        short_template = (
-            self.template
-            if len(self.template) < NOTES_MAX_DISPLAY_LENGTH
-            else self.template[: NOTES_MAX_DISPLAY_LENGTH - 3] + "..."
-        )
-        return _("{obj.path} template: {short_template}").format(
-            obj=self,
-            short_template=short_template,
-        )
 
 
 class Delay(TimestampMixin, NotesMixin, models.Model):
@@ -391,9 +322,6 @@ class Delay(TimestampMixin, NotesMixin, models.Model):
         verbose_name = _("delay")
         verbose_name_plural = _("delays")
 
-    def __str__(self):
-        return _('Delay "{obj.task}" for {obj.duration}').format(obj=self)
-
     @property
     def in_effect(self):
         return self.created + self.duration > now()
@@ -403,7 +331,13 @@ class Delay(TimestampMixin, NotesMixin, models.Model):
         return self.created + self.duration
 
     def end(self):
-        self.duration = self.created - now()
+        if not self.in_effect:
+            raise AlreadyEndedError(
+                _("Delay '{delay_name}' has already ended.").format(
+                    delay_name=str(self),
+                )
+            )
+        self.duration = now() - self.created
         self.save()
 
 
@@ -450,9 +384,6 @@ class Suspension(TimestampMixin, NotesMixin, models.Model):
     @property
     def lifted(self):
         return self.lifted_at is not None
-
-    def __str__(self):
-        return _('Suspension for "{obj.task}"').format(obj=self)
 
 
 add_note_type("Suspension", "iris.app.Suspension")
