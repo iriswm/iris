@@ -347,6 +347,9 @@ class CommitAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False
 
+    def has_delete_permission(self, request):
+        return False
+
     @admin.display(description=_("Step"))
     def step_description(self, obj):
         return obj.task.step_transition.creates.name
