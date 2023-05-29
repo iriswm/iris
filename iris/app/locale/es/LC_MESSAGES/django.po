@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-27 15:57+0000\n"
-"PO-Revision-Date: 2023-05-27 17:59+0200\n"
+"POT-Creation-Date: 2023-05-29 03:05+0000\n"
+"PO-Revision-Date: 2023-05-29 05:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -29,6 +29,76 @@ msgstr "completado"
 
 msgid "Not completed"
 msgstr "No completados"
+
+msgid "Description"
+msgstr "Descripción"
+
+msgid "Process"
+msgstr "Proceso"
+
+msgid "Delayed"
+msgstr "Retrasados"
+
+msgid "Suspended"
+msgstr "Suspendidos"
+
+#, python-brace-format
+msgid "Task for step '{obj.step_transition.creates.name}'"
+msgstr "Tarea para el paso '{obj.step_transition.creates.name}'"
+
+msgid "Item"
+msgstr "Producto"
+
+#, python-brace-format
+msgid ""
+"Spawns a task for step '{obj.creates.name}' when the process '{obj.process."
+"name}' starts"
+msgstr ""
+"Crea una tarea para el paso \"{obj.creates.name}\" cuando el proceso \"{obj."
+"process.name}\" se inicia"
+
+#, python-brace-format
+msgid ""
+"Spawns a task for step '{obj.creates.name}' when steps {required_names} are "
+"closed"
+msgstr ""
+"Crea una tarea para el paso \"{obj.creates.name}\" cuando los pasos "
+"{required_names} se cierran"
+
+#, python-brace-format
+msgid "Step '{obj.name}'"
+msgstr "Paso '{obj.name}'"
+
+msgid "Assigned user"
+msgstr "Usuario asignado"
+
+#, python-brace-format
+msgid "Profile assigned to user '{obj.user.username}'"
+msgstr "Perfil asignado al usuario '{obj.user.username}'"
+
+msgid "Step"
+msgstr "Paso"
+
+msgid "Stations"
+msgstr "Estaciones"
+
+msgid "Worker"
+msgstr "Trabajador"
+
+msgid "Modified"
+msgstr "Modificado"
+
+msgid "Transition"
+msgstr "Transición"
+
+msgid "Template contents"
+msgstr "Contenido de la plantilla"
+
+msgid "Created"
+msgstr "Creado"
+
+msgid "Ends"
+msgstr "Termina"
 
 msgid "Lifted"
 msgstr "Levantado"
@@ -54,6 +124,21 @@ msgstr "Levantar suspensiones"
 msgid "Suspensions lifted."
 msgstr "Suspensiones levantadas."
 
+msgid "End delays now"
+msgstr "Terminar retrasos ahora"
+
+msgid "Delays ended."
+msgstr "Retrasos terminados."
+
+msgid "Commit the selected tasks"
+msgstr "Cerrar las tareas seleccionadas"
+
+msgid "Delay the selected tasks"
+msgstr "Retrasar las tareas seleccionadas"
+
+msgid "Suspend the selected tasks"
+msgstr "Suspender las tareas seleccionadas"
+
 msgid "Reason"
 msgstr "Razón"
 
@@ -73,8 +158,60 @@ msgstr "Los productos se han cancelado."
 msgid "You have to check the confirmation box to continue."
 msgstr "Tienes que marcar la casilla de confirmación para continuar."
 
+msgid "Confirm tasks creation"
+msgstr "Confirmar la creación de tareas"
+
+msgid ""
+"There are tasks already created for one or more of the selected items. Are "
+"you sure you want to proceed?"
+msgstr ""
+"Ya hay tareas creadas para uno o mas de los productos seleccionados. "
+"¿Seguro que quieres continuar?"
+
 msgid "Tasks spawned."
 msgstr "Tareas creadas."
+
+msgid ""
+"There are tasks already derived from one or more of the selected commits. "
+"Are you sure you want to proceed?"
+msgstr ""
+"Ya hay tareas creadas para uno o mas de los cierres seleccionados. ¿Seguro "
+"que quieres continuar?"
+
+#, python-brace-format
+msgid "The task '{task_name}' is already {verb}."
+msgstr "La tarea '{task_name}' ya está {verb}."
+
+#, python-brace-format
+msgid "The task '{task_name}' is {verb}."
+msgstr "La tarea '{task_name}' está {verb}."
+
+msgid "Commit tasks"
+msgstr "Cerrar tareas"
+
+msgid "completed"
+msgstr "completada"
+
+msgid "delayed"
+msgstr "retrasada"
+
+msgid "suspended"
+msgstr "suspendida"
+
+msgid "The tasks were commited."
+msgstr "Las tareas han sido completadas."
+
+msgid "Delay tasks"
+msgstr "Retrasar tareas"
+
+msgid "The tasks were delayed."
+msgstr "Las tareas han sido retrasadas."
+
+msgid "Suspend tasks"
+msgstr "Suspender tareas"
+
+msgid "The tasks were suspended."
+msgstr "Las tareas han sido suspendidas."
 
 msgid "Delays must have a duration."
 msgstr "Los retrasos necesitan una duración."
@@ -123,19 +260,11 @@ msgstr "producto"
 msgid "items"
 msgstr "productos"
 
-#, python-brace-format
-msgid "Item {obj.pk}"
-msgstr "Producto {obj.pk}"
-
 msgid "name"
 msgstr "nombre"
 
 msgid "processes"
 msgstr "procesos"
-
-#, python-brace-format
-msgid "'{obj.name}' process"
-msgstr "Proceso '{obj.name}'"
 
 msgid "instructions"
 msgstr "instrucciones"
@@ -149,10 +278,6 @@ msgstr "paso"
 msgid "steps"
 msgstr "pasos"
 
-#, python-brace-format
-msgid "Step '{obj.name}' ({obj.pk})"
-msgstr "Paso '{obj.name}' ({obj.pk})"
-
 msgid "step transition"
 msgstr "transición de paso"
 
@@ -162,13 +287,6 @@ msgstr "tarea"
 msgid "tasks"
 msgstr "tareas"
 
-#, python-brace-format
-msgid ""
-"'{obj.step_transition.creates.name}' for item {obj.item.pk}{quantity_suffix}"
-msgstr ""
-"'{obj.step_transition.creates.name}' para el proyecto {obj.item.pk}"
-"{quantity_suffix}"
-
 msgid "required steps"
 msgstr "pasos requeridos"
 
@@ -177,18 +295,6 @@ msgstr "crea"
 
 msgid "step transitions"
 msgstr "transiciones de pasos"
-
-#, python-brace-format
-msgid ""
-"Spawns \"{obj.creates.name}\" when the process \"{obj.process.name}\" starts"
-msgstr ""
-"Crea \"{obj.creates.name}\" cuando el proceso \"{obj.process.name}\" se "
-"inicie"
-
-#, python-brace-format
-msgid "Spawns \"{obj.creates.name}\" when steps {required_names} are closed"
-msgstr ""
-"Crea \"{obj.creates.name}\" cuando los pasos {required_names} se cierren"
 
 msgid "user"
 msgstr "usuario"
@@ -205,10 +311,6 @@ msgstr "cierre"
 msgid "commits"
 msgstr "cierres"
 
-#, python-brace-format
-msgid "Commit for item \"{obj.task}\" by worker {obj.worker} ({obj.modified})"
-msgstr "Cierre para la tarea \"{obj.task}\" por {obj.worker} ({obj.modified})"
-
 msgid "station"
 msgstr "estación"
 
@@ -224,10 +326,6 @@ msgstr "plantilla de notas"
 msgid "note templates"
 msgstr "plantillas de notas"
 
-#, python-brace-format
-msgid "{obj.path} template: {short_template}"
-msgstr "Plantilla para {obj.path}: {short_template}"
-
 msgid "duration"
 msgstr "duración"
 
@@ -238,8 +336,8 @@ msgid "delays"
 msgstr "retrasos"
 
 #, python-brace-format
-msgid "Delay \"{obj.task}\" for {obj.duration}"
-msgstr "Retraso de \"{obj.task}\" durante {obj.duration}"
+msgid "Delay '{delay_name}' has already ended."
+msgstr "El retraso '{delay_name}' ya ha finalizado."
 
 msgid "lifted_at"
 msgstr "levantado el"
@@ -253,10 +351,6 @@ msgstr "suspensiones"
 #, python-brace-format
 msgid "Suspension '{suspension_name}' is already lifted."
 msgstr "La suspensión '{suspension_name}' ya está levantada."
-
-#, python-brace-format
-msgid "Suspension for \"{obj.task}\""
-msgstr "Suspensión de \"{obj.task}\""
 
 msgid "Home"
 msgstr "Inicio"
@@ -273,6 +367,18 @@ msgstr "Confirmar"
 msgid "Canceling items"
 msgstr "Cancelar productos"
 
+msgid "Tasks"
+msgstr "Tareas"
+
+msgid "Commiting tasks"
+msgstr "Cerrando tareas"
+
+msgid "Delaying tasks"
+msgstr "Retrasando tareas"
+
+msgid "Suspending tasks"
+msgstr "Suspendiendo tareas"
+
 msgid "Iris workshop management system"
 msgstr "Sistema de control de tareas Iris"
 
@@ -285,17 +391,11 @@ msgstr "Gestionar"
 msgid "Items"
 msgstr "Productos"
 
-msgid "Tasks"
-msgstr "Tareas"
-
 msgid "Issues"
 msgstr "Incidencias"
 
 msgid "Admin"
 msgstr "Administración"
-
-msgid "Stations"
-msgstr "Estaciones"
 
 #, python-format
 msgid "Logged as %(user)s"
@@ -360,17 +460,11 @@ msgstr "Retrasar"
 msgid "Create a new item"
 msgstr "Crear un nuevo producto"
 
-msgid "Process"
-msgstr "Proceso"
-
 msgid "Select a process"
 msgstr "Selecciona un proceso"
 
 msgid "Quantity"
 msgstr "Cantidad"
-
-msgid "Description"
-msgstr "Descripción"
 
 msgid "Save changes"
 msgstr "Guardar los cambios"
@@ -461,12 +555,6 @@ msgstr "Lista de tareas"
 #, python-format
 msgid "Items for station %(station_name)s"
 msgstr "Productos para la estación %(station_name)s"
-
-msgid "Delayed"
-msgstr "Retrasados"
-
-msgid "Suspended"
-msgstr "Suspendidos"
 
 msgid "All tasks"
 msgstr "Todas las tareas"

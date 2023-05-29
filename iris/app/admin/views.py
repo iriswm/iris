@@ -4,7 +4,7 @@ from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext as _
-from django.utils.translation import gettext_lazy as _lazy
+from django.utils.translation import gettext_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
@@ -102,8 +102,8 @@ class ConfirmationViewMixin(AdminContextMixin, PermissionRequiredMixin, Template
 
 class ItemSpawnTasksView(ConfirmationViewMixin):
     permission_required = "iris.add_task"
-    confirmation_title = _lazy("Confirm tasks creation")
-    confirmation_text = _lazy(
+    confirmation_title = gettext_lazy("Confirm tasks creation")
+    confirmation_text = gettext_lazy(
         "There are tasks already created for one or more of the selected items. "
         "Are you sure you want to proceed?"
     )
@@ -145,8 +145,8 @@ class ItemSpawnTasksView(ConfirmationViewMixin):
 
 class CommitSpawnAndConsolidateTasksView(ConfirmationViewMixin):
     permission_required = "iris.add_task"
-    confirmation_title = _lazy("Confirm tasks creation")
-    confirmation_text = _lazy(
+    confirmation_title = gettext_lazy("Confirm tasks creation")
+    confirmation_text = gettext_lazy(
         "There are tasks already derived from one or more of the selected commits. "
         "Are you sure you want to proceed?"
     )
@@ -251,12 +251,12 @@ class CommitTasksView(PermissionRequiredMixin, AddActionsTaskViewMixin):
     permission_required = "iris.add_commit"
     template_name = "admin/iris/task/commit_tasks.html"
     form_class = AddCommitTasksViewForm
-    action_title = _lazy("Commit tasks")
+    action_title = gettext_lazy("Commit tasks")
     action_attr = "completed"
-    action_verb = _lazy("completed")
+    action_verb = gettext_lazy("completed")
     action_conflicts = [
-        ("delayed", _lazy("delayed")),
-        ("suspended", _lazy("suspended")),
+        ("delayed", gettext_lazy("delayed")),
+        ("suspended", gettext_lazy("suspended")),
     ]
 
     def form_valid(self, form):
@@ -276,12 +276,12 @@ class DelayTasksView(PermissionRequiredMixin, AddActionsTaskViewMixin):
     permission_required = "iris.add_delay"
     template_name = "admin/iris/task/delay_tasks.html"
     form_class = AddDelayTasksViewForm
-    action_title = _lazy("Delay tasks")
+    action_title = gettext_lazy("Delay tasks")
     action_attr = "delayed"
-    action_verb = _lazy("delayed")
+    action_verb = gettext_lazy("delayed")
     action_conflicts = [
-        ("completed", _lazy("completed")),
-        ("suspended", _lazy("suspended")),
+        ("completed", gettext_lazy("completed")),
+        ("suspended", gettext_lazy("suspended")),
     ]
 
     def form_valid(self, form):
@@ -302,12 +302,12 @@ class SuspendTasksView(PermissionRequiredMixin, AddActionsTaskViewMixin):
     permission_required = "iris.add_suspension"
     template_name = "admin/iris/task/suspend_tasks.html"
     form_class = AddCommitTasksViewForm
-    action_title = _lazy("Suspend tasks")
+    action_title = gettext_lazy("Suspend tasks")
     action_attr = "suspended"
-    action_verb = _lazy("suspended")
+    action_verb = gettext_lazy("suspended")
     action_conflicts = [
-        ("completed", _lazy("completed")),
-        ("delayed", _lazy("delayed")),
+        ("completed", gettext_lazy("completed")),
+        ("delayed", gettext_lazy("delayed")),
     ]
 
     def form_valid(self, form):
