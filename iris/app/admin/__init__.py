@@ -70,6 +70,11 @@ class ItemCompletionListFilter(admin.SimpleListFilter):
             return queryset.exclude(total_tasks=F("completed_tasks"))
 
 
+class ProcessModelChoiceField(ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.name
+
+
 @admin.register(Item)
 class ItemAdmin(CompletableAdminMixin, CancelableAdminMixin, admin.ModelAdmin):
     actions = [items_cancel, items_restore, items_spawn_tasks]
@@ -109,6 +114,11 @@ class ItemAdmin(CompletableAdminMixin, CancelableAdminMixin, admin.ModelAdmin):
             obj is not None and Task.objects.filter(item=obj).count() > 0
         )
         return ["process"] if item_exists_and_has_tasks else []
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "process":
+            kwargs["form_class"] = ProcessModelChoiceField
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 @admin.register(Process)
@@ -229,11 +239,6 @@ class StepTransitionRequiredStepsInline(admin.TabularInline):
                 )
                 kwargs["form_class"] = StepTransitionModelChoiceField
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
-
-
-class ProcessModelChoiceField(ModelChoiceField):
-    def label_from_instance(self, obj):
-        return obj.name
 
 
 class StepModelChoiceField(ModelChoiceField):
