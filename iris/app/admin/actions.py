@@ -71,3 +71,30 @@ def delays_end_now(self, request, queryset):
     else:
         messages.info(request, _("Delays ended."))
     return HttpResponseRedirect(reverse("admin:iris_delay_changelist"))
+
+
+@admin.action(description=str(_("Commit the selected tasks")))
+def tasks_commit_tasks(self, request, queryset):
+    selected = queryset.values_list("pk", flat=True)
+    selected_joined = ",".join(str(pk) for pk in selected)
+    return HttpResponseRedirect(
+        reverse("admin:iris_task_commit_tasks") + f"?ids={selected_joined}"
+    )
+
+
+@admin.action(description=str(_("Delay the selected tasks")))
+def tasks_delay_tasks(self, request, queryset):
+    selected = queryset.values_list("pk", flat=True)
+    selected_joined = ",".join(str(pk) for pk in selected)
+    return HttpResponseRedirect(
+        reverse("admin:iris_task_delay_tasks") + f"?ids={selected_joined}"
+    )
+
+
+@admin.action(description=str(_("Suspend the selected tasks")))
+def tasks_suspend_tasks(self, request, queryset):
+    selected = queryset.values_list("pk", flat=True)
+    selected_joined = ",".join(str(pk) for pk in selected)
+    return HttpResponseRedirect(
+        reverse("admin:iris_task_suspend_tasks") + f"?ids={selected_joined}"
+    )

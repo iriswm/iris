@@ -8,8 +8,13 @@ from django.utils.translation import gettext_lazy as _lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
-from iris.app.admin.forms import CancelItemsViewForm
-from iris.app.models import AlreadyCanceledError, Commit, Item, Task
+from iris.app.admin.forms import (
+    AddCommitTasksViewForm,
+    AddDelayTasksViewForm,
+    AddSuspendTasksViewForm,
+    CancelItemsViewForm,
+)
+from iris.app.models import AlreadyCanceledError, Commit, Delay, Item, Suspension, Task
 
 
 class AdminContextMixin:
@@ -25,7 +30,7 @@ class AdminContextMixin:
         return context
 
 
-class ItemCancelView(AdminContextMixin, PermissionRequiredMixin, FormView):
+class CancelItemsView(AdminContextMixin, PermissionRequiredMixin, FormView):
     permission_required = "iris.change_item"
     template_name = "admin/iris/item/cancel_items.html"
     form_class = CancelItemsViewForm
@@ -183,3 +188,136 @@ class CommitSpawnAndConsolidateTasksView(ConfirmationViewMixin):
                 commit.spawn_and_consolidate_tasks()
         messages.info(request, _("Tasks spawned."))
         return HttpResponseRedirect(reverse("admin:iris_commit_changelist"))
+
+
+class AddActionsTaskViewMixin(AdminContextMixin, FormView):
+    success_url = reverse_lazy("admin:iris_task_changelist")
+    action_title = ""
+    action_attr = ""
+    action_verb = ""
+    action_conflicts = []
+
+    def get_context_data(self, **kwargs):
+        ids = self.request.GET["ids"]
+        tasks = Task.objects.filter(pk__in=ids.split(","))
+        return {
+            **super().get_context_data(**kwargs),
+            "title": self.action_title,
+            "ids": ids,
+            "tasks": tasks,
+        }
+
+    def log_action_applied_message(self, task):
+        messages.error(
+            self.request,
+            _("The task '{task_name}' is already {verb}.").format(
+                task_name=str(task),
+                verb=self.action_verb,
+            ),
+        )
+
+    def log_action_conflicted_message(self, task, verb):
+        messages.error(
+            self.request,
+            _("The task '{task_name}' is {verb}.").format(
+                task_name=str(task),
+                verb=verb,
+            ),
+        )
+
+    def check_and_log(self, task):
+        if getattr(task, self.action_attr):
+            self.log_action_applied_message(task)
+            return True
+        for attr, verb in self.action_conflicts:
+            if getattr(task, attr):
+                self.log_action_conflicted_message(task, verb)
+                return True
+        return False
+
+    def get_ids_and_tasks(self, request):
+        ids = request.GET["ids"]
+        return ids, Task.objects.filter(pk__in=ids.split(","))
+
+    def get(self, request, *args, **kwargs):
+        _ids, tasks = self.get_ids_and_tasks(request)
+        for task in tasks:
+            if self.check_and_log(task):
+                return HttpResponseRedirect(reverse("admin:iris_task_changelist"))
+        return super().get(request, *args, **kwargs)
+
+
+class CommitTasksView(PermissionRequiredMixin, AddActionsTaskViewMixin):
+    permission_required = "iris.add_commit"
+    template_name = "admin/iris/task/commit_tasks.html"
+    form_class = AddCommitTasksViewForm
+    action_title = _lazy("Commit tasks")
+    action_attr = "completed"
+    action_verb = _lazy("completed")
+    action_conflicts = [
+        ("delayed", _lazy("delayed")),
+        ("suspended", _lazy("suspended")),
+    ]
+
+    def form_valid(self, form):
+        ids, tasks = self.get_ids_and_tasks(self.request)
+        worker = form.cleaned_data["worker"]
+        with transaction.atomic():
+            for task in tasks:
+                if self.check_and_log(task):
+                    return HttpResponseRedirect(self.request.path_info + f"?ids={ids}")
+            for task in tasks:
+                Commit(task=task, worker=worker).save()
+        messages.info(self.request, _("The tasks were commited."))
+        return super().form_valid(form)
+
+
+class DelayTasksView(PermissionRequiredMixin, AddActionsTaskViewMixin):
+    permission_required = "iris.add_delay"
+    template_name = "admin/iris/task/delay_tasks.html"
+    form_class = AddDelayTasksViewForm
+    action_title = _lazy("Delay tasks")
+    action_attr = "delayed"
+    action_verb = _lazy("delayed")
+    action_conflicts = [
+        ("completed", _lazy("completed")),
+        ("suspended", _lazy("suspended")),
+    ]
+
+    def form_valid(self, form):
+        ids, tasks = self.get_ids_and_tasks(self.request)
+        worker = form.cleaned_data["worker"]
+        duration = form.cleaned_data["duration"]
+        with transaction.atomic():
+            for task in tasks:
+                if self.check_and_log(task):
+                    return HttpResponseRedirect(self.request.path_info + f"?ids={ids}")
+            for task in tasks:
+                Delay(task=task, worker=worker, duration=duration).save()
+        messages.info(self.request, _("The tasks were delayed."))
+        return super().form_valid(form)
+
+
+class SuspendTasksView(PermissionRequiredMixin, AddActionsTaskViewMixin):
+    permission_required = "iris.add_suspension"
+    template_name = "admin/iris/task/suspend_tasks.html"
+    form_class = AddCommitTasksViewForm
+    action_title = _lazy("Suspend tasks")
+    action_attr = "suspended"
+    action_verb = _lazy("suspended")
+    action_conflicts = [
+        ("completed", _lazy("completed")),
+        ("delayed", _lazy("delayed")),
+    ]
+
+    def form_valid(self, form):
+        ids, tasks = self.get_ids_and_tasks(self.request)
+        worker = form.cleaned_data["worker"]
+        with transaction.atomic():
+            for task in tasks:
+                if self.check_and_log(task):
+                    return HttpResponseRedirect(self.request.path_info + f"?ids={ids}")
+            for task in tasks:
+                Suspension(task=task, worker=worker).save()
+        messages.info(self.request, _("The tasks were suspended."))
+        return super().form_valid(form)

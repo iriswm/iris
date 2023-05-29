@@ -12,11 +12,17 @@ from iris.app.admin.actions import (
     items_restore,
     items_spawn_tasks,
     suspensions_lift,
+    tasks_commit_tasks,
+    tasks_delay_tasks,
+    tasks_suspend_tasks,
 )
 from iris.app.admin.views import (
+    CancelItemsView,
     CommitSpawnAndConsolidateTasksView,
-    ItemCancelView,
+    CommitTasksView,
+    DelayTasksView,
     ItemSpawnTasksView,
+    SuspendTasksView,
 )
 from iris.app.models import (
     Commit,
@@ -98,7 +104,7 @@ class ItemAdmin(CompletableAdminMixin, CancelableAdminMixin, admin.ModelAdmin):
         return [
             path(
                 "iris_item_cancel",
-                self.admin_site.admin_view(ItemCancelView.as_view()),
+                self.admin_site.admin_view(CancelItemsView.as_view()),
                 name="iris_item_cancel",
             ),
             path(
@@ -168,9 +174,25 @@ class TaskCompletionListFilter(admin.SimpleListFilter):
 
 @admin.register(Task)
 class TaskAdmin(CompletableAdminMixin, admin.ModelAdmin):
-    list_display = ["id", "task_description", "item_name", "completed"]
+    list_display = [
+        "id",
+        "task_description",
+        "item_name",
+        "completed",
+        "delayed",
+        "suspended",
+    ]
     list_display_links = None
     list_filter = (TaskCompletionListFilter,)
+    actions = [tasks_commit_tasks, tasks_delay_tasks, tasks_suspend_tasks]
+
+    @admin.display(description=_("Delayed"), boolean=True)
+    def delayed(self, obj):
+        return obj.delayed
+
+    @admin.display(description=_("Suspended"), boolean=True)
+    def suspended(self, obj):
+        return obj.suspended
 
     def has_add_permission(self, request):
         return False
@@ -190,6 +212,26 @@ class TaskAdmin(CompletableAdminMixin, admin.ModelAdmin):
             if obj.item.description == ""
             else f"#{obj.item.pk} ({Truncator(obj.item.description).chars(16)}){quantity_suffix}"
         )
+
+    def get_urls(self):
+        return [
+            path(
+                "iris_task_commit_tasks",
+                self.admin_site.admin_view(CommitTasksView.as_view()),
+                name="iris_task_commit_tasks",
+            ),
+            path(
+                "iris_task_delay_tasks",
+                self.admin_site.admin_view(DelayTasksView.as_view()),
+                name="iris_task_delay_tasks",
+            ),
+            path(
+                "iris_task_suspend_tasks",
+                self.admin_site.admin_view(SuspendTasksView.as_view()),
+                name="iris_task_suspend_tasks",
+            ),
+            *super().get_urls(),
+        ]
 
 
 def format_transition(obj):
