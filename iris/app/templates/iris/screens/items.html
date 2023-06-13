@@ -1,6 +1,7 @@
 {% extends 'iris/base.html' %}
 
 {% load i18n %}
+{% load iris_tags %}
 
 {% block iris_title %}{% block iris_header %}{% translate "All items" %}{% endblock %}{% endblock %}
 
@@ -34,7 +35,7 @@
 				<div class="card-header text-danger">{% translate "This item has been canceled." %}</div>
 				{% endif %}
 				<div class="card-header">
-					<h5 class="card-title">{{ item.name }}</h5>
+					<h5 class="card-title">{% make_item_title item %}</h5>
 					{% if item.quantity != 1 %}<h6 class="card-subtitle mb-2 text-muted">{% blocktranslate with quantity=item.quantity %}{{ quantity }} times{% endblocktranslate %}</h6>{% endif %}
 				</div>
 				<ul class="list-group list-group-flush">
