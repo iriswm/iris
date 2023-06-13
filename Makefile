@@ -24,10 +24,10 @@ makemigrations:
 	@$(exec) $(COMPOSE_EXEC_CMD) ./manage.py makemigrations
 .PHONY: makemessages
 makemessages:
-	@$(exec) $(COMPOSE_EXEC_CMD) django-admin makemessages -l es --no-obsolete --no-location
+	@$(exec) $(COMPOSE_EXEC_CMD) sh -c "cd iris && django-admin makemessages -l es --no-obsolete --no-location"
 .PHONY: compilemessages
 compilemessages:
-	@$(exec) $(COMPOSE_EXEC_CMD) django-admin compilemessages -l es
+	@$(exec) $(COMPOSE_EXEC_CMD) sh -c "cd iris && django-admin compilemessages -l es"
 
 .PHONY: init-db	
 init-db:
