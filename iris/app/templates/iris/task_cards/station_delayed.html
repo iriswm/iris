@@ -5,7 +5,7 @@
 		<div class="card-header">
 			<h5 class="card-title">{{ task.step.name }}</h5>
 			{% if task.item.quantity != 1 %}<h6 class="card-subtitle mb-2 text-muted">{% blocktranslate with quantity=task.item.quantity %}{{ quantity }} times{% endblocktranslate %}</h6>{% endif %}
-			<p class="card-text">{{ task.item }}</p>
+			<p class="card-text">{{ task.item.name }}</p>
 		</div>
 		{% if task.delayed_by.notes %}
 		<ul class="list-group list-group-flush">

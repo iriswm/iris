@@ -7,7 +7,7 @@
 			{% if task.item.quantity != 1 %}<h6 class="card-subtitle mb-2 text-muted">{% blocktranslate with quantity=task.item.quantity %}{{ quantity }} times{% endblocktranslate %}</h6>{% endif %}
 		</div>
 		<ul class="list-group list-group-flush">
-			<li class="list-group-item">{{ task.item }}</li>
+			<li class="list-group-item">{{ task.item.name }}</li>
 		</ul>
 		<div class="card-footer">
 			{% include "iris/task_cards/buttons/goto_task.html" %}

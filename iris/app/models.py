@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, ValidationError
 from django.db import models
+from django.utils.text import Truncator
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
@@ -123,6 +124,13 @@ class Item(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
     class Meta:
         verbose_name = _("item")
         verbose_name_plural = _("items")
+
+    @property
+    def name(self):
+        head = _("Item #{obj.pk}").format(obj=self)
+        short_desc = Truncator(self.description).chars(32)
+        tail = "" if len(self.description) == 0 else f" ({short_desc})"
+        return head + tail
 
     @property
     def completed(self):

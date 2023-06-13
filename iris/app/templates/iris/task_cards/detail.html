@@ -17,7 +17,7 @@
 			{% if task.item.quantity != 1 %}<h6 class="card-subtitle mb-2 text-muted">{% blocktranslate with quantity=task.item.quantity %}{{ quantity }} times{% endblocktranslate %}</h6>{% endif %}
 		</div>
 		<ul class="list-group list-group-flush">
-			<li class="list-group-item">{{ task.item }}</li>
+			<li class="list-group-item">{{ task.item.name }}</li>
 			{% if task.item.notes %}
 			<li class="list-group-item">
 				<p>{% translate "Item notes" %}</p>
