@@ -1,12 +1,11 @@
-from django.db.models import Count, F, Manager, Max, Q
+from django.db.models import Count, F, Max, Q, QuerySet
 from django.utils.timezone import now
 
 
-class ItemManager(Manager):
+class ItemQuerySet(QuerySet):
     def pending(self):
-        queryset = self.get_queryset()
         return (
-            queryset.annotate(
+            self.annotate(
                 number_of_tasks=Count("tasks"), number_of_commits=Count("tasks__commit")
             )
             .filter(cancel_time__isnull=True)
@@ -14,22 +13,21 @@ class ItemManager(Manager):
         )
 
     def completed(self):
-        queryset = self.get_queryset()
-        return queryset.annotate(
+        return self.annotate(
             number_of_tasks=Count("tasks"), number_of_commits=Count("tasks__commit")
         ).filter(number_of_tasks=F("number_of_commits"))
 
     def canceled(self):
-        return self.get_queryset().filter(cancel_time__isnull=False)
+        return self.filter(cancel_time__isnull=False)
 
 
-class TaskManager(Manager):
-    def pending(self, station=None):
-        queryset = self.get_queryset()
-        if station is not None:
-            queryset = queryset.filter(step_transition__creates__stations=station)
+class TaskQuerySet(QuerySet):
+    def in_station(self, station):
+        return self.filter(step_transition__creates__stations=station)
+
+    def pending(self):
         return (
-            queryset.filter(commit__isnull=True, item__cancel_time__isnull=True)
+            self.filter(commit__isnull=True, item__cancel_time__isnull=True)
             .annotate(
                 max_delay=Max(F("delays__created") + F("delays__duration")),
             )
@@ -39,38 +37,27 @@ class TaskManager(Manager):
             )
         )
 
-    def completed(self, station=None):
-        queryset = self.get_queryset()
-        if station is not None:
-            queryset = queryset.filter(step_transition__creates__stations=station)
-        return queryset.filter(commit__isnull=False)
+    def completed(self):
+        return self.filter(commit__isnull=False)
 
-    def delayed(self, station=None):
-        queryset = self.get_queryset()
-        if station is not None:
-            queryset = queryset.filter(step_transition__creates__stations=station)
-        return queryset.annotate(
+    def delayed(self):
+        return self.annotate(
             max_delay=Max(F("delays__created") + F("delays__duration")),
         ).filter(Q(max_delay__isnull=False) & (Q(max_delay__gt=now())))
 
-    def suspended(self, station=None):
-        queryset = self.get_queryset()
-        if station is not None:
-            queryset = queryset.filter(step_transition__creates__stations=station)
-        return queryset.filter(
+    def suspended(self):
+        return self.filter(
             Q(suspensions__isnull=False) & Q(suspensions__lifted_at__isnull=True)
         )
 
 
-class DelayManager(Manager):
+class DelayQuerySet(QuerySet):
     def in_effect(self):
-        queryset = self.get_queryset()
-        return queryset.annotate(
+        return self.annotate(
             delay_limit=F("created") + F("duration"),
         ).filter(delay_limit__gt=now())
 
 
-class SuspensionManager(Manager):
+class SuspensionQuerySet(QuerySet):
     def in_effect(self):
-        queryset = self.get_queryset()
-        return queryset.filter(Q(lifted_at__isnull=True))
+        return self.filter(Q(lifted_at__isnull=True))

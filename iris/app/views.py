@@ -108,11 +108,11 @@ class StationView(LoginRequiredMixin, PageModeMixin, DetailView):
         context = super().get_context_data(**kwargs)
         station = self.get_object()
         if self.current_mode == "pending":
-            context["tasks"] = Task.objects.pending(station=station)
+            context["tasks"] = Task.objects.in_station(station).pending()
         elif self.current_mode == "delayed":
-            context["tasks"] = Task.objects.delayed(station=station)
+            context["tasks"] = Task.objects.in_station(station).delayed()
         elif self.current_mode == "suspended":
-            context["tasks"] = Task.objects.suspended(station=station)
+            context["tasks"] = Task.objects.in_station(station).suspended()
         return context
 
 

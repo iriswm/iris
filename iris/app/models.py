@@ -4,7 +4,12 @@ from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
-from iris.app.managers import DelayManager, ItemManager, SuspensionManager, TaskManager
+from iris.app.managers import (
+    DelayQuerySet,
+    ItemQuerySet,
+    SuspensionQuerySet,
+    TaskQuerySet,
+)
 
 NOTES_PATH_LIMIT = 64
 
@@ -126,7 +131,7 @@ class Item(IrisStrMixin, TimestampMixin, CancelableMixin, NotesMixin, models.Mod
     )
     has_priority = models.BooleanField(_("has priority"), default=False)
 
-    objects = ItemManager()
+    objects = ItemQuerySet.as_manager()
 
     class Meta:
         verbose_name = _("item")
@@ -178,7 +183,7 @@ class Task(IrisStrMixin, TimestampMixin, models.Model):
         "Item", verbose_name=_("item"), on_delete=models.RESTRICT, related_name="tasks"
     )
 
-    objects = TaskManager()
+    objects = TaskQuerySet.as_manager()
 
     class Meta:
         verbose_name = _("task")
@@ -324,7 +329,7 @@ class Delay(IrisStrMixin, TimestampMixin, NotesMixin, models.Model):
     )
     duration = models.DurationField(_("duration"))
 
-    objects = DelayManager()
+    objects = DelayQuerySet.as_manager()
 
     class Meta:
         verbose_name = _("delay")
@@ -371,7 +376,7 @@ class Suspension(IrisStrMixin, TimestampMixin, NotesMixin, models.Model):
         null=True,
     )
 
-    objects = SuspensionManager()
+    objects = SuspensionQuerySet.as_manager()
 
     class Meta:
         verbose_name = _("suspension")
