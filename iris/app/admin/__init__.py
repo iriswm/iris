@@ -194,10 +194,13 @@ class TaskAdmin(CompletableAdminMixin, admin.ModelAdmin):
     def suspended(self, obj):
         return obj.suspended
 
-    def has_add_permission(self, request):
+    def has_add_permission(self, *args, **kwargs):
         return False
 
-    def has_delete_permission(self, request):
+    def has_change_permission(self, *args, **kwargs):
+        return False
+
+    def has_delete_permission(self, *args, **kwargs):
         return False
 
     @admin.display(description=_("Description"))
@@ -344,10 +347,13 @@ class CommitAdmin(admin.ModelAdmin):
     list_display_links = None
     actions = [commits_spawn_tasks]
 
-    def has_add_permission(self, request):
+    def has_add_permission(self, *args, **kwargs):
         return False
 
-    def has_delete_permission(self, request):
+    def has_change_permission(self, *args, **kwargs):
+        return False
+
+    def has_delete_permission(self, *args, **kwargs):
         return False
 
     @admin.display(description=_("Step"))
