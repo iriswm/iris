@@ -11,7 +11,7 @@
 >
 	<option {% if not selected %}selected {% endif %}value="0">{{ select_hint }}</option>
 	{% for item in items %}
-	<option {% if selected == item.pk %}selected {% endif %} value="{{ item.pk }}">{% make_item_title item %}</option>
+	<option {% if selected == item.pk %}selected {% endif %} value="{{ item.pk }}">{{ item.name }}</option>
 	{% endfor %}
 </select>
 {% include "iris/forms/include/field_errors.html" %}
