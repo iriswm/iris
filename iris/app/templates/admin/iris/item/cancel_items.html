@@ -27,7 +27,7 @@
 					<div class="form-row">
 						<div>
 							<div class="flex-container">
-								{{ field.label_tag }}
+								<label{% if field.field.required %} class="required"{% endif %} for="{{ field.auto_id }}">{{ field.label }}:</label>
 								{{ field }}
 							</div>
 						</div>
