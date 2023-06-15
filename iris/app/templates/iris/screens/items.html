@@ -9,9 +9,9 @@
 <div class="container mt-4">
 	<div class="container-flex">
 		<div class="btn-group">
-			<a href="{% url "iris:item_list" %}" class="btn btn-primary{% if current_mode == "pending" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Pending" %}</a>
-			<a href="{% url "iris:item_list" %}?mode=completed" class="btn btn-primary{% if current_mode == "completed" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Completed" %}</a>
-			<a href="{% url "iris:item_list" %}?mode=canceled" class="btn btn-primary{% if current_mode == "canceled" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Canceled" %}</a>
+			<a href="{% url "iris:item_list" %}" class="btn btn-primary{% if status == "pending" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Pending" %}</a>
+			<a href="{% url "iris:item_list" status="completed" %}" class="btn btn-primary{% if status == "completed" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Completed" %}</a>
+			<a href="{% url "iris:item_list" status="canceled" %}" class="btn btn-primary{% if status == "canceled" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Canceled" %}</a>
 		</div>
 		{% if perms.iris.add_item %}
 		<div class="btn-group">

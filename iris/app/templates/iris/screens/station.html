@@ -7,17 +7,17 @@
 {% block content %}
 <div class="container mt-4">
 	<div class="btn-group">
-		<a href="{% url "iris:station" object.pk %}" class="btn btn-primary{% if current_mode == "pending" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Pending" %}</a>
-		<a href="{% url "iris:station" object.pk %}?mode=delayed" class="btn btn-primary{% if current_mode == "delayed" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Delayed" %}</a>
-		<a href="{% url "iris:station" object.pk %}?mode=suspended" class="btn btn-primary{% if current_mode == "suspended" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Suspended" %}</a>
+		<a href="{% url "iris:station" station=station.pk %}" class="btn btn-primary{% if status == "pending" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Pending" %}</a>
+		<a href="{% url "iris:station" station=station.pk status="delayed" %}" class="btn btn-primary{% if status == "delayed" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Delayed" %}</a>
+		<a href="{% url "iris:station" station=station.pk status="suspended" %}" class="btn btn-primary{% if status == "suspended" %} active" aria-current="page"{% else %}"{% endif %}>{% translate "Suspended" %}</a>
 	</div>
 	<ul>
-		{% if current_mode == "pending" %}
-		{% for task in tasks %}{% include "iris/task_cards/station_pending.html" %}{% endfor %}
-		{% elif current_mode == "delayed" %}
-		{% for task in tasks %}{% include "iris/task_cards/station_delayed.html" %}{% endfor %}
-		{% elif current_mode == "suspended" %}
-		{% for task in tasks %}{% include "iris/task_cards/station_suspended.html" %}{% endfor %}
+		{% if status == "pending" %}
+		{% for task in object_list %}{% include "iris/task_cards/station_pending.html" %}{% endfor %}
+		{% elif status == "delayed" %}
+		{% for task in object_list %}{% include "iris/task_cards/station_delayed.html" %}{% endfor %}
+		{% elif status == "suspended" %}
+		{% for task in object_list %}{% include "iris/task_cards/station_suspended.html" %}{% endfor %}
 		{% endif %}
 	</ul>
 </div>

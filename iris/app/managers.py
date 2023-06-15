@@ -50,6 +50,14 @@ class TaskQuerySet(QuerySet):
             Q(suspensions__isnull=False) & Q(suspensions__lifted_at__isnull=True)
         )
 
+    def with_issues(self):
+        return self.annotate(
+            max_delay=Max(F("delays__created") + F("delays__duration")),
+        ).filter(
+            Q(max_delay__isnull=False) & (Q(max_delay__gt=now()))
+            | Q(suspensions__isnull=False) & Q(suspensions__lifted_at__isnull=True)
+        )
+
 
 class DelayQuerySet(QuerySet):
     def in_effect(self):

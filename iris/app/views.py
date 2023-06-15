@@ -1,21 +1,18 @@
-from datetime import timedelta
-
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import (
     CreateView,
     DetailView,
-    FormView,
     ListView,
     TemplateView,
     UpdateView,
     View,
 )
-from django.views.generic.edit import ContextMixin, ModelFormMixin, SingleObjectMixin
+from django.views.generic.edit import ModelFormMixin, SingleObjectMixin
 
 from iris.app.forms import CancelItemForm, CreateItemModelForm, DelayModelForm
 from iris.app.models import (
@@ -29,29 +26,6 @@ from iris.app.models import (
     Task,
     Worker,
 )
-
-
-class PageModeMixin(ContextMixin):
-    default_mode = 0
-    page_modes = ["default"]
-    page_mode_param = "mode"
-
-    @property
-    def current_mode(self):
-        try:
-            query_mode = self.request.GET[self.page_mode_param]
-        except KeyError:
-            return self.page_modes[self.default_mode]
-        else:
-            if query_mode in self.page_modes:
-                return query_mode
-            else:
-                return self.page_modes[self.default_mode]
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["current_mode"] = self.current_mode
-        return context
 
 
 class NextUrlParamMixin:
@@ -81,12 +55,6 @@ class NextUrlFieldMixin(NextUrlParamMixin, ModelFormMixin):
         return next_url if next_url is not None else super().get_success_url()
 
 
-class SomePermissionRequiredMixin(PermissionRequiredMixin):
-    def has_permission(self):
-        perms = self.get_permission_required()
-        return any([self.request.user.has_perm(perm) for perm in perms])
-
-
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "iris/index.html"
 
@@ -99,74 +67,79 @@ class IrisLogoutView(LogoutView):
     next_page = reverse_lazy("iris:index")
 
 
-class StationView(LoginRequiredMixin, PageModeMixin, DetailView):
-    template_name = "iris/screens/station.html"
-    model = Station
-    page_modes = ["pending", "delayed", "suspended"]
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        station = self.get_object()
-        if self.current_mode == "pending":
-            context["tasks"] = Task.objects.in_station(station).pending()
-        elif self.current_mode == "delayed":
-            context["tasks"] = Task.objects.in_station(station).delayed()
-        elif self.current_mode == "suspended":
-            context["tasks"] = Task.objects.in_station(station).suspended()
-        return context
-
-
-class TaskListView(PageModeMixin, ListView):
-    template_name = "iris/screens/tasks.html"
+class BaseTaskListMixin(ListView):
     model = Task
-    page_modes = ["pending", "delayed", "suspended", "completed"]
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.current_mode == "pending":
-            context["tasks"] = Task.objects.pending()
-        elif self.current_mode == "delayed":
-            context["tasks"] = Task.objects.delayed()
-        elif self.current_mode == "suspended":
-            context["tasks"] = Task.objects.suspended()
-        elif self.current_mode == "completed":
-            context["tasks"] = Task.objects.completed()
-        return context
-
-
-class ItemListView(LoginRequiredMixin, PageModeMixin, ListView):
-    template_name = "iris/screens/items.html"
-    model = Item
-    page_modes = ["pending", "completed", "canceled"]
+    def get(self, request, status="pending"):
+        self.status = status
+        return super().get(request, status=status)
 
     def get_queryset(self):
-        if self.current_mode == "pending":
-            return Item.objects.pending()
-        elif self.current_mode == "completed":
-            return Item.objects.completed()
-        elif self.current_mode == "canceled":
-            return Item.objects.canceled()
-        return super().get_queryset()
-
-
-class IssuesView(SomePermissionRequiredMixin, PageModeMixin, TemplateView):
-    template_name = "iris/screens/issues.html"
-    permission_required = (
-        "iris.view_delay",
-        "iris.view_suspension",
-    )
-    page_modes = ["both", "delays", "suspensions"]
+        queryset = super().get_queryset()
+        if self.status == "delayed":
+            return queryset.delayed()
+        elif self.status == "suspended":
+            return queryset.suspended()
+        elif self.status == "with_issues":
+            return queryset.with_issues()
+        elif self.status == "completed":
+            return queryset.completed()
+        else:
+            return queryset.pending()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.current_mode in ["both", "delays"]:
-            context |= {
-                "delays": Delay.objects.in_effect(),
-            }
-        if self.current_mode in ["both", "suspensions"]:
-            context |= {
-                "suspensions": Suspension.objects.in_effect(),
-            }
+        context["status"] = self.status
+        return context
+
+
+class StationTaskListView(BaseTaskListMixin, ListView):
+    template_name = "iris/screens/station.html"
+
+    def get(self, request, station, *args, **kwargs):
+        self.station = Station.objects.get(pk=station)
+        return super().get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.in_station(self.station)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["station"] = self.station
+        return context
+
+
+class GeneralTaskListView(BaseTaskListMixin, ListView):
+    template_name = "iris/screens/tasks.html"
+
+
+class TasksWithIssuesView(BaseTaskListMixin, ListView):
+    template_name = "iris/screens/issues.html"
+
+    def get(self, request, status="with_issues"):
+        return super().get(request, status=status)
+
+
+class ItemListView(LoginRequiredMixin, ListView):
+    template_name = "iris/screens/items.html"
+    model = Item
+
+    def get(self, request, status="pending"):
+        self.status = status
+        return super().get(request, status=status)
+
+    def get_queryset(self):
+        if self.status == "completed":
+            return Item.objects.completed()
+        elif self.status == "canceled":
+            return Item.objects.canceled()
+        else:
+            return Item.objects.pending()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["status"] = self.status
         return context
 
 
