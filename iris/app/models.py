@@ -43,6 +43,14 @@ def add_note_type(name, path):
         raise RuntimeError(f"Note types registry duplicate value for {name}, {path}")
 
 
+class IrisStrMixin(models.Model):
+    def __str__(self):
+        return f"{self.__class__.__name__} #{self.pk}"
+
+    class Meta:
+        abstract = True
+
+
 class TimestampMixin(models.Model):
     created = models.DateTimeField(_("created"), auto_now_add=True)
     modified = models.DateTimeField(_("modified"), auto_now=True)
@@ -105,7 +113,7 @@ class NotesMixin(models.Model):
         abstract = True
 
 
-class Item(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
+class Item(IrisStrMixin, TimestampMixin, CancelableMixin, NotesMixin, models.Model):
     process = models.ForeignKey(
         "Process",
         verbose_name=_("process"),
@@ -139,7 +147,7 @@ class Item(TimestampMixin, CancelableMixin, NotesMixin, models.Model):
 add_note_type("Item", "iris.app.Item")
 
 
-class Process(models.Model):
+class Process(IrisStrMixin, models.Model):
     name = models.CharField(_("name"), max_length=64)
 
     class Meta:
@@ -147,7 +155,7 @@ class Process(models.Model):
         verbose_name_plural = _("processes")
 
 
-class Step(models.Model):
+class Step(IrisStrMixin, models.Model):
     name = models.CharField(_("name"), max_length=64)
     instructions = models.TextField(_("instructions"), blank=True)
     stations = models.ManyToManyField(
@@ -159,7 +167,7 @@ class Step(models.Model):
         verbose_name_plural = _("steps")
 
 
-class Task(TimestampMixin, models.Model):
+class Task(IrisStrMixin, TimestampMixin, models.Model):
     step_transition = models.ForeignKey(
         "StepTransition",
         verbose_name=_("step transition"),
@@ -207,7 +215,7 @@ class Task(TimestampMixin, models.Model):
                 return suspension
 
 
-class StepTransition(models.Model):
+class StepTransition(IrisStrMixin, models.Model):
     process = models.ForeignKey(
         "Process",
         verbose_name=_("process"),
@@ -233,7 +241,7 @@ class StepTransition(models.Model):
         verbose_name_plural = _("step transitions")
 
 
-class StepTransitionRequiredSteps(models.Model):
+class StepTransitionRequiredSteps(IrisStrMixin, models.Model):
     step_transition = models.ForeignKey(
         "StepTransition", on_delete=models.CASCADE, related_name="step_transition"
     )
@@ -242,7 +250,7 @@ class StepTransitionRequiredSteps(models.Model):
     )
 
 
-class Worker(models.Model):
+class Worker(IrisStrMixin, models.Model):
     user = models.OneToOneField(
         get_user_model(),
         verbose_name=_("user"),
@@ -256,7 +264,7 @@ class Worker(models.Model):
         verbose_name_plural = _("workers")
 
 
-class Commit(TimestampMixin, NotesMixin, models.Model):
+class Commit(IrisStrMixin, TimestampMixin, NotesMixin, models.Model):
     task = models.OneToOneField(
         "Task", verbose_name=_("task"), on_delete=models.CASCADE
     )
@@ -287,7 +295,7 @@ class Commit(TimestampMixin, NotesMixin, models.Model):
 add_note_type("Commit", "iris.app.Commit")
 
 
-class Station(models.Model):
+class Station(IrisStrMixin, models.Model):
     name = models.CharField(_("name"), max_length=64)
 
     class Meta:
@@ -295,7 +303,7 @@ class Station(models.Model):
         verbose_name_plural = _("stations")
 
 
-class NoteTemplate(models.Model):
+class NoteTemplate(IrisStrMixin, models.Model):
     path = models.CharField(_("path"), max_length=NOTES_PATH_LIMIT)
     template = models.CharField(_("template"), max_length=256)
 
@@ -304,7 +312,7 @@ class NoteTemplate(models.Model):
         verbose_name_plural = _("note templates")
 
 
-class Delay(TimestampMixin, NotesMixin, models.Model):
+class Delay(IrisStrMixin, TimestampMixin, NotesMixin, models.Model):
     task = models.ForeignKey(
         "Task", verbose_name=_("task"), on_delete=models.CASCADE, related_name="delays"
     )
@@ -344,7 +352,7 @@ class Delay(TimestampMixin, NotesMixin, models.Model):
 add_note_type("Delay", "iris.app.Delay")
 
 
-class Suspension(TimestampMixin, NotesMixin, models.Model):
+class Suspension(IrisStrMixin, TimestampMixin, NotesMixin, models.Model):
     task = models.ForeignKey(
         "Task",
         verbose_name=_("task"),
