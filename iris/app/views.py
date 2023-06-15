@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, RedirectURLMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
@@ -12,7 +12,7 @@ from django.views.generic import (
     UpdateView,
     View,
 )
-from django.views.generic.edit import ModelFormMixin, SingleObjectMixin
+from django.views.generic.edit import ContextMixin, SingleObjectMixin
 
 from iris.app.forms import CancelItemForm, CreateItemModelForm, DelayModelForm
 from iris.app.models import (
@@ -28,31 +28,15 @@ from iris.app.models import (
 )
 
 
-class NextUrlParamMixin:
-    next_url_param = "next"
-
-    def get_next_url(self):
-        if self.next_url_param in self.request.GET:
-            return self.request.GET[self.next_url_param]
-
-
-class NextUrlFieldMixin(NextUrlParamMixin, ModelFormMixin):
-    next_url_field = "next_url"
-
-    def get_next_url(self):
-        if self.next_url_field in self.request.POST:
-            return self.request.GET[self.next_url_field]
-        else:
-            return super().get_next_url()
-
+class ContextRedirectURLMixin(RedirectURLMixin, ContextMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["next_url"] = self.get_next_url()
+        context.update(
+            {
+                self.redirect_field_name: self.get_redirect_url(),
+            }
+        )
         return context
-
-    def get_success_url(self):
-        next_url = self.get_next_url()
-        return next_url if next_url is not None else super().get_success_url()
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
@@ -161,7 +145,7 @@ class TaskDetailView(DetailView):
         return context
 
 
-class CreateForTaskMixin(LoginRequiredMixin, NextUrlFieldMixin, CreateView):
+class CreateForTaskMixin(LoginRequiredMixin, ContextRedirectURLMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["task"] = Task.objects.get(pk=self.kwargs["pk"])
@@ -192,14 +176,14 @@ class CreateDelayForTaskView(CreateForTaskMixin, PermissionRequiredMixin, Create
     permission_required = "iris.add_delay"
 
 
-class CommitFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
+class CommitFormView(PermissionRequiredMixin, ContextRedirectURLMixin, UpdateView):
     template_name = "iris/forms/edit_commit.html"
     model = Commit
     permission_required = "iris.change_commit"
     fields = ["notes"]
 
 
-class DelayFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
+class DelayFormView(PermissionRequiredMixin, ContextRedirectURLMixin, UpdateView):
     template_name = "iris/forms/edit_delay.html"
     model = Delay
     form_class = DelayModelForm
@@ -209,7 +193,7 @@ class DelayFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
 class DelayEndView(
     PermissionRequiredMixin,
     SingleObjectMixin,
-    NextUrlParamMixin,
+    ContextRedirectURLMixin,
     View,
 ):
     model = Delay
@@ -217,7 +201,7 @@ class DelayEndView(
 
     def get(self, request, *args, **kwargs):
         self.get_object().end()
-        return HttpResponseRedirect(self.get_next_url())
+        return HttpResponseRedirect(self.get_redirect_url())
 
 
 class CreateSuspensionForTaskView(
@@ -229,7 +213,7 @@ class CreateSuspensionForTaskView(
     fields = ["notes"]
 
 
-class SuspensionFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
+class SuspensionFormView(PermissionRequiredMixin, ContextRedirectURLMixin, UpdateView):
     template_name = "iris/forms/edit_suspension.html"
     model = Suspension
     permission_required = "iris.change_suspension"
@@ -239,7 +223,7 @@ class SuspensionFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView)
 class SuspensionLiftView(
     PermissionRequiredMixin,
     SingleObjectMixin,
-    NextUrlParamMixin,
+    ContextRedirectURLMixin,
     View,
 ):
     model = Suspension
@@ -247,17 +231,17 @@ class SuspensionLiftView(
 
     def get(self, request, *args, **kwargs):
         self.get_object().lift()
-        return HttpResponseRedirect(self.get_next_url())
+        return HttpResponseRedirect(self.get_redirect_url())
 
 
-class ItemFormView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
+class ItemFormView(PermissionRequiredMixin, ContextRedirectURLMixin, UpdateView):
     template_name = "iris/forms/edit_item.html"
     model = Item
     permission_required = "iris.change_item"
     fields = ["description", "notes"]
 
 
-class CreateItemView(PermissionRequiredMixin, NextUrlFieldMixin, CreateView):
+class CreateItemView(PermissionRequiredMixin, ContextRedirectURLMixin, CreateView):
     template_name = "iris/forms/create_item.html"
     model = Item
     permission_required = "iris.add_item"
@@ -269,14 +253,14 @@ class CreateItemView(PermissionRequiredMixin, NextUrlFieldMixin, CreateView):
         return context
 
 
-class CancelItemView(PermissionRequiredMixin, NextUrlFieldMixin, UpdateView):
+class CancelItemView(PermissionRequiredMixin, ContextRedirectURLMixin, UpdateView):
     template_name = "iris/forms/cancel_item.html"
     model = Item
     permission_required = "iris.change_item"
     form_class = CancelItemForm
 
 
-class RestoreItemView(PermissionRequiredMixin, NextUrlParamMixin, View):
+class RestoreItemView(PermissionRequiredMixin, ContextRedirectURLMixin, View):
     permission_required = "iris.change_item"
 
     def get(self, request, *args, **kwargs):
@@ -286,9 +270,9 @@ class RestoreItemView(PermissionRequiredMixin, NextUrlParamMixin, View):
             object.restore()
         except Item.DoesNotExist:
             messages.error(request, _("The item does not exists."))
-            return HttpResponseRedirect(self.get_next_url())
+            return HttpResponseRedirect(self.get_redirect_url())
         except NotCanceledError:
             messages.error(request, _("The item is not cancelled."))
-            return HttpResponseRedirect(self.get_next_url())
+            return HttpResponseRedirect(self.get_redirect_url())
         messages.info(request, _("The item was restored."))
-        return HttpResponseRedirect(self.get_next_url())
+        return HttpResponseRedirect(self.get_redirect_url())

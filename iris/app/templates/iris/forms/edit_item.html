@@ -9,7 +9,7 @@
 <div class="container-sm mt-4 p-4">
 	<form method="post">
 		{% csrf_token %}
-		<input type="hidden" id="next_url" value="{{ next_url }}">
+		<input type="hidden" id="next" value="{{ next }}">
 		{% include "iris/forms/include/form_errors.html" %}
 		<div class="mb-3 row">
 			<div class="col">
