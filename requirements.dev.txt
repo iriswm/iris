@@ -1,2 +1,2 @@
 black~=26.1
-isort~=5.12
+isort~=8.0
