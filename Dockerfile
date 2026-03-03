@@ -1,4 +1,4 @@
-FROM docker.io/library/python:3.11-bullseye AS dev
+FROM docker.io/library/python:3.14-trixie AS dev
 RUN apt-get update && apt-get install -y gettext && rm -rf /var/lib/apt/lists/*
 
 RUN python3 -m venv /opt/venv
@@ -16,7 +16,7 @@ ENV PYTHONPATH="/app:/app/deps/iris_wc"
 RUN ./manage.py compilemessages
 
 
-FROM docker.io/library/python:3.11-bullseye
+FROM docker.io/library/python:3.14-trixie
 
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
