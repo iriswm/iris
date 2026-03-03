@@ -1,4 +1,7 @@
 {% load i18n %}
+<form class="invisible" id="logout-form" method="post" action="{% url 'iris:logout' %}">
+    {% csrf_token %}
+</form>
 <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="{% url 'iris:index' %}">Iris</a>
@@ -13,7 +16,7 @@
 			</ul>
 			<form class="d-flex">
 				<span class="navbar-text me-1">{% blocktranslate %}Logged as {{ user }}{% endblocktranslate %}</span>
-				<a class="btn btn-primary" role="button" href="{% url 'iris:logout' %}">{% translate "Log out" %}</a>
+				<a class="btn btn-primary" role="button" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{% translate "Log out" %}</a>
 			</form>
 		</div>
 		{% endif %}
